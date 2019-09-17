@@ -2,4 +2,41 @@ html,
 body,
 #root {
   height: 100%;
+  overflow: hidden;
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translate3d(30px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translate3d(-30px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translate3d(0, 30px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translate3d(0, -30px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }

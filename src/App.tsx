@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 import styled from 'styled-components';
 
-import Map from './components/Map';
+import Game from './components/Game';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const App = () => {
   return (
     <Wrapper>
-      <Map />
+      <Game />
     </Wrapper>
   );
 };
