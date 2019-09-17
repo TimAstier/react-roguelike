@@ -1,7 +1,18 @@
 {
-  "name": "react-rpg",
+  "name": "react-rpg-game",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "A RPG game built with React",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimAstier/react-rpg-game"
+  },
+  "author": "Timothée Astier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TimAstier/react-rpg-game/issues"
+  },
+  "homepage": "https://github.com/TimAstier/react-rpg-game#readme",
   "dependencies": {
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
