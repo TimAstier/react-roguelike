@@ -16,9 +16,11 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Create basic grid
 - [x] Move with arrow keys
 - [x] Smooth move animation
+- [x] Add Redux to the project
+- [ ] Add Prettier (check long lines)
+- [ ] Fix bug when changing direction towards a wall
 - [ ] Add CONRIBUTING.md and all-contributors
 - [ ] Investiage the use of game loop and frames
-- [ ] Add Redux to the project (and refactor moveDirection)
 - [ ] Debounce keypress handler
 - [ ] Live demo with auto-deploy when merge into master
 - [ ] Fixed viewport and moving background
@@ -50,6 +52,7 @@ $ npm start
 ## Built with
 
 - [react](https://reactjs.org/) - a JavaScript library for building user interfaces
+- [redux](https://redux.js.org/) - a predictable state container for JavaScript apps
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
 - [TypeScript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
 

@@ -19,7 +19,7 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ moveDirection }) => {
-  const animation = `move${moveDirection} 0.5s steps(16)`;
+  const animation = `move${moveDirection} 0.25s steps(16)`;
   return <Wrapper animation={animation} />;
 };
 

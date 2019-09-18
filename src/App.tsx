@@ -13,12 +13,11 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const App = () => {
-  return (
-    <Wrapper>
-      <Game />
-    </Wrapper>
-  );
-};
+const App = () => (
+  <Wrapper>
+    <Game />
+  </Wrapper>
+);
+
 
 export default App;

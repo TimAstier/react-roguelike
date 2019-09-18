@@ -21,23 +21,23 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ moveDirection, playerPosition }) => {
-  const createCellsContent = () => {
-    const cells: CellContent[][] = [];
+  const createMapContent = () => {
+    const mapContent: CellContent[][] = [];
     for (let i = 0; i < GRID_WIDTH; i += 1) {
-      cells[i] = [];
+      mapContent[i] = [];
       for (let j = 0; j < GRID_HEIGHT; j += 1) {
         if (i === playerPosition[0] && j === playerPosition[1]) {
-          cells[i][j] = 'Player';
+          mapContent[i][j] = 'Player';
         } else {
-          cells[i][j] = 0;
+          mapContent[i][j] = 0;
         }
       }
     }
-    return cells;
+    return mapContent;
   };
 
   const renderCells = () => {
-    return createCellsContent()
+    return createMapContent()
       .map((row, posX) => {
         return row.map((column, posY) => {
           const position = `${posX}-${posY}`;
