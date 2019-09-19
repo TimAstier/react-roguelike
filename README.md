@@ -1,7 +1,8 @@
 <div align="center">
 <h1>React RPG game</h1>
 
-<p>A RPG game built with React.</p>
+<p>A RPG game built with TypeScript, React and Redux.</p>
+<p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com/</a><p/>
 </div>
 
 ## Motivation
@@ -17,12 +18,11 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Move with arrow keys
 - [x] Smooth move animation
 - [x] Add Redux to the project
-- [x] Fix bug when changing direction towards a wall
 - [x] Add Prettier
+- [x] Live demo with auto-deploy when merge into master
 - [ ] Add CONRIBUTING.md and all-contributors
 - [ ] Investiage the use of game loop and frames
 - [ ] Debounce keypress handler
-- [ ] Live demo with auto-deploy when merge into master
 - [ ] Fixed viewport and moving background
 - [ ] Fog of war
 - [ ] Walls

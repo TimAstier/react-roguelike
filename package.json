@@ -2,7 +2,7 @@
   "name": "react-rpg-game",
   "version": "0.1.0",
   "private": false,
-  "description": "A RPG game built with React",
+  "description": "A RPG game built with TypeScript, React and Redux",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TimAstier/react-rpg-game"
