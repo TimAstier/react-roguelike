@@ -15,7 +15,25 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "downlevelIteration": true,
-    "lib": ["dom", "es2015", "es2016", "es2017"],
-    "types": ["node", "jest", "react"]
-  }
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "es2017"
+    ],
+    "types": [
+      "node",
+      "jest",
+      "react"
+    ],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": [
+    "src"
+  ]
 }
