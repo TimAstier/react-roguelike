@@ -7,7 +7,7 @@ import { MoveDirection } from '../typings/moveDirection';
 import Player from './Player';
 
 const Wrapper = styled.div`
-  border: solid 1px black;
+  border: solid 1px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   width: ${() => `${CELL_WIDTH_IN_PIXELS}px`};
   height: ${() => `${CELL_WIDTH_IN_PIXELS}px`};
