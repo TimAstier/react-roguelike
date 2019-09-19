@@ -7,19 +7,19 @@ body,
 
 @keyframes moveLeft {
   0% {
-    transform: translate3d(30px, 0, 0);
+    transform: translate3d(30px, 0, 0) rotate(-90deg);
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) rotate(-90deg);
   }
 }
 
 @keyframes moveRight {
   0% {
-    transform: translate3d(-30px, 0, 0);
+    transform: translate3d(-30px, 0, 0) rotate(90deg);
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) rotate(90deg);
   }
 }
 
@@ -34,9 +34,9 @@ body,
 
 @keyframes moveDown {
   0% {
-    transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0) rotate(180deg);
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) rotate(180deg);
   }
 }
