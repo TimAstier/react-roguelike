@@ -17,8 +17,8 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Move with arrow keys
 - [x] Smooth move animation
 - [x] Add Redux to the project
-- [ ] Add Prettier (check long lines)
-- [ ] Fix bug when changing direction towards a wall
+- [x] Fix bug when changing direction towards a wall
+- [x] Add Prettier
 - [ ] Add CONRIBUTING.md and all-contributors
 - [ ] Investiage the use of game loop and frames
 - [ ] Debounce keypress handler

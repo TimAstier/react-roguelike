@@ -1,26 +1,14 @@
 module.exports = {
-  env: {
-    browser: true,
-    commonjs: true,
-    es6: true
-  },
-  settings: {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  },
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'airbnb',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
+    'storytel',
+    'prettier',
   ],
-  plugins: [
-    'react-hooks',
-    'simple-import-sort',
-  ],
+  plugins: ['react-hooks', 'simple-import-sort'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -28,32 +16,17 @@ module.exports = {
       jsx: true,
     },
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
-    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx", ".ts", ".tsx"] }],
-    semi: [2, "always"],
-    "react/jsx-boolean-value": [2, "always"],
+    '@typescript-eslint/explicit-function-return-type': 0,
     'react/prop-types': 0,
-    "react/sort-comp": [1],
-    "comma-dangle": ["error", "always-multiline"],
-    "no-confusing-arrow": 0,
-    "arrow-parens": 0,
-    "arrow-body-style": 0,
-    "object-curly-newline": 0,
-    "prefer-destructuring": 0,
-    "react/require-default-props": 0,
-    "react/destructuring-assignment": 0,
-    "import/no-extraneous-dependencies": 0,
-    "no-console": 0,
-    "react/jsx-wrap-multilines": 0,
-    "operator-linebreak": 0,
-    "react/prefer-stateless-function": 0,
-    "no-plusplus": 0,
+    '@typescript-eslint/no-explicit-any': 0,
     'simple-import-sort/sort': 'error',
     'no-console': ['warn', { allow: ['error'] }],
-    '@typescript-eslint/indent': [
-      'error',
-      2
-    ],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -71,6 +44,10 @@ module.exports = {
       },
     ],
     'react-hooks/rules-of-hooks': 'warn',
-    '@typescript-eslint/explicit-function-return-type': 0,
-  }
+    camelcase: ['error', { allow: ['^UNSAFE_'] }],
+    'consistent-return': 0,
+  },
+  env: {
+    jest: true,
+  },
 };

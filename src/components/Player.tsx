@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { gameSelectors } from '../redux/game';
 import { MoveDirection } from '../typings/moveDirection';
+import { ReduxState } from '../typings/reduxState';
 
 const mapMoveDirectionToAngle = {
   Left: -90,
@@ -11,7 +14,7 @@ const mapMoveDirectionToAngle = {
 };
 
 interface StylingProps {
-  animation: string;
+  animation?: string;
   transform: string;
 }
 
@@ -31,14 +34,28 @@ const Front = styled.div`
   margin-right: auto;
 `;
 
-interface Props {
+interface StateProps {
+  shouldPlayerAnimate: boolean;
+}
+
+interface OwnProps {
   moveDirection: MoveDirection;
 }
 
-const Player: React.FC<Props> = ({ moveDirection }) => {
-  const animation = `move${moveDirection} 0.25s steps(16)`;
+type Props = StateProps & OwnProps;
+
+const Player: React.FC<Props> = ({ moveDirection, shouldPlayerAnimate }) => {
+  const animation = shouldPlayerAnimate ? `move${moveDirection} 0.25s steps(16)` : undefined;
   const transform = `rotate(${mapMoveDirectionToAngle[moveDirection]}deg)`;
-  return <Wrapper animation={animation} transform={transform}><Front /></Wrapper>;
+  return (
+    <Wrapper animation={animation} transform={transform}>
+      <Front />
+    </Wrapper>
+  );
 };
 
-export default Player;
+const mapStateToProps = (state: ReduxState): StateProps => ({
+  shouldPlayerAnimate: gameSelectors.getShouldPlayerAnimate(state.game),
+});
+
+export default connect(mapStateToProps)(Player);

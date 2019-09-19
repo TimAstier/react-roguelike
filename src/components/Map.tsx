@@ -37,13 +37,12 @@ const Map: React.FC<Props> = ({ moveDirection, playerPosition }) => {
   };
 
   const renderCells = () => {
-    return createMapContent()
-      .map((row, posX) => {
-        return row.map((column, posY) => {
-          const position = `${posX}-${posY}`;
-          return <Cell key={position} content={column} moveDirection={moveDirection} />;
-        });
+    return createMapContent().map((row, posX) => {
+      return row.map((column, posY) => {
+        const position = `${posX}-${posY}`;
+        return <Cell key={position} content={column} moveDirection={moveDirection} />;
       });
+    });
   };
 
   return <Wrapper>{renderCells()}</Wrapper>;
