@@ -20,6 +20,7 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Add Redux to the project
 - [x] Add Prettier
 - [x] Live demo with auto-deploy when merge into master
+- [ ] Setup CI and protect master branch
 - [ ] Add CONRIBUTING.md and all-contributors
 - [ ] Investiage the use of game loop and frames
 - [ ] Debounce keypress handler
