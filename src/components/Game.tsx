@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
+import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
 import { gameActions } from '../redux/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -42,13 +43,26 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 const Game: React.FC<Props> = ({ moveDirection, movePlayer, playerPosition }) => {
+  const lastMoveDate = useRef(Date.now());
+
   useEffect(() => {
     const handleKeyDown = (event: any) => {
       const keyCode: number = event.keyCode;
+
+      // Prevent reacting to other keys
       if (!GAME_KEYS.includes(keyCode)) {
         return;
       }
+
       event.preventDefault();
+
+      // Prevent moving again before animation is finished
+      if (Date.now() - lastMoveDate.current < ANIMATION_SPEED + PAUSE_TIME_BETWEEN_MOVES) {
+        return;
+      }
+
+      // Perform the move
+      lastMoveDate.current = Date.now();
       const direction = mapKeyCodeToDirection(keyCode);
       if (direction) {
         movePlayer(direction);
