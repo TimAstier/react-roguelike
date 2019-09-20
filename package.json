@@ -46,8 +46,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "prettier:base": "prettier --parser typescript --single-quote",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
     "check-types": "tsc -p src --skipLibCheck --noEmit",
-    "validate": "npm run lint && npm run check-types"
+    "validate": "npm run lint && npm run prettier:check && npm run check-types"
   },
   "eslintConfig": {
     "extends": "react-app"
