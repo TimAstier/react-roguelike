@@ -1,11 +1,12 @@
 <div align="center">
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 <h1>React RPG game</h1>
 
 <p>A RPG game built with TypeScript, React and Redux.</p>
 <p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
-<img src="https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg" alt="circle-ci-badge"/>
 </div>
+
+[![CircleCI](https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg)](https://circleci.com/gh/TimAstier/react-rpg-game)  
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 ## Description
 
