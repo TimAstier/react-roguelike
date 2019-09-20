@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 
-import { GRID_WIDTH } from '../constants/grid';
+import { GRID_WIDTH } from '../constants/config';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 

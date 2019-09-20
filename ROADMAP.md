@@ -11,7 +11,7 @@
 - [x] Auto deploy development and review app
 - [x] Setup Circle CI
 - [x] Add CONRIBUTING file and @all-contributors bot
-- [ ] Fixed viewport and moving background
+- [x] Fixed viewport and moving background
 - [ ] Fog of war
 - [ ] Walls
 - [ ] NPCs
