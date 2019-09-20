@@ -6,14 +6,18 @@
 <img src="https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg" alt="circle-ci-badge"/>
 </div>
 
-## Motivation
+## Description
 
-This is a hobby project to see how React can be used to create a game.  
-Anyone is welcome to contribute to learn and have fun!
+This is a hobby project to see how React can be used to create a game.
 
 _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https://github.com/ASteinheiser/react-rpg.com)._
 
-## Todo
+## Contributing
+
+You are welcome to contribute to this project :)  
+See [CONTRIBUTING](./CONTRIBUTING.md).
+
+## Roadmap
 
 - [x] Create basic grid
 - [x] Move with arrow keys
@@ -25,7 +29,7 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Protect master branch
 - [x] Auto deploy development and review app
 - [x] Setup Circle CI
-- [ ] Add CONRIBUTING.md and all-contributors
+- [x] Add CONRIBUTING file and @all-contributors bot
 - [ ] Fixed viewport and moving background
 - [ ] Fog of war
 - [ ] Walls
