@@ -5,8 +5,7 @@
 <p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
 </div>
 
-[![CircleCI](https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg)](https://circleci.com/gh/TimAstier/react-rpg-game)  
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![CircleCI](https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg)](https://circleci.com/gh/TimAstier/react-rpg-game) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 ## Description
 
@@ -16,31 +15,7 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 
 ## Contributing
 
-You are welcome to contribute to this project :)  
-See [CONTRIBUTING](./CONTRIBUTING.md).
-
-## Roadmap
-
-- [x] Create basic grid
-- [x] Move with arrow keys
-- [x] Smooth move animation
-- [x] Add Redux to the project
-- [x] Add Prettier
-- [x] Live demo with auto-deploy when merge into master
-- [x] Debounce keypress handler
-- [x] Protect master branch
-- [x] Auto deploy development and review app
-- [x] Setup Circle CI
-- [x] Add CONRIBUTING file and @all-contributors bot
-- [ ] Fixed viewport and moving background
-- [ ] Fog of war
-- [ ] Walls
-- [ ] NPCs
-- [ ] PlayerProfile component
-- [ ] AdventureLogs component
-- [ ] Enter other maps
-- [ ] Monsters and attacks
-- [ ] Add sound manager (use Howler)
+You are welcome to contribute to this project :) See [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## Installation
 
@@ -67,6 +42,10 @@ https://react-rpg-game-development.herokuapp.com
 
 Merging commits to `master` will auto-deploy to:  
 https://react-redux-rpg.herokuapp.com
+
+## Roadmap
+
+See [ROADMAP](ROADMAP.md).
 
 ## Built with
 

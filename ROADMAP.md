@@ -1,0 +1,22 @@
+# ROADMAP
+
+- [x] Create basic grid
+- [x] Move with arrow keys
+- [x] Smooth move animation
+- [x] Add Redux to the project
+- [x] Add Prettier
+- [x] Live demo with auto-deploy when merge into master
+- [x] Debounce keypress handler
+- [x] Protect master branch
+- [x] Auto deploy development and review app
+- [x] Setup Circle CI
+- [x] Add CONRIBUTING file and @all-contributors bot
+- [ ] Fixed viewport and moving background
+- [ ] Fog of war
+- [ ] Walls
+- [ ] NPCs
+- [ ] PlayerProfile component
+- [ ] AdventureLogs component
+- [ ] Enter other maps
+- [ ] Monsters and attacks
+- [ ] Add sound manager (use Howler)
