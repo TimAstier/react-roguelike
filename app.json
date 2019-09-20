@@ -1,16 +1,9 @@
 {
-  "addons": [
-
-  ],
-  "buildpacks": [
-
-  ],
-  "env": {
-  },
-  "formation": {
-  },
+  "addons": [],
+  "buildpacks": [],
+  "env": {},
+  "formation": {},
   "name": "react-rpg-game",
-  "scripts": {
-  },
+  "scripts": {},
   "stack": "heroku-18"
 }
