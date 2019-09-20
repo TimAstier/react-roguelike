@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { ANIMATION_SPEED } from '../constants/config';
+import { ANIMATION_SPEED, ANIMATION_STEPS } from '../constants/config';
 import { gameSelectors } from '../redux/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { ReduxState } from '../typings/reduxState';
@@ -47,7 +47,7 @@ type Props = StateProps & OwnProps;
 
 const Player: React.FC<Props> = ({ moveDirection, shouldPlayerAnimate }) => {
   const animation = shouldPlayerAnimate
-    ? `move${moveDirection} ${ANIMATION_SPEED / 1000}s steps(16)`
+    ? `move${moveDirection} ${ANIMATION_SPEED / 1000}s steps(${ANIMATION_STEPS})`
     : undefined;
   const transform = `rotate(${mapMoveDirectionToAngle[moveDirection]}deg)`;
   return (

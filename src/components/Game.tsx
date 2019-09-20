@@ -7,6 +7,7 @@ import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { ReduxState } from '../typings/reduxState';
 import Map from './Map';
+import Viewport from './Viewport';
 
 const LEFT_KEYCODE = 37;
 const UP_KEYCODE = 38;
@@ -74,7 +75,11 @@ const Game: React.FC<Props> = ({ moveDirection, movePlayer, playerPosition }) =>
     };
   }, [movePlayer]);
 
-  return <Map playerPosition={playerPosition} moveDirection={moveDirection} />;
+  return (
+    <Viewport>
+      <Map playerPosition={playerPosition} moveDirection={moveDirection} />
+    </Viewport>
+  );
 };
 
 const mapStateToProps = (state: ReduxState) => ({

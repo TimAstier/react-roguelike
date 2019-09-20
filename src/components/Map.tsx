@@ -1,11 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { CELL_WIDTH_IN_PIXELS, GRID_HEIGHT, GRID_WIDTH } from '../constants/grid';
+import { ANIMATION_SPEED } from '../constants/config';
+import { CELL_WIDTH_IN_PIXELS, GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { CellContent } from '../typings/cellContent';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import Cell from './Cell';
+
+interface StylingProps {
+  left: number;
+  top: number;
+}
 
 const Wrapper = styled.div`
   width: ${() => `${CELL_WIDTH_IN_PIXELS * GRID_HEIGHT}px`};
@@ -13,6 +19,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   border: solid 1px black;
+  position: relative;
+  left: ${(p: StylingProps) => `${p.left}px`};
+  top: ${(p: StylingProps) => `${p.top}px`};
+  transition: ${() => `top ${ANIMATION_SPEED / 1000}s, left ${ANIMATION_SPEED / 1000}s`};
+  background-color: white;
 `;
 
 interface Props {
@@ -45,7 +56,14 @@ const Map: React.FC<Props> = ({ moveDirection, playerPosition }) => {
     });
   };
 
-  return <Wrapper>{renderCells()}</Wrapper>;
+  const mapLeftPosition = (-playerPosition[1] + 5) * CELL_WIDTH_IN_PIXELS;
+  const mapUpPosition = (-playerPosition[0] + 5) * CELL_WIDTH_IN_PIXELS;
+
+  return (
+    <Wrapper left={mapLeftPosition} top={mapUpPosition}>
+      {renderCells()}
+    </Wrapper>
+  );
 };
 
 export default Map;

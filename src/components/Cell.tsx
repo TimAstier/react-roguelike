@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { CELL_WIDTH_IN_PIXELS } from '../constants/grid';
+import { CELL_WIDTH_IN_PIXELS } from '../constants/config';
 import { CellContent } from '../typings/cellContent';
 import { MoveDirection } from '../typings/moveDirection';
 import Player from './Player';
