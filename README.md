@@ -3,6 +3,7 @@
 
 <p>A RPG game built with TypeScript, React and Redux.</p>
 <p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
+<img src="https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg" alt="circle-ci-badge"/>
 </div>
 
 ## Motivation
@@ -23,7 +24,7 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Debounce keypress handler
 - [x] Protect master branch
 - [x] Auto deploy development and review app
-- [ ] Setup CI
+- [x] Setup Circle CI
 - [ ] Add CONRIBUTING.md and all-contributors
 - [ ] Fixed viewport and moving background
 - [ ] Fog of war

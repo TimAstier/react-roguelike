@@ -18,3 +18,6 @@ jobs:
       - run:
           name: Run validate script
           command: npm run validate
+      - run:
+          name: Build
+          command: npm run build
