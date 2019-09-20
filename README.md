@@ -2,7 +2,7 @@
 <h1>React RPG game</h1>
 
 <p>A RPG game built with TypeScript, React and Redux.</p>
-<p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com/</a><p/>
+<p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
 </div>
 
 ## Motivation
@@ -21,7 +21,9 @@ _Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https
 - [x] Add Prettier
 - [x] Live demo with auto-deploy when merge into master
 - [x] Debounce keypress handler
-- [ ] Setup CI and protect master branch
+- [x] Protect master branch
+- [x] Auto deploy development and review app
+- [ ] Setup CI
 - [ ] Add CONRIBUTING.md and all-contributors
 - [ ] Fixed viewport and moving background
 - [ ] Fog of war
@@ -48,6 +50,16 @@ $ npm start
 
 # Opens a browser tab at http://localhost:3000/
 ```
+
+## Deployments:
+
+Review apps will be deployed when opening a PR on the development branch.
+
+Merging commits to `development` will auto-deploy to:  
+https://react-rpg-game-development.herokuapp.com
+
+Merging commits to `master` will auto-deploy to:  
+https://react-redux-rpg.herokuapp.com
 
 ## Built with
 
