@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
+import maps from '../data/maps';
 import { gameActions } from '../redux/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -77,7 +78,7 @@ const Game: React.FC<Props> = ({ moveDirection, movePlayer, playerPosition }) =>
 
   return (
     <Viewport>
-      <Map playerPosition={playerPosition} moveDirection={moveDirection} />
+      <Map playerPosition={playerPosition} moveDirection={moveDirection} tiles={maps.intro} />
     </Viewport>
   );
 };
