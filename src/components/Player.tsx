@@ -20,16 +20,16 @@ interface StylingProps {
 }
 
 const Wrapper = styled.div`
-  width: 15px;
-  height: 15px;
+  width: 24px;
+  height: 24px;
   background-color: blue;
   animation: ${(p: StylingProps) => p.animation};
   transform: ${(p: StylingProps) => p.transform};
 `;
 
 const Front = styled.div`
-  width: 5px;
-  height: 5px;
+  width: 10px;
+  height: 10px;
   background-color: black;
   margin-left: auto;
   margin-right: auto;

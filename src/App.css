@@ -7,7 +7,7 @@ body,
 
 @keyframes moveLeft {
   0% {
-    transform: translate3d(30px, 0, 0) rotate(-90deg);
+    transform: translate3d(45px, 0, 0) rotate(-90deg);
   }
   100% {
     transform: translate3d(0, 0, 0) rotate(-90deg);
@@ -16,7 +16,7 @@ body,
 
 @keyframes moveRight {
   0% {
-    transform: translate3d(-30px, 0, 0) rotate(90deg);
+    transform: translate3d(-45px, 0, 0) rotate(90deg);
   }
   100% {
     transform: translate3d(0, 0, 0) rotate(90deg);
@@ -25,7 +25,7 @@ body,
 
 @keyframes moveUp {
   0% {
-    transform: translate3d(0, 30px, 0);
+    transform: translate3d(0, 45px, 0);
   }
   100% {
     transform: translate3d(0, 0, 0);
@@ -34,7 +34,7 @@ body,
 
 @keyframes moveDown {
   0% {
-    transform: translate3d(0, -30px, 0) rotate(180deg);
+    transform: translate3d(0, -45px, 0) rotate(180deg);
   }
   100% {
     transform: translate3d(0, 0, 0) rotate(180deg);

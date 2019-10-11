@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { ANIMATION_SPEED } from '../constants/config';
 import { CELL_WIDTH_IN_PIXELS, GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
-import { CellContent } from '../typings/cellContent';
+import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import Cell from './Cell';
@@ -29,18 +29,19 @@ const Wrapper = styled.div`
 interface Props {
   moveDirection: MoveDirection;
   playerPosition: Position;
+  tiles: CellTile[][];
 }
 
-const Map: React.FC<Props> = ({ moveDirection, playerPosition }) => {
+const Map: React.FC<Props> = ({ moveDirection, playerPosition, tiles }) => {
   const createMapContent = () => {
-    const mapContent: CellContent[][] = [];
+    const mapContent: CellData[][] = [];
     for (let i = 0; i < GRID_WIDTH; i += 1) {
       mapContent[i] = [];
       for (let j = 0; j < GRID_HEIGHT; j += 1) {
+        mapContent[i][j] = { content: 0, tile: ' ' };
+        mapContent[i][j].tile = tiles[i][j];
         if (i === playerPosition[0] && j === playerPosition[1]) {
-          mapContent[i][j] = 'Player';
-        } else {
-          mapContent[i][j] = 0;
+          mapContent[i][j].content = 'Player';
         }
       }
     }
@@ -51,7 +52,14 @@ const Map: React.FC<Props> = ({ moveDirection, playerPosition }) => {
     return createMapContent().map((row, posX) => {
       return row.map((column, posY) => {
         const position = `${posX}-${posY}`;
-        return <Cell key={position} content={column} moveDirection={moveDirection} />;
+        return (
+          <Cell
+            key={position}
+            content={column.content}
+            moveDirection={moveDirection}
+            tile={column.tile}
+          />
+        );
       });
     });
   };
