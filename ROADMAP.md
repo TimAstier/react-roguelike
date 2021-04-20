@@ -13,6 +13,7 @@
 - [x] Add CONRIBUTING file and @all-contributors bot
 - [x] Fixed viewport and moving background
 - [x] Walls
+- [ ] Remove redux
 - [ ] Fog of war
 - [ ] NPCs
 - [ ] PlayerProfile component

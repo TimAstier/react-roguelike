@@ -7,17 +7,20 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: npm-cache-v1-{{ checksum "package-lock.json" }}
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: npm ci
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
-          key: npm-cache-v1-{{ checksum "package-lock.json" }}
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - /home/circleci/.npm
+            - ~/.cache/yarn
       - run:
           name: Run validate script
-          command: npm run validate
+          command: yarn validate
       - run:
           name: Build
-          command: npm run build
+          command: yarn build

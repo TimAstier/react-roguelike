@@ -35,7 +35,7 @@ const mapKeyCodeToDirection = (keyCode: number): MoveDirection | undefined => {
 };
 
 interface StateProps {
-  currentMap: CellTile[][];
+  currentMap: CellTile[][] | null;
   moveDirection: MoveDirection;
   playerPosition: Position;
 }
@@ -109,7 +109,4 @@ const mapDispatchToProps = {
   setCurrentMap: gameActions.setCurrentMap,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

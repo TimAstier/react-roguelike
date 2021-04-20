@@ -25,10 +25,10 @@ $ git clone https://github.com/TimAstier/react-rpg-game
 
 # Install dependencies
 $ cd react-rpg-game
-$ npm install
+$ yarn install
 
 # Start the app
-$ npm start
+$ yarn start
 
 # Opens a browser tab at http://localhost:3000/
 ```
