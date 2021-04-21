@@ -1,3 +1,5 @@
+import { Reducer } from 'redux';
+
 import { GRID_WIDTH } from '../constants/config';
 import { CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
@@ -119,7 +121,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
   }
 };
 
-export default function(state = INITIAL_STATE, action: GameAction) {
+export const game: Reducer<any, GameAction> = (state = INITIAL_STATE, action: GameAction) => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
       return reduceMovePlayer(state, action.direction);
@@ -128,4 +130,4 @@ export default function(state = INITIAL_STATE, action: GameAction) {
     default:
       return INITIAL_STATE;
   }
-}
+};

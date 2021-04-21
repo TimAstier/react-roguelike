@@ -13,10 +13,8 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const App = () => (
+export const App: React.FC = () => (
   <Wrapper>
     <Game />
   </Wrapper>
 );
-
-export default App;
