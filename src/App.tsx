@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 import styled from 'styled-components';
 
-import Game from './components/Game';
+import { Game } from './components/Game';
 
 const Wrapper = styled.div`
   display: flex;

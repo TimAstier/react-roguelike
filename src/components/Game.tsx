@@ -1,13 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
 import maps from '../data/maps';
-import { gameActions } from '../redux/game';
-import { CellTile } from '../typings/cell';
+import { game } from '../reducers';
+import { gameActions, INITIAL_STATE } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
-import { Position } from '../typings/position';
-import { ReduxState } from '../typings/reduxState';
 import Map from './Map';
 import Viewport from './Viewport';
 
@@ -34,31 +31,13 @@ const mapKeyCodeToDirection = (keyCode: number): MoveDirection | undefined => {
   }
 };
 
-interface StateProps {
-  currentMap: CellTile[][] | null;
-  moveDirection: MoveDirection;
-  playerPosition: Position;
-}
-
-interface DispatchProps {
-  movePlayer: typeof gameActions.movePlayer;
-  setCurrentMap: typeof gameActions.setCurrentMap;
-}
-
-type Props = StateProps & DispatchProps;
-
-const Game: React.FC<Props> = ({
-  currentMap,
-  moveDirection,
-  movePlayer,
-  playerPosition,
-  setCurrentMap,
-}) => {
+export const Game: React.FC = () => {
+  const [state, dispatch] = React.useReducer(game, INITIAL_STATE);
   const lastMoveDate = useRef(Date.now());
 
   useEffect(() => {
-    setCurrentMap(maps.intro);
-  }, [setCurrentMap]);
+    dispatch(gameActions.setCurrentMap(maps.intro));
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -80,33 +59,25 @@ const Game: React.FC<Props> = ({
       lastMoveDate.current = Date.now();
       const direction = mapKeyCodeToDirection(keyCode);
       if (direction) {
-        movePlayer(direction);
+        dispatch(gameActions.movePlayer(direction));
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [movePlayer]);
+  }, []);
 
   const renderGameContent = () => {
-    return currentMap ? (
-      <Map playerPosition={playerPosition} moveDirection={moveDirection} tiles={currentMap} />
+    return state.currentMap ? (
+      <Map
+        playerPosition={state.playerPosition}
+        moveDirection={state.moveDirection}
+        tiles={state.currentMap}
+        shouldPlayerAnimate={state.shouldPlayerAnimate}
+      />
     ) : null;
   };
 
   return <Viewport>{renderGameContent()}</Viewport>;
 };
-
-const mapStateToProps = (state: ReduxState) => ({
-  currentMap: state.game.currentMap,
-  moveDirection: state.game.moveDirection,
-  playerPosition: state.game.playerPosition,
-});
-
-const mapDispatchToProps = {
-  movePlayer: gameActions.movePlayer,
-  setCurrentMap: gameActions.setCurrentMap,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { CELL_WIDTH_IN_PIXELS } from '../constants/config';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
-import Player from './Player';
+import { Player } from './Player';
 
 interface StylingProps {
   backgroundColor: string;
@@ -25,12 +25,13 @@ interface Props {
   content: CellContent;
   moveDirection: MoveDirection;
   tile: CellTile;
+  shouldPlayerAnimate: boolean;
 }
 
-const Cell: React.FC<Props> = ({ content, moveDirection, tile }) => {
+const Cell: React.FC<Props> = ({ content, moveDirection, tile, shouldPlayerAnimate }) => {
   const renderContent = () => {
     if (content === 'Player') {
-      return <Player moveDirection={moveDirection} />;
+      return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
     return null;
   };
