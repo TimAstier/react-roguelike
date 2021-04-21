@@ -6,6 +6,7 @@ import { CELL_WIDTH_IN_PIXELS, GRID_HEIGHT, GRID_WIDTH } from '../constants/conf
 import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
+import { getVisibility } from '../utils/getVisibility';
 import Cell from './Cell';
 
 interface StylingProps {
@@ -29,11 +30,18 @@ const Wrapper = styled.div`
 interface Props {
   moveDirection: MoveDirection;
   playerPosition: Position;
+  fogOfWar: boolean;
   tiles: CellTile[][];
   shouldPlayerAnimate: boolean;
 }
 
-const Map: React.FC<Props> = ({ moveDirection, playerPosition, tiles, shouldPlayerAnimate }) => {
+const Map: React.FC<Props> = ({
+  moveDirection,
+  playerPosition,
+  fogOfWar,
+  tiles,
+  shouldPlayerAnimate,
+}) => {
   const createMapContent = () => {
     const mapContent: CellData[][] = [];
     for (let i = 0; i < GRID_WIDTH; i += 1) {
@@ -53,8 +61,10 @@ const Map: React.FC<Props> = ({ moveDirection, playerPosition, tiles, shouldPlay
     return createMapContent().map((row, posX) => {
       return row.map((column, posY) => {
         const position = `${posX}-${posY}`;
+        const visibility = fogOfWar ? getVisibility({ posX, posY, playerPosition }) : 'clear';
         return (
           <Cell
+            visibility={visibility}
             key={position}
             content={column.content}
             moveDirection={moveDirection}
