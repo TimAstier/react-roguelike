@@ -12,10 +12,12 @@
 - [x] Add CONRIBUTING file and @all-contributors bot
 - [x] Fixed viewport and moving background
 - [x] Walls
-- [ ] Fog of war
+- [x] Fog of war
+- [ ] Hide cells that are hidden behind walls in fogOfWar
 - [ ] NPCs
-- [ ] PlayerProfile component
+- [ ] Inventory component
 - [ ] AdventureLogs component
+- [ ] Dialog component
 - [ ] Enter other maps or rooms
 - [ ] Monsters and attacks
 - [ ] Add sound manager (use Howler)

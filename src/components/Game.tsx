@@ -72,6 +72,7 @@ export const Game: React.FC = () => {
     return state.currentMap ? (
       <Map
         playerPosition={state.playerPosition}
+        fogOfWar={true}
         moveDirection={state.moveDirection}
         tiles={state.currentMap}
         shouldPlayerAnimate={state.shouldPlayerAnimate}

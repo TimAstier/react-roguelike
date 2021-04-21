@@ -4,7 +4,15 @@ import styled from 'styled-components';
 import { CELL_WIDTH_IN_PIXELS } from '../constants/config';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
+import { Visibility } from '../typings/visibility';
+import { lightenDarkenColor } from '../utils/ligntenDarkenColor';
 import { Player } from './Player';
+
+const mapVisibilityToModifier: { [key in Visibility]: number } = {
+  clear: 0,
+  dim: -100,
+  dark: -300,
+};
 
 interface StylingProps {
   backgroundColor: string;
@@ -26,9 +34,16 @@ interface Props {
   moveDirection: MoveDirection;
   tile: CellTile;
   shouldPlayerAnimate: boolean;
+  visibility: Visibility;
 }
 
-const Cell: React.FC<Props> = ({ content, moveDirection, tile, shouldPlayerAnimate }) => {
+const Cell: React.FC<Props> = ({
+  content,
+  moveDirection,
+  tile,
+  shouldPlayerAnimate,
+  visibility,
+}) => {
   const renderContent = () => {
     if (content === 'Player') {
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
@@ -36,7 +51,10 @@ const Cell: React.FC<Props> = ({ content, moveDirection, tile, shouldPlayerAnima
     return null;
   };
 
-  const backgroundColor = tile === ' ' ? 'white' : 'black';
+  const visibilityModifier = mapVisibilityToModifier[visibility];
+
+  const backgroundColor =
+    tile === ' ' ? lightenDarkenColor('#ffffff', visibilityModifier) : 'rgb(0,0,0,1)';
 
   return <Wrapper backgroundColor={backgroundColor}>{renderContent()}</Wrapper>;
 };
