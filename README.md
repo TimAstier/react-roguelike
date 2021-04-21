@@ -1,7 +1,7 @@
 <div align="center">
 <h1>React RPG game</h1>
 
-<p>A RPG game built with TypeScript, React and Redux.</p>
+<p>A RPG game built with React and TypeScript.</p>
 <p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
 </div>
 
@@ -50,7 +50,6 @@ See [ROADMAP](ROADMAP.md).
 ## Built with
 
 - [react](https://reactjs.org/) - a JavaScript library for building user interfaces
-- [redux](https://redux.js.org/) - a predictable state container for JavaScript apps
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
 - [TypeScript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
 

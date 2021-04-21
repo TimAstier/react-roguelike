@@ -1,10 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED, ANIMATION_STEPS } from '../constants/config';
 import { MoveDirection } from '../typings/moveDirection';
-import { ReduxState } from '../typings/reduxState';
 
 const mapMoveDirectionToAngle = {
   Left: -90,
@@ -34,17 +32,12 @@ const Front = styled.div`
   margin-right: auto;
 `;
 
-interface StateProps {
+interface Props {
+  moveDirection: MoveDirection;
   shouldPlayerAnimate: boolean;
 }
 
-interface OwnProps {
-  moveDirection: MoveDirection;
-}
-
-type Props = StateProps & OwnProps;
-
-const Player: React.FC<Props> = ({ moveDirection, shouldPlayerAnimate }) => {
+export const Player: React.FC<Props> = ({ moveDirection, shouldPlayerAnimate }) => {
   const animation = shouldPlayerAnimate
     ? `move${moveDirection} ${ANIMATION_SPEED / 1000}s steps(${ANIMATION_STEPS})`
     : undefined;
@@ -55,9 +48,3 @@ const Player: React.FC<Props> = ({ moveDirection, shouldPlayerAnimate }) => {
     </Wrapper>
   );
 };
-
-const mapStateToProps = (state: ReduxState): StateProps => ({
-  shouldPlayerAnimate: state.game.shouldPlayerAnimate,
-});
-
-export default connect(mapStateToProps)(Player);

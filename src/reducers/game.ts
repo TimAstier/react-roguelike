@@ -1,4 +1,4 @@
-import { Reducer } from 'redux';
+import { Reducer } from 'react';
 
 import { GRID_WIDTH } from '../constants/config';
 import { CellTile } from '../typings/cell';
@@ -36,7 +36,7 @@ export interface GameState {
   shouldPlayerAnimate: boolean;
 }
 
-const INITIAL_STATE: GameState = {
+export const INITIAL_STATE: GameState = {
   currentMap: null,
   moveDirection: 'Right',
   playerPosition: [0, 0],
@@ -121,7 +121,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
   }
 };
 
-export const game: Reducer<any, GameAction> = (state = INITIAL_STATE, action: GameAction) => {
+export const game: Reducer<GameState, GameAction> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
       return reduceMovePlayer(state, action.direction);

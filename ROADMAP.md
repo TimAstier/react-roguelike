@@ -3,7 +3,6 @@
 - [x] Create basic grid
 - [x] Move with arrow keys
 - [x] Smooth move animation
-- [x] Add Redux to the project
 - [x] Add Prettier
 - [x] Live demo with auto-deploy when merge into master
 - [x] Debounce keypress handler
@@ -13,7 +12,6 @@
 - [x] Add CONRIBUTING file and @all-contributors bot
 - [x] Fixed viewport and moving background
 - [x] Walls
-- [ ] Remove redux
 - [ ] Fog of war
 - [ ] NPCs
 - [ ] PlayerProfile component

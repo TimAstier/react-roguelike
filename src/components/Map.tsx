@@ -30,9 +30,10 @@ interface Props {
   moveDirection: MoveDirection;
   playerPosition: Position;
   tiles: CellTile[][];
+  shouldPlayerAnimate: boolean;
 }
 
-const Map: React.FC<Props> = ({ moveDirection, playerPosition, tiles }) => {
+const Map: React.FC<Props> = ({ moveDirection, playerPosition, tiles, shouldPlayerAnimate }) => {
   const createMapContent = () => {
     const mapContent: CellData[][] = [];
     for (let i = 0; i < GRID_WIDTH; i += 1) {
@@ -58,6 +59,7 @@ const Map: React.FC<Props> = ({ moveDirection, playerPosition, tiles }) => {
             content={column.content}
             moveDirection={moveDirection}
             tile={column.tile}
+            shouldPlayerAnimate={shouldPlayerAnimate}
           />
         );
       });
