@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
 import maps from '../data/maps';
 import { gameActions } from '../redux/game';
+import { CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { ReduxState } from '../typings/reduxState';
@@ -34,18 +35,30 @@ const mapKeyCodeToDirection = (keyCode: number): MoveDirection | undefined => {
 };
 
 interface StateProps {
+  currentMap: CellTile[][] | null;
   moveDirection: MoveDirection;
   playerPosition: Position;
 }
 
 interface DispatchProps {
-  movePlayer: (direction: MoveDirection) => void;
+  movePlayer: typeof gameActions.movePlayer;
+  setCurrentMap: typeof gameActions.setCurrentMap;
 }
 
 type Props = StateProps & DispatchProps;
 
-const Game: React.FC<Props> = ({ moveDirection, movePlayer, playerPosition }) => {
+const Game: React.FC<Props> = ({
+  currentMap,
+  moveDirection,
+  movePlayer,
+  playerPosition,
+  setCurrentMap,
+}) => {
   const lastMoveDate = useRef(Date.now());
+
+  useEffect(() => {
+    setCurrentMap(maps.intro);
+  }, [setCurrentMap]);
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -76,23 +89,24 @@ const Game: React.FC<Props> = ({ moveDirection, movePlayer, playerPosition }) =>
     };
   }, [movePlayer]);
 
-  return (
-    <Viewport>
-      <Map playerPosition={playerPosition} moveDirection={moveDirection} tiles={maps.intro} />
-    </Viewport>
-  );
+  const renderGameContent = () => {
+    return currentMap ? (
+      <Map playerPosition={playerPosition} moveDirection={moveDirection} tiles={currentMap} />
+    ) : null;
+  };
+
+  return <Viewport>{renderGameContent()}</Viewport>;
 };
 
 const mapStateToProps = (state: ReduxState) => ({
+  currentMap: state.game.currentMap,
   moveDirection: state.game.moveDirection,
   playerPosition: state.game.playerPosition,
 });
 
 const mapDispatchToProps = {
   movePlayer: gameActions.movePlayer,
+  setCurrentMap: gameActions.setCurrentMap,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

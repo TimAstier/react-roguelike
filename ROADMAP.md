@@ -12,11 +12,12 @@
 - [x] Setup Circle CI
 - [x] Add CONRIBUTING file and @all-contributors bot
 - [x] Fixed viewport and moving background
+- [x] Walls
+- [ ] Remove redux
 - [ ] Fog of war
-- [ ] Walls
 - [ ] NPCs
 - [ ] PlayerProfile component
 - [ ] AdventureLogs component
-- [ ] Enter other maps
+- [ ] Enter other maps or rooms
 - [ ] Monsters and attacks
 - [ ] Add sound manager (use Howler)

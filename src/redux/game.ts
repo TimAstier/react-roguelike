@@ -1,135 +1,133 @@
-import { AnyAction } from 'redux';
+import { Reducer } from 'redux';
 
 import { GRID_WIDTH } from '../constants/config';
+import { CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 
-// TYPES
+// ACTIONS
 
-const MOVE_PLAYER = '@game/MOVE_PLAYER';
+export type GameAction =
+  | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
+  | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellTile[][] };
+
+const movePlayer = (direction: MoveDirection): GameAction => ({
+  type: '@@GAME/MOVE_PLAYER',
+  direction,
+});
+
+const setCurrentMap = (currentMap: CellTile[][]): GameAction => ({
+  type: '@@GAME/SET_CURRENT_MAP',
+  currentMap,
+});
+
+export const gameActions = {
+  movePlayer,
+  setCurrentMap,
+};
 
 // INITIAL_STATE
 
 export interface GameState {
+  currentMap: CellTile[][] | null;
   moveDirection: MoveDirection;
   playerPosition: Position;
   playerPreviousPosition: Position;
+  shouldPlayerAnimate: boolean;
 }
 
 const INITIAL_STATE: GameState = {
+  currentMap: null,
   moveDirection: 'Right',
   playerPosition: [0, 0],
   playerPreviousPosition: [0, 0],
+  shouldPlayerAnimate: false,
 };
 
 // REDUCER
 
-const reduceMovePlayer = (state = INITIAL_STATE, direction: MoveDirection) => {
-  switch (direction) {
+const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) => {
+  let nextTileX: number;
+  let nextTileY: number;
+  let nextTile: CellTile;
+
+  if (state.currentMap === null) {
+    return state;
+  }
+
+  const moveToNewPosition = (tile: Position) => {
+    return {
+      ...state,
+      moveDirection,
+      playerPosition: tile,
+      playerPreviousPosition: state.playerPosition,
+      shouldPlayerAnimate: true,
+    };
+  };
+
+  const moveAndStayAtSamePosition = () => ({ ...state, moveDirection, shouldPlayerAnimate: false });
+
+  switch (moveDirection) {
     case 'Left':
-      if (state.playerPosition[1] > 0) {
-        return {
-          ...state,
-          moveDirection: 'Left',
-          playerPosition: [state.playerPosition[0], state.playerPosition[1] - 1],
-          playerPreviousPosition: state.playerPosition,
-        };
+      nextTileX = state.playerPosition[0];
+      nextTileY =
+        state.playerPosition[1] > 0 ? state.playerPosition[1] - 1 : state.playerPosition[1];
+      nextTile = state.currentMap[nextTileX][nextTileY];
+
+      if (state.playerPosition[1] > 0 && nextTile !== 'X') {
+        return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return {
-        ...state,
-        moveDirection: 'Left',
-      };
+      return moveAndStayAtSamePosition();
+
     case 'Right':
-      if (state.playerPosition[1] < GRID_WIDTH - 1) {
-        return {
-          moveDirection: 'Right',
-          playerPosition: [state.playerPosition[0], state.playerPosition[1] + 1],
-          playerPreviousPosition: state.playerPosition,
-        };
+      nextTileX = state.playerPosition[0];
+      nextTileY =
+        state.playerPosition[1] < GRID_WIDTH
+          ? state.playerPosition[1] + 1
+          : state.playerPosition[1];
+      nextTile = state.currentMap[nextTileX][nextTileY];
+
+      if (state.playerPosition[1] < GRID_WIDTH - 1 && nextTile !== 'X') {
+        return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return {
-        ...state,
-        moveDirection: 'Right',
-      };
+      return moveAndStayAtSamePosition();
+
     case 'Up':
-      if (state.playerPosition[0] > 0) {
-        return {
-          moveDirection: 'Up',
-          playerPosition: [state.playerPosition[0] - 1, state.playerPosition[1]],
-          playerPreviousPosition: state.playerPosition,
-        };
+      nextTileX =
+        state.playerPosition[0] > 0 ? state.playerPosition[0] - 1 : state.playerPosition[0];
+      nextTileY = state.playerPosition[1];
+      nextTile = state.currentMap[nextTileX][nextTileY];
+
+      if (state.playerPosition[0] > 0 && nextTile !== 'X') {
+        return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return {
-        ...state,
-        moveDirection: 'Up',
-      };
+      return moveAndStayAtSamePosition();
+
     case 'Down':
-      if (state.playerPosition[0] < GRID_WIDTH - 1) {
-        return {
-          moveDirection: 'Down',
-          playerPosition: [state.playerPosition[0] + 1, state.playerPosition[1]],
-          playerPreviousPosition: state.playerPosition,
-        };
+      nextTileX =
+        state.playerPosition[0] < GRID_WIDTH - 1
+          ? state.playerPosition[0] + 1
+          : state.playerPosition[0];
+      nextTileY = state.playerPosition[1];
+      nextTile = state.currentMap[nextTileX][nextTileY];
+
+      if (state.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== 'X') {
+        return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return {
-        ...state,
-        moveDirection: 'Down',
-      };
+      return moveAndStayAtSamePosition();
+
     default:
       return state;
   }
 };
 
-export default function(state = INITIAL_STATE, action: AnyAction) {
+export const game: Reducer<any, GameAction> = (state = INITIAL_STATE, action: GameAction) => {
   switch (action.type) {
-    case MOVE_PLAYER:
-      return reduceMovePlayer(state, action.payload);
+    case '@@GAME/MOVE_PLAYER':
+      return reduceMovePlayer(state, action.direction);
+    case '@@GAME/SET_CURRENT_MAP':
+      return { ...state, currentMap: action.currentMap };
     default:
       return INITIAL_STATE;
   }
-}
-
-// ACTIONS
-
-const movePlayer = (direction: MoveDirection) => ({
-  type: MOVE_PLAYER,
-  payload: direction,
-});
-
-export const gameActions = {
-  movePlayer,
-};
-
-// SELECTORS
-
-const getShouldPlayerAnimate = (state: GameState) => {
-  if (state.moveDirection === 'Left' && state.playerPosition[1] === 0) {
-    if (state.playerPreviousPosition[1] === 1) {
-      return true;
-    }
-    return false;
-  }
-  if (state.moveDirection === 'Right' && state.playerPosition[1] === GRID_WIDTH - 1) {
-    if (state.playerPreviousPosition[1] === GRID_WIDTH - 2) {
-      return true;
-    }
-    return false;
-  }
-  if (state.moveDirection === 'Up' && state.playerPosition[0] === 0) {
-    if (state.playerPreviousPosition[0] === 1) {
-      return true;
-    }
-    return false;
-  }
-  if (state.moveDirection === 'Down' && state.playerPosition[0] === GRID_WIDTH - 1) {
-    if (state.playerPreviousPosition[0] === GRID_WIDTH - 2) {
-      return true;
-    }
-    return false;
-  }
-  return true;
-};
-
-export const gameSelectors = {
-  getShouldPlayerAnimate,
 };

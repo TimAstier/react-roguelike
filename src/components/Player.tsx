@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED, ANIMATION_STEPS } from '../constants/config';
-import { gameSelectors } from '../redux/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { ReduxState } from '../typings/reduxState';
 
@@ -58,7 +57,7 @@ const Player: React.FC<Props> = ({ moveDirection, shouldPlayerAnimate }) => {
 };
 
 const mapStateToProps = (state: ReduxState): StateProps => ({
-  shouldPlayerAnimate: gameSelectors.getShouldPlayerAnimate(state.game),
+  shouldPlayerAnimate: state.game.shouldPlayerAnimate,
 });
 
 export default connect(mapStateToProps)(Player);
