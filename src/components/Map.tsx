@@ -61,7 +61,9 @@ const Map: React.FC<Props> = ({
     return createMapContent().map((row, posX) => {
       return row.map((column, posY) => {
         const position = `${posX}-${posY}`;
-        const visibility = fogOfWar ? getVisibility({ posX, posY, playerPosition }) : 'clear';
+        const visibility = fogOfWar
+          ? getVisibility({ posX, posY, playerPosition, tiles })
+          : 'clear';
         return (
           <Cell
             visibility={visibility}

@@ -1,4 +1,4 @@
-export const ANIMATION_SPEED = 250; // ms
+export const ANIMATION_SPEED = 400; // ms
 export const ANIMATION_STEPS = 64;
 export const PAUSE_TIME_BETWEEN_MOVES = 100; // ms
 

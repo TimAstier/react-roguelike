@@ -11,7 +11,7 @@
 
 This is a hobby project to see how React can be used to create a game.
 
-_Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https://github.com/ASteinheiser/react-rpg.com)._
+_Inspired by [the Danger Crew](https://thedangercrew.com/), [react-rpg](https://github.com/ASteinheiser/react-rpg.com), [rogue](https://playclassic.games/games/role-playing-dos-games-online/play-rogue-online/play/)._
 
 ## Contributing
 
@@ -46,6 +46,11 @@ https://react-redux-rpg.herokuapp.com
 ## Roadmap
 
 See [ROADMAP](ROADMAP.md).
+
+## References
+
+- [Red Blob Games](https://www.redblobgames.com/) - interactive visual explanations of math and algorithms
+  - [Line drawing on a grid](https://www.redblobgames.com/grids/line-drawing.html)
 
 ## Built with
 

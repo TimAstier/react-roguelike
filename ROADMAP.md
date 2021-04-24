@@ -13,7 +13,7 @@
 - [x] Fixed viewport and moving background
 - [x] Walls
 - [x] Fog of war
-- [ ] Hide cells that are hidden behind walls in fogOfWar
+- [x] Hide cells that are hidden behind walls in fogOfWar
 - [ ] NPCs
 - [ ] Inventory component
 - [ ] AdventureLogs component
