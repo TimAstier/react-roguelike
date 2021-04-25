@@ -51,6 +51,13 @@ See [ROADMAP](ROADMAP.md).
 
 - [Red Blob Games](https://www.redblobgames.com/) - interactive visual explanations of math and algorithms
   - [Line drawing on a grid](https://www.redblobgames.com/grids/line-drawing.html)
+- [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/#imports) - react hook and audio-related tips and resources
+
+## Resources
+
+- [open-game-art.org](opengameart.org)
+  - [rpg-sound-pack](https://opengameart.org/content/rpg-sound-pack)
+- [game-icons.net](https://game-icons.net/)
 
 ## Built with
 
