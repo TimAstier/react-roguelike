@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useSound from 'use-sound';
 
-import cristalCave from './assets/music/cristal-cave-song.mp3';
+import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
 import { Game } from './components/Game';
 import { useDetectUserInput } from './hooks/useDetectUserInput';
 
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 
 export const App: React.FC = () => {
   const soundOptions: UseCustomSoundOptions = { loop: true, volume: 0.1 };
-  const [play] = useSound(cristalCave, soundOptions);
+  const [play] = useSound(crystalCaveSong, soundOptions);
   const didUserInput = useDetectUserInput();
 
   React.useEffect(() => {

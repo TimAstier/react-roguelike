@@ -3,7 +3,7 @@ import React from 'react';
 // Since Chrome disables auto play until user has interacted with window,
 // we can only load music only after user has clicked or pressed a key
 
-export const useDetectUserInput = () => {
+export const useDetectUserInput = (): boolean => {
   const [didUserInput, setDidUserInput] = React.useState(false);
 
   const handleKeyPress = () => {

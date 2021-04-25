@@ -65,6 +65,10 @@ See [ROADMAP](ROADMAP.md).
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
 - [TypeScript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
 
+## Credits
+
+- Music from Pixelsphere.org / The Cynic Project: https://opengameart.org/content/crystal-cave-song18
+
 ## License
 
 This project is licensed under the MIT License.  
