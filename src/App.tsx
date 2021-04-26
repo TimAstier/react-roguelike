@@ -33,13 +33,17 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const App: React.FC = () => {
+interface Props {
+  withBackgroundMusic: boolean;
+}
+
+export const App: React.FC<Props> = (props) => {
   const soundOptions: UseCustomSoundOptions = { loop: true, volume: 0.1 };
   const [play] = useSound(crystalCaveSong, soundOptions);
   const didUserInput = useDetectUserInput();
 
   React.useEffect(() => {
-    if (didUserInput) {
+    if (didUserInput && props.withBackgroundMusic) {
       play();
     }
   }, [didUserInput]);

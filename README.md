@@ -52,12 +52,22 @@ See [ROADMAP](ROADMAP.md).
 - [Red Blob Games](https://www.redblobgames.com/) - interactive visual explanations of math and algorithms
   - [Line drawing on a grid](https://www.redblobgames.com/grids/line-drawing.html)
 - [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/#imports) - react hook and audio-related tips and resources
+- [RoguelikeDevResources](https://github.com/marukrap/RoguelikeDevResources)
+- [Herbert Wolverson - Procedural Map Generation Techniques](https://www.youtube.com/watch?v=TlLIOgWYVpI)
+- [Brian Walker - Procedural level design in Brogue and beyond](https://www.youtube.com/watch?v=Uo9-IcHhq_w)
+- [ROguelike Toolkit in JavaScript](https://github.com/ondras/rot.js)
+- [Brogue](https://sites.google.com/site/broguegame/)
 
 ## Resources
 
 - [open-game-art.org](opengameart.org)
   - [rpg-sound-pack](https://opengameart.org/content/rpg-sound-pack)
+  - https://opengameart.org/content/roguelikerpg-items
 - [game-icons.net](https://game-icons.net/)
+
+## Research
+
+- Dijkstra Maps
 
 ## Built with
 

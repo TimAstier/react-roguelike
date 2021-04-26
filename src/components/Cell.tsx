@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(p: StylingProps) => p.backgroundColor};
+  font-size: 20px;
 `;
 
 interface Props {
@@ -48,7 +49,7 @@ const Cell: React.FC<Props> = ({
     if (content === 'Player') {
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
-    return null;
+    return '.';
   };
 
   const visibilityModifier = mapVisibilityToModifier[visibility];
