@@ -73,7 +73,8 @@ See [ROADMAP](ROADMAP.md).
 
 - [react](https://reactjs.org/) - a JavaScript library for building user interfaces
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
-- [TypeScript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
+- [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
 
 ## Credits
 
