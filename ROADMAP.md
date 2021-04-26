@@ -22,3 +22,13 @@
 - [ ] Enter other maps or rooms
 - [ ] Monsters and attacks
 - [ ] Use requestAnimationFrame. See for example [this code](https://github.com/KilroggD/rpg-react-redux/blob/master/src/tile-view/GameLoop.js) and [explanations](https://levelup.gitconnected.com/rpg-game-with-react-redux-html5-part-1-build-a-tile-map-9144fd867830), or [this code](https://github.com/ASteinheiser/react-rpg.com/blob/edd9d6f2af131822f97b3b49eb91696ec5e3f497/src/features/player/index.js).
+- [ ] Player death
+- [ ] HP and nutrition
+- [ ] Active conditions
+- [ ] Atmosphere texts (hit a wall).
+- [ ] Rest
+- [ ] Environment: grass, water, plants...
+- [ ] Throw items
+- [ ] Keyboard shortcuts
+- [ ] Player stats
+- [ ] Remember visibility of explored cells
