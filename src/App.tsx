@@ -31,6 +31,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: lightgrey;
   height: 100%;
+  font-family: UglyTerminal;
 `;
 
 interface Props {
