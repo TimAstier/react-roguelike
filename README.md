@@ -69,6 +69,10 @@ See [ROADMAP](ROADMAP.md).
 ## Research
 
 - Dijkstra Maps
+- http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps
+- http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized
+- https://www.redblobgames.com/pathfinding/tower-defense/
+- [A\* and Dijkstra](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
 
 ## Built with
 
