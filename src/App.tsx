@@ -2,11 +2,13 @@ import './App.css';
 
 import { HowlOptions } from 'howler';
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import useSound from 'use-sound';
 
 import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
 import { Game } from './components/Game';
+import { MapGenerator } from './components/MapGenerator';
 import { useDetectUserInput } from './hooks/useDetectUserInput';
 
 const Wrapper = styled.div`
@@ -39,10 +41,19 @@ export const App: React.FC = () => {
 
   return (
     <Wrapper>
-      <Game
-        withBackgroundMusic={withBackgroundMusic}
-        setWithBackgroundMusic={setWithBackgroundMusic}
-      />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Game
+              withBackgroundMusic={withBackgroundMusic}
+              setWithBackgroundMusic={setWithBackgroundMusic}
+            />
+          </Route>
+          <Route exact path="/pcg">
+            <MapGenerator />
+          </Route>
+        </Switch>
+      </Router>
     </Wrapper>
   );
 };

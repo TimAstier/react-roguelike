@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
-import maps from '../data/maps';
+import { generateMap } from '../pcg/generateMap';
 import { game } from '../reducers';
 import { gameActions, INITIAL_STATE } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
@@ -63,7 +63,8 @@ export const Game: React.FC<Props> = (props) => {
   const lastMoveDate = useRef(Date.now());
 
   useEffect(() => {
-    dispatch(gameActions.setCurrentMap(maps.intro));
+    const map = generateMap();
+    dispatch(gameActions.setCurrentMap(map));
   }, []);
 
   useEffect(() => {
@@ -98,6 +99,7 @@ export const Game: React.FC<Props> = (props) => {
   const renderGameContent = () => {
     return state.currentMap ? (
       <Map
+        inViewport={true}
         playerPosition={state.playerPosition}
         fogOfWar={true}
         moveDirection={state.moveDirection}
