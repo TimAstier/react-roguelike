@@ -39,8 +39,8 @@ export interface GameState {
 export const INITIAL_STATE: GameState = {
   currentMap: null,
   moveDirection: 'Right',
-  playerPosition: [4, 1],
-  playerPreviousPosition: [4, 1],
+  playerPosition: [4, 4],
+  playerPreviousPosition: [4, 4],
   shouldPlayerAnimate: false,
 };
 

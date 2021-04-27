@@ -59,13 +59,16 @@ const Cell: React.FC<Props> = ({
     if (tile === 'X') {
       return '#';
     }
+    if (tile === ' ') {
+      return '';
+    }
     return '.';
   };
 
   const visibilityModifier = mapVisibilityToModifier[visibility];
 
   const backgroundColor =
-    tile === ' ' ? lightenDarkenColor('#ffffff', visibilityModifier) : 'rgb(0,0,0,1)';
+    tile === '.' ? lightenDarkenColor('#ffffff', visibilityModifier) : 'rgb(0,0,0,1)';
 
   return (
     <Wrapper

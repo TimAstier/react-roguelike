@@ -19,6 +19,8 @@ interface StylingProps {
 const Wrapper = styled.div<StylingProps>`
   width: ${(p) => `${p.cellWidth * GRID_WIDTH}px`};
   height: ${(p) => `${p.cellWidth * GRID_HEIGHT}px`};
+  min-width: ${(p) => `${p.cellWidth * GRID_WIDTH}px`};
+  min-height: ${(p) => `${p.cellWidth * GRID_HEIGHT}px`};
   display: flex;
   flex-wrap: wrap;
   border: solid 1px black;

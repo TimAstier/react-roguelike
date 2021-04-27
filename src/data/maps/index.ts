@@ -1,7 +1,7 @@
-import { intro } from './intro';
+import { testMap } from './testMap';
 
 const maps = {
-  intro,
+  testMap,
 };
 
 export default maps;
