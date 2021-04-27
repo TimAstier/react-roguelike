@@ -34,24 +34,32 @@ const Wrapper = styled.div`
   font-family: UglyTerminal;
 `;
 
-interface Props {
-  withBackgroundMusic: boolean;
-}
-
-export const App: React.FC<Props> = (props) => {
+export const App: React.FC = () => {
   const soundOptions: UseCustomSoundOptions = { loop: true, volume: 0.1 };
-  const [play] = useSound(crystalCaveSong, soundOptions);
+  const [play, { stop }] = useSound(crystalCaveSong, soundOptions);
   const didUserInput = useDetectUserInput();
+  const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(false);
 
   React.useEffect(() => {
-    if (didUserInput && props.withBackgroundMusic) {
+    if (didUserInput && withBackgroundMusic) {
       play();
     }
   }, [didUserInput]);
 
+  React.useEffect(() => {
+    if (withBackgroundMusic === false) {
+      stop();
+    } else {
+      play();
+    }
+  }, [withBackgroundMusic]);
+
   return (
     <Wrapper>
-      <Game />
+      <Game
+        withBackgroundMusic={withBackgroundMusic}
+        setWithBackgroundMusic={setWithBackgroundMusic}
+      />
     </Wrapper>
   );
 };
