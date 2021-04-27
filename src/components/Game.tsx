@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
 import maps from '../data/maps';
@@ -7,6 +8,27 @@ import { gameActions, INITIAL_STATE } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
 import Map from './Map';
 import Viewport from './Viewport';
+
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const SideWrapper = styled.div`
+  background-color: yellow;
+  width: 200px;
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+const toggleFullScreen = () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+};
 
 const LEFT_KEYCODE = 37;
 const UP_KEYCODE = 38;
@@ -31,7 +53,12 @@ const mapKeyCodeToDirection = (keyCode: number): MoveDirection | undefined => {
   }
 };
 
-export const Game: React.FC = () => {
+interface Props {
+  withBackgroundMusic: boolean;
+  setWithBackgroundMusic: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const Game: React.FC<Props> = (props) => {
   const [state, dispatch] = React.useReducer(game, INITIAL_STATE);
   const lastMoveDate = useRef(Date.now());
 
@@ -80,5 +107,32 @@ export const Game: React.FC = () => {
     ) : null;
   };
 
-  return <Viewport>{renderGameContent()}</Viewport>;
+  return (
+    <Wrapper>
+      <SideWrapper>
+        <p>HP: 11/50</p>
+        <p>FO: 82/90</p>
+        <p>-----</p>
+        <p>STR: 13</p>
+        <p>DEX: 14</p>
+        <p>CON: 10</p>
+        <p>INT: 11</p>
+        <p>WIS: 8</p>
+        <p>CHA: 9</p>
+        <p>-----</p>
+
+        <div style={{ cursor: 'pointer' }} onClick={() => toggleFullScreen()}>
+          FULL SCREEN
+        </div>
+        <div
+          style={{ cursor: 'pointer' }}
+          onClick={() => props.setWithBackgroundMusic(!props.withBackgroundMusic)}
+        >
+          {props.withBackgroundMusic ? 'BGM: ON' : 'BGM: OFF'}
+        </div>
+      </SideWrapper>
+      <Viewport>{renderGameContent()}</Viewport>
+      <SideWrapper>:)</SideWrapper>
+    </Wrapper>
+  );
 };

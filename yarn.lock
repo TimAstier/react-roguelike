@@ -11161,10 +11161,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-sound@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-2.0.2.tgz#664224085c9ca0f70a5ef88c9b8e33dbdd9c0768"
-  integrity sha512-e8uB1ohhMv7eTEBXMM91IcNdV3WIccx9eEi9gdIzeTbcCQsnfkxoHIjXX2jRZNt1HQ617kj6Fa/VzVZpzgTSfA==
+use-sound@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-2.1.0.tgz#af22bbba4368af3e5795a6d08f31de7466584d84"
+  integrity sha512-K5QchPxJdXOK/SS+EtRQ4XhHACTha9Pyd/azvGjNOA3/ycXgsMwG4sDp4xhtxJavgF7lCasO+M2nk7E8LqpDhQ==
   dependencies:
     howler "^2.1.3"
 

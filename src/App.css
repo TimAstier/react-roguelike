@@ -5,6 +5,11 @@ body,
   overflow: hidden;
 }
 
+@font-face {
+  font-family: 'UglyTerminal';
+  src: local('UglyTerminal'), url(./assets/fonts/ugly-terminal-8.ttf) format('truetype');
+}
+
 @keyframes moveLeft {
   0% {
     transform: translate3d(45px, 0, 0) rotate(-90deg);

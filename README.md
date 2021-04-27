@@ -79,6 +79,7 @@ See [ROADMAP](ROADMAP.md).
 ## Credits
 
 - Music from Pixelsphere.org / The Cynic Project: https://opengameart.org/content/crystal-cave-song18
+- Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/)
 
 ## License
 
