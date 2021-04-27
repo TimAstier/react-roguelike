@@ -1,6 +1,6 @@
 import { Reducer } from 'react';
 
-import { GRID_WIDTH } from '../constants/config';
+import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -39,8 +39,8 @@ export interface GameState {
 export const INITIAL_STATE: GameState = {
   currentMap: null,
   moveDirection: 'Right',
-  playerPosition: [0, 0],
-  playerPreviousPosition: [0, 0],
+  playerPosition: [4, 1],
+  playerPreviousPosition: [4, 1],
   shouldPlayerAnimate: false,
 };
 
@@ -69,49 +69,50 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
 
   switch (moveDirection) {
     case 'Left':
-      nextTileX = state.playerPosition[0];
-      nextTileY =
-        state.playerPosition[1] > 0 ? state.playerPosition[1] - 1 : state.playerPosition[1];
-      nextTile = state.currentMap[nextTileX][nextTileY];
-
-      if (state.playerPosition[1] > 0 && nextTile !== 'X') {
-        return moveToNewPosition([nextTileX, nextTileY]);
-      }
-      return moveAndStayAtSamePosition();
-
-    case 'Right':
-      nextTileX = state.playerPosition[0];
-      nextTileY =
-        state.playerPosition[1] < GRID_WIDTH
-          ? state.playerPosition[1] + 1
-          : state.playerPosition[1];
-      nextTile = state.currentMap[nextTileX][nextTileY];
-
-      if (state.playerPosition[1] < GRID_WIDTH - 1 && nextTile !== 'X') {
-        return moveToNewPosition([nextTileX, nextTileY]);
-      }
-      return moveAndStayAtSamePosition();
-
-    case 'Up':
       nextTileX =
         state.playerPosition[0] > 0 ? state.playerPosition[0] - 1 : state.playerPosition[0];
       nextTileY = state.playerPosition[1];
-      nextTile = state.currentMap[nextTileX][nextTileY];
+      nextTile = state.currentMap[nextTileY][nextTileX];
 
       if (state.playerPosition[0] > 0 && nextTile !== 'X') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
 
-    case 'Down':
+    case 'Right':
       nextTileX =
-        state.playerPosition[0] < GRID_WIDTH - 1
+        state.playerPosition[0] < GRID_WIDTH
           ? state.playerPosition[0] + 1
           : state.playerPosition[0];
       nextTileY = state.playerPosition[1];
-      nextTile = state.currentMap[nextTileX][nextTileY];
+
+      nextTile = state.currentMap[nextTileY][nextTileX];
 
       if (state.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== 'X') {
+        return moveToNewPosition([nextTileX, nextTileY]);
+      }
+      return moveAndStayAtSamePosition();
+
+    case 'Up':
+      nextTileX = state.playerPosition[0];
+      nextTileY =
+        state.playerPosition[1] > 0 ? state.playerPosition[1] - 1 : state.playerPosition[1];
+      nextTile = state.currentMap[nextTileY][nextTileX];
+
+      if (state.playerPosition[1] > 0 && nextTile !== 'X') {
+        return moveToNewPosition([nextTileX, nextTileY]);
+      }
+      return moveAndStayAtSamePosition();
+
+    case 'Down':
+      nextTileX = state.playerPosition[0];
+      nextTileY =
+        state.playerPosition[1] < GRID_HEIGHT - 1
+          ? state.playerPosition[1] + 1
+          : state.playerPosition[1];
+      nextTile = state.currentMap[nextTileY][nextTileX];
+
+      if (state.playerPosition[1] < GRID_HEIGHT - 1 && nextTile !== 'X') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();

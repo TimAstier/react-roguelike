@@ -17,6 +17,7 @@ interface StylingProps {
   backgroundColor: string;
   cellWidth: number;
   inViewport: boolean;
+  color: string;
 }
 
 const Wrapper = styled.div<StylingProps>`
@@ -29,6 +30,7 @@ const Wrapper = styled.div<StylingProps>`
   align-items: center;
   background-color: ${(p) => p.backgroundColor};
   font-size: ${(p) => (p.inViewport ? '20px' : '8px')};
+  color: ${(p) => p.color};
 `;
 
 interface Props {
@@ -54,6 +56,9 @@ const Cell: React.FC<Props> = ({
     if (content === 'Player') {
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
+    if (tile === 'X') {
+      return '#';
+    }
     return '.';
   };
 
@@ -63,7 +68,12 @@ const Cell: React.FC<Props> = ({
     tile === ' ' ? lightenDarkenColor('#ffffff', visibilityModifier) : 'rgb(0,0,0,1)';
 
   return (
-    <Wrapper backgroundColor={backgroundColor} cellWidth={cellWidth} inViewport={inViewport}>
+    <Wrapper
+      backgroundColor={backgroundColor}
+      cellWidth={cellWidth}
+      inViewport={inViewport}
+      color={tile === 'X' ? 'white' : 'black'}
+    >
       {renderContent()}
     </Wrapper>
   );

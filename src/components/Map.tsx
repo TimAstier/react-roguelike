@@ -17,8 +17,8 @@ interface StylingProps {
 }
 
 const Wrapper = styled.div<StylingProps>`
-  width: ${(p) => `${p.cellWidth * GRID_HEIGHT}px`};
-  height: ${(p) => `${p.cellWidth * GRID_WIDTH}px`};
+  width: ${(p) => `${p.cellWidth * GRID_WIDTH}px`};
+  height: ${(p) => `${p.cellWidth * GRID_HEIGHT}px`};
   display: flex;
   flex-wrap: wrap;
   border: solid 1px black;
@@ -50,14 +50,14 @@ const Map: React.FC<Props> = ({
 
   const createMapContent = () => {
     const mapContent: CellData[][] = [];
-    for (let i = 0; i < GRID_WIDTH; i += 1) {
-      mapContent[i] = [];
-      for (let j = 0; j < GRID_HEIGHT; j += 1) {
-        mapContent[i][j] = { content: 0, tile: ' ' };
-        mapContent[i][j].tile = tiles[i][j];
+    for (let j = 0; j < GRID_HEIGHT; j += 1) {
+      mapContent[j] = [];
+      for (let i = 0; i < GRID_WIDTH; i += 1) {
+        mapContent[j][i] = { content: 0, tile: ' ' };
+        mapContent[j][i].tile = tiles[j][i];
         if (i === playerPosition[0] && j === playerPosition[1]) {
           if (inViewport) {
-            mapContent[i][j].content = 'Player';
+            mapContent[j][i].content = 'Player';
           }
         }
       }
@@ -70,7 +70,12 @@ const Map: React.FC<Props> = ({
       return row.map((column, posY) => {
         const position = `${posX}-${posY}`;
         const visibility = fogOfWar
-          ? getVisibility({ posX, posY, playerPosition, tiles })
+          ? getVisibility({
+              posX,
+              posY,
+              playerPosition: [playerPosition[1], playerPosition[0]], // One last weird thing
+              tiles,
+            })
           : 'clear';
         return (
           <Cell
@@ -88,8 +93,9 @@ const Map: React.FC<Props> = ({
     });
   };
 
-  const mapLeftPosition = (-playerPosition[1] + 5) * cellWidth;
-  const mapUpPosition = (-playerPosition[0] + 5) * cellWidth;
+  // Note: Should this logic be part of the Viewport?
+  const mapLeftPosition = (-playerPosition[0] + 5) * cellWidth;
+  const mapUpPosition = (-playerPosition[1] + 5) * cellWidth;
 
   return (
     <Wrapper
