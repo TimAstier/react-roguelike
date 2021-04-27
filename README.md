@@ -57,6 +57,7 @@ See [ROADMAP](ROADMAP.md).
 - [Brian Walker - Procedural level design in Brogue and beyond](https://www.youtube.com/watch?v=Uo9-IcHhq_w)
 - [ROguelike Toolkit in JavaScript](https://github.com/ondras/rot.js)
 - [Brogue](https://sites.google.com/site/broguegame/)
+  - [Level generation in Brogue wiki](https://brogue.fandom.com/wiki/Level_Generation)
 
 ## Resources
 
@@ -74,6 +75,7 @@ See [ROADMAP](ROADMAP.md).
 - [react](https://reactjs.org/) - a JavaScript library for building user interfaces
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
 - [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
+- [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
 - [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
 
 ## Credits

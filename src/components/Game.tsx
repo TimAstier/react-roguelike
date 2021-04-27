@@ -98,6 +98,7 @@ export const Game: React.FC<Props> = (props) => {
   const renderGameContent = () => {
     return state.currentMap ? (
       <Map
+        inViewport={true}
         playerPosition={state.playerPosition}
         fogOfWar={true}
         moveDirection={state.moveDirection}
