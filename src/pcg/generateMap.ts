@@ -38,38 +38,45 @@ const placeRectangleOnMap = (map: CellTile[][], area: Area): CellTile[][] => {
 };
 
 // Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
-// Based on Binary Space Partitioning (BSP) Trees
+const getLeaves = () => {
+  // TODO: Split in a random position (not always in the middle)
+  // See: http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation
 
-// TODO: Randomize the vertical vs. horizontal split
+  const NUMBER_0F_SPLITS = 3;
+  let leaves: Area[] = [fullMap];
+  let toggle = Math.random() > 0.5 ? true : false;
 
-// TODO: Split in a random position (not always in the middle)
-// See: http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation
+  for (let i = 0; i <= NUMBER_0F_SPLITS; i++) {
+    const split = toggle ? horizontalSplitArea : verticalSplitArea;
+    toggle = !toggle;
+    leaves = [...leaves.map((leaf) => split(leaf))].flat();
+  }
+
+  return leaves;
+};
 
 export const generateMap = (): CellTile[][] => {
   // TODO: use seed as param
   // const rng = seedrandom(String(seed));
+
   // Get an empty map
   const emptyMap = createEmptyMap(GRID_WIDTH, GRID_HEIGHT);
 
-  // TODO: Refactor this
+  // Cut empty map into leaves using Binary Space Partitioning (BSP) Trees
+  const leaves = getLeaves();
 
-  const leafsA = verticalSplitArea(fullMap);
-  const leafsB = [...horizontalSplitArea(leafsA[0]), ...horizontalSplitArea(leafsA[1])];
-  const leafsC = [
-    ...verticalSplitArea(leafsB[0]),
-    ...verticalSplitArea(leafsB[1]),
-    ...verticalSplitArea(leafsB[2]),
-    ...verticalSplitArea(leafsB[3]),
-  ];
+  // Get random rooms from each leaf
+  const rooms = leaves.map((leaf) => getRandomAreaWithinArea(leaf));
 
-  // Add rectangles randomly
-  const rooms = leafsC.map((leaf) => getRandomAreaWithinArea(leaf));
-
-  // Place rectangles on the map
+  // Place rooms on the map
   let resultMap = emptyMap;
   rooms.forEach((room) => {
     resultMap = placeRectangleOnMap(resultMap, room);
   });
+
+  // TODO: Connect rooms
+
+  // TODO: Return a spawn point
 
   return resultMap;
 };
