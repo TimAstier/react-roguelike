@@ -9,7 +9,8 @@ import { Position } from '../typings/position';
 
 export type GameAction =
   | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
-  | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellTile[][] };
+  | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellTile[][] }
+  | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -21,9 +22,15 @@ const setCurrentMap = (currentMap: CellTile[][]): GameAction => ({
   currentMap,
 });
 
+const initPlayerSpawn = (playerSpawn: Position): GameAction => ({
+  type: '@@GAME/INIT_PLAYER_SPAWN',
+  playerSpawn,
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
+  initPlayerSpawn,
 };
 
 // INITIAL_STATE
@@ -39,8 +46,8 @@ export interface GameState {
 export const INITIAL_STATE: GameState = {
   currentMap: null,
   moveDirection: 'Right',
-  playerPosition: [4, 4],
-  playerPreviousPosition: [4, 4],
+  playerPosition: [0, 0],
+  playerPreviousPosition: [0, 0],
   shouldPlayerAnimate: false,
 };
 
@@ -128,6 +135,12 @@ export const game: Reducer<GameState, GameAction> = (state = INITIAL_STATE, acti
       return reduceMovePlayer(state, action.direction);
     case '@@GAME/SET_CURRENT_MAP':
       return { ...state, currentMap: action.currentMap };
+    case '@@GAME/INIT_PLAYER_SPAWN':
+      return {
+        ...state,
+        playerPosition: action.playerSpawn,
+        playerPreviousPosition: action.playerSpawn,
+      };
     default:
       return INITIAL_STATE;
   }

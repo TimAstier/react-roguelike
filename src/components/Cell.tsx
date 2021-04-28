@@ -57,10 +57,13 @@ const Cell: React.FC<Props> = ({
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
     if (tile === 'X') {
-      return '#';
+      return ''; // return '#';
     }
     if (tile === ' ') {
       return '';
+    }
+    if (tile === '@') {
+      return '@';
     }
     return '.';
   };
@@ -68,7 +71,9 @@ const Cell: React.FC<Props> = ({
   const visibilityModifier = mapVisibilityToModifier[visibility];
 
   const backgroundColor =
-    tile === '.' ? lightenDarkenColor('#ffffff', visibilityModifier) : 'rgb(0,0,0,1)';
+    tile === '.' || tile === '@'
+      ? lightenDarkenColor('#ffffff', visibilityModifier)
+      : 'rgb(0,0,0,1)';
 
   return (
     <Wrapper

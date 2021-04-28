@@ -1,9 +1,6 @@
 // From: https://www.redblobgames.com/grids/line-drawing.html#supercover
 
-interface Point {
-  x: number;
-  y: number;
-}
+import { Point } from '../typings/point';
 
 const diagonalDistance = (p0: Point, p1: Point) => {
   const dx = p1.x - p0.x;
