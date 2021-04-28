@@ -89,13 +89,21 @@ const connectAllLeaves = (leavesArray: Area[][], map: CellTile[][]): CellTile[][
         leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - j * 2],
         newMap
       );
+      // TODO: Refactor this and add more random connections like these
+      if (i === NUMBER_0F_SPLITS) {
+        newMap = connectLeaves(
+          leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - (j * 2 - 1)],
+          leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - j * 2],
+          newMap
+        );
+      }
     }
   }
   return newMap;
 };
 
 const generateMap = (): CellTile[][] => {
-  // TODO: use seed as param
+  // TODO: Use seed as param
   // const rng = seedrandom(String(seed));
 
   // Get an empty map
