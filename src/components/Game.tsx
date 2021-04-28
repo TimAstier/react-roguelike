@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
-import { generateMap } from '../pcg/generateMap';
+import { generateLevel } from '../pcg/generateLevel';
 import { game } from '../reducers';
 import { gameActions, INITIAL_STATE } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
@@ -63,8 +63,9 @@ export const Game: React.FC<Props> = (props) => {
   const lastMoveDate = useRef(Date.now());
 
   useEffect(() => {
-    const map = generateMap();
-    dispatch(gameActions.setCurrentMap(map));
+    const level = generateLevel();
+    dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
+    dispatch(gameActions.setCurrentMap(level.map));
   }, []);
 
   useEffect(() => {

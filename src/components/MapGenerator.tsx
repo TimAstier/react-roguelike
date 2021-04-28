@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import seedrandom from 'seedrandom';
-import { generateMap } from '../pcg/generateMap';
+import { generateLevel } from '../pcg/generateLevel';
 import { CellTile } from '../typings/cell';
 import Map from './Map';
 
@@ -12,8 +12,8 @@ export const MapGenerator: React.FC = () => {
     // We can seed the rng by providing a string to seedrandom():
     // const seed = seedrandom('hello');
     // const newMap = generateMap(String(seed()));
-    const newMap = generateMap();
-    setMap(newMap);
+    const level = generateLevel();
+    setMap(level.map);
   }, []);
 
   if (map === null) {
