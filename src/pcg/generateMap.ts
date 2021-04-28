@@ -37,34 +37,46 @@ const placeRectangleOnMap = (map: CellTile[][], area: Area): CellTile[][] => {
   return newMap;
 };
 
+// Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
+const getLeaves = () => {
+  // TODO: Split in a random position (not always in the middle)
+  // See: http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation
+
+  const NUMBER_0F_SPLITS = 3;
+  let leaves: Area[] = [fullMap];
+  let toggle = Math.random() > 0.5 ? true : false;
+
+  for (let i = 0; i <= NUMBER_0F_SPLITS; i++) {
+    const split = toggle ? horizontalSplitArea : verticalSplitArea;
+    toggle = !toggle;
+    leaves = [...leaves.map((leaf) => split(leaf))].flat();
+  }
+
+  return leaves;
+};
+
 export const generateMap = (): CellTile[][] => {
   // TODO: use seed as param
   // const rng = seedrandom(String(seed));
+
   // Get an empty map
   const emptyMap = createEmptyMap(GRID_WIDTH, GRID_HEIGHT);
 
-  // TODO: Refactor this
+  // Cut empty map into leaves using Binary Space Partitioning (BSP) Trees
+  const leaves = getLeaves();
 
-  const rectanglesA = verticalSplitArea(fullMap);
-  const rectanglesB = [
-    ...horizontalSplitArea(rectanglesA[0]),
-    ...horizontalSplitArea(rectanglesA[1]),
-  ];
-  const rectanglesC = [
-    ...verticalSplitArea(rectanglesB[0]),
-    ...verticalSplitArea(rectanglesB[1]),
-    ...verticalSplitArea(rectanglesB[2]),
-    ...verticalSplitArea(rectanglesB[3]),
-  ];
+  // Get random rooms from each leaf
+  const rooms = leaves.map((leaf) => getRandomAreaWithinArea(leaf));
 
-  // Add rectangles "randomly"
-  const areas = rectanglesC.map((rectangle) => getRandomAreaWithinArea(rectangle));
-
-  // Place rectangles on the map
+  // Place rooms on the map
   let resultMap = emptyMap;
-  areas.forEach((area) => {
-    resultMap = placeRectangleOnMap(resultMap, area);
+  rooms.forEach((room) => {
+    resultMap = placeRectangleOnMap(resultMap, room);
   });
+
+  // TODO: Connect rooms
+
+  // TODO: Return a spawn point
 
   return resultMap;
 };

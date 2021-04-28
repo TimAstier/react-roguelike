@@ -6,4 +6,4 @@ export const CELL_WIDTH_IN_PIXELS = 45;
 export const VIEWPORT_WIDTH_IN_PIXELS = 11 * CELL_WIDTH_IN_PIXELS + 1;
 
 export const GRID_WIDTH = 80; // number of cells
-export const GRID_HEIGHT = 30; // number of cells
+export const GRID_HEIGHT = 50; // number of cells

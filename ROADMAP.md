@@ -32,3 +32,4 @@
 - [ ] Keyboard shortcuts
 - [ ] Player stats
 - [ ] Remember visibility of explored cells
+- [ ] XP, AC, Money
