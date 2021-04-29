@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Visibility } from '../typings/visibility';
-import { lightenDarkenColor } from '../utils/ligntenDarkenColor';
+import { lightenDarkenColor } from '../utils/lightenDarkenColor';
 import { Player } from './Player';
 
 const mapVisibilityToModifier: { [key in Visibility]: number } = {

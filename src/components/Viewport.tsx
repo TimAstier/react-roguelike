@@ -10,6 +10,8 @@ const Wrapper = styled.div`
   background-color: black;
   border: solid 5px black;
   border-spacing: border-box;
+  border: 2px solid #6e6e6e;
+  border-radius: 5px;
 `;
 
 const Viewport: React.FC = (props) => {

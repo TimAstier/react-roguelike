@@ -6,6 +6,10 @@ import { generateLevel } from '../pcg/generateLevel';
 import { game } from '../reducers';
 import { gameActions, INITIAL_STATE } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
+import { DoubleBorders } from './DoubleBorders';
+import { EventLogs } from './EventLogs';
+import { InteractionLogs } from './InteractionLogs';
+import { Inventory } from './Inventory';
 import Map from './Map';
 import Viewport from './Viewport';
 
@@ -14,10 +18,9 @@ const Wrapper = styled.div`
 `;
 
 const SideWrapper = styled.div`
-  background-color: yellow;
-  width: 200px;
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 220px;
+  background-color: black;
+  color: white;
 `;
 
 const toggleFullScreen = () => {
@@ -111,31 +114,71 @@ export const Game: React.FC<Props> = (props) => {
   };
 
   return (
-    <Wrapper>
-      <SideWrapper>
-        <p>HP: 11/50</p>
-        <p>FO: 82/90</p>
-        <p>-----</p>
-        <p>STR: 13</p>
-        <p>DEX: 14</p>
-        <p>CON: 10</p>
-        <p>INT: 11</p>
-        <p>WIS: 8</p>
-        <p>CHA: 9</p>
-        <p>-----</p>
-
-        <div style={{ cursor: 'pointer' }} onClick={() => toggleFullScreen()}>
-          FULL SCREEN
-        </div>
-        <div
-          style={{ cursor: 'pointer' }}
-          onClick={() => props.setWithBackgroundMusic(!props.withBackgroundMusic)}
+    <div>
+      <EventLogs />
+      <Wrapper>
+        <SideWrapper
+          style={{
+            marginRight: '15px',
+            paddingRight: 5,
+            paddingLeft: 5,
+            boxSizing: 'border-box',
+          }}
         >
-          {props.withBackgroundMusic ? 'BGM: ON' : 'BGM: OFF'}
-        </div>
-      </SideWrapper>
-      <Viewport>{renderGameContent()}</Viewport>
-      <SideWrapper>:)</SideWrapper>
-    </Wrapper>
+          <DoubleBorders>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div style={{ paddingLeft: 20, paddingRight: 20 }}>
+                <p>HP: 11/50</p>
+                <p>FO: 82/90</p>
+                <p>XP: 82/90</p>
+                <p>-----</p>
+                <p>STR: 13</p>
+                <p>DEX: 14</p>
+                <p>CON: 10</p>
+                <p>INT: 11</p>
+                <p>WIS: 8</p>
+                <p>CHA: 9</p>
+                <p>-----</p>
+              </div>
+              <div style={{ height: 80, paddingLeft: 20, paddingRight: 20 }}>
+                <div
+                  style={{ cursor: 'pointer', marginTop: 17 }}
+                  onClick={() => toggleFullScreen()}
+                >
+                  FULL SCR.
+                </div>
+                <div
+                  style={{ cursor: 'pointer', marginTop: 10 }}
+                  onClick={() => props.setWithBackgroundMusic(!props.withBackgroundMusic)}
+                >
+                  {props.withBackgroundMusic ? 'BGM: ON' : 'BGM: OFF'}
+                </div>
+              </div>
+            </div>
+          </DoubleBorders>
+        </SideWrapper>
+        <Viewport>
+          {/* <DoubleBorders> */}
+          {renderGameContent()}
+          {/* </DoubleBorders> */}
+        </Viewport>
+        <SideWrapper
+          style={{
+            marginLeft: '15px',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Inventory />
+        </SideWrapper>
+      </Wrapper>
+      <InteractionLogs />
+    </div>
   );
 };
