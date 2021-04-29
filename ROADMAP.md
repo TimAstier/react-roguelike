@@ -15,12 +15,12 @@
 - [x] Fog of war
 - [x] Hide cells that are hidden behind walls in fogOfWar
 - [x] Add sound manager
+- [x] Inventory component
+- [x] "Interaction text" component
+- [x] "Events text" component
 - [ ] Improve generateLevel
 - [ ] Remember visibility of explored cells
 - [ ] Move over the map by moving Viewport
-- [ ] Inventory component
-- [ ] "Interaction text" component
-- [ ] "Events text" component
 - [ ] NPCs
 - [ ] Monsters and attacks
 - [ ] Player death
