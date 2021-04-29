@@ -63,8 +63,14 @@ See [ROADMAP](ROADMAP.md).
 
 - [open-game-art.org](opengameart.org)
   - [rpg-sound-pack](https://opengameart.org/content/rpg-sound-pack)
-  - https://opengameart.org/content/roguelikerpg-items
 - [game-icons.net](https://game-icons.net/)
+
+## 2D Art
+
+- [RPG items](https://opengameart.org/content/roguelikerpg-items)
+- [Ravenmore icons](https://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0)
+- [Upgrade from Ravenmore icons](https://opengameart.org/content/golden-items-rip-upgrade-pack)
+- [Additions to Ravenmore icons](https://opengameart.org/node/83169)
 
 ## Research
 
@@ -86,6 +92,7 @@ See [ROADMAP](ROADMAP.md).
 
 - Music from Pixelsphere.org / The Cynic Project: https://opengameart.org/content/crystal-cave-song18
 - Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/)
+- [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter).
 
 ## License
 

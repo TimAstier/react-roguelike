@@ -80,22 +80,41 @@ const connectLeaves = (leafA: Area, leafB: Area, map: CellTile[][]) => {
   return map;
 };
 
+interface ConnectAdjacentLeavesOptions {
+  leavesArray: Area[][];
+  map: CellTile[][];
+  index: number;
+  leavesDepth: number;
+}
+
+const connectAdjacentLeaves = ({
+  leavesArray,
+  map,
+  index,
+  leavesDepth,
+}: ConnectAdjacentLeavesOptions) => {
+  return connectLeaves(
+    leavesArray[leavesDepth][leavesArray[leavesDepth].length - (index - 1)],
+    leavesArray[leavesDepth][leavesArray[leavesDepth].length - index],
+    map
+  );
+};
+
 const connectAllLeaves = (leavesArray: Area[][], map: CellTile[][]): CellTile[][] => {
   let newMap = map;
   for (let i = 0; i <= NUMBER_0F_SPLITS; i++) {
     for (let j = 1; j <= 2 ** (NUMBER_0F_SPLITS - i); j++) {
-      newMap = connectLeaves(
-        leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - (j * 2 - 1)],
-        leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - j * 2],
-        newMap
-      );
-      // TODO: Refactor this and add more random connections like these
+      const options = {
+        leavesArray,
+        map: newMap,
+        index: j * 2,
+        leavesDepth: NUMBER_0F_SPLITS - i,
+      };
+      newMap = connectAdjacentLeaves(options);
       if (i === NUMBER_0F_SPLITS) {
-        newMap = connectLeaves(
-          leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - (j * 2 - 1)],
-          leavesArray[NUMBER_0F_SPLITS - i][leavesArray[NUMBER_0F_SPLITS - i].length - j * 2],
-          newMap
-        );
+        // TODO: Add more random connections like these
+        newMap = connectAdjacentLeaves(options);
+        newMap = connectAdjacentLeaves(options);
       }
     }
   }
