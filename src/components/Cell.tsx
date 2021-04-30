@@ -29,7 +29,7 @@ const Wrapper = styled.div<StylingProps>`
   justify-content: center;
   align-items: center;
   background-color: ${(p) => p.backgroundColor};
-  font-size: ${(p) => (p.inViewport ? '20px' : '8px')};
+  font-size: ${(p) => (p.inViewport ? '12px' : '8px')};
   color: ${(p) => p.color};
 `;
 

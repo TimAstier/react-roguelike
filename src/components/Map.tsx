@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED } from '../constants/config';
-import { CELL_WIDTH_IN_PIXELS, GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
+import {
+  CELL_WIDTH_IN_PIXELS,
+  GRID_HEIGHT,
+  GRID_WIDTH,
+  NUMBER_OF_CELLS_IN_VIEWPORT,
+} from '../constants/config';
 import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -96,8 +101,11 @@ const Map: React.FC<Props> = ({
   };
 
   // Note: Should this logic be part of the Viewport?
-  const mapLeftPosition = (-playerPosition[0] + 5) * cellWidth;
-  const mapUpPosition = (-playerPosition[1] + 5) * cellWidth;
+  // TODO: Depend on number of cells?
+  const mapLeftPosition =
+    (-playerPosition[0] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
+  const mapUpPosition =
+    (-playerPosition[1] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
 
   return (
     <Wrapper
