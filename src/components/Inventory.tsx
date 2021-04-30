@@ -32,7 +32,7 @@ const SlotsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 92%;
+  width: 85%;
 `;
 
 // TODO: Left arm / Right arm

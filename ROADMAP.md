@@ -20,7 +20,7 @@
 - [x] "Events text" component
 - [ ] Improve generateLevel
 - [ ] Remember visibility of explored cells
-- [ ] Move over the map by moving Viewport
+- [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
 - [ ] NPCs
 - [ ] Monsters and attacks
 - [ ] Player death

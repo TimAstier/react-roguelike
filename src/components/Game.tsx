@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 
 const SideWrapper = styled.div`
-  width: 220px;
+  width: 230px;
   background-color: black;
   color: white;
 `;
@@ -114,7 +114,7 @@ export const Game: React.FC<Props> = (props) => {
   };
 
   return (
-    <div>
+    <div style={{ userSelect: 'none' }}>
       <EventLogs />
       <Wrapper>
         <SideWrapper
@@ -163,11 +163,11 @@ export const Game: React.FC<Props> = (props) => {
             </div>
           </DoubleBorders>
         </SideWrapper>
-        <Viewport>
-          {/* <DoubleBorders> */}
-          {renderGameContent()}
-          {/* </DoubleBorders> */}
-        </Viewport>
+        <div>
+          <DoubleBorders>
+            <Viewport>{renderGameContent()}</Viewport>
+          </DoubleBorders>
+        </div>
         <SideWrapper
           style={{
             marginLeft: '15px',
