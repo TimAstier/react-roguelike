@@ -58,6 +58,7 @@ See [ROADMAP](ROADMAP.md).
 - [ROguelike Toolkit in JavaScript](https://github.com/ondras/rot.js)
 - [Brogue](https://sites.google.com/site/broguegame/)
   - [Level generation in Brogue wiki](https://brogue.fandom.com/wiki/Level_Generation)
+- [Rogueliike dev FAQ](https://www.reddit.com/r/roguelikedev/wiki/faq_friday)
 
 ## Resources
 
@@ -71,6 +72,7 @@ See [ROADMAP](ROADMAP.md).
 - [Ravenmore icons](https://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0)
 - [Upgrade from Ravenmore icons](https://opengameart.org/content/golden-items-rip-upgrade-pack)
 - [Additions to Ravenmore icons](https://opengameart.org/node/83169)
+- [Craftpix.next](https://craftpix.net/)
 
 ## Research
 

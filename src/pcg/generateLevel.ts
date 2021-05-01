@@ -4,7 +4,7 @@
 
 import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { Area } from '../typings/area';
-import { CellTile } from '../typings/cell';
+import { CellData, CellTile } from '../typings/cell';
 import { Level } from '../typings/level';
 import { findCellsInArea } from '../utils/findCellsInArea';
 import { walkGrid } from '../utils/walkGrid';
@@ -66,18 +66,20 @@ const connectLeaves = (leafA: Area, leafB: Area, map: CellTile[][]) => {
 
   // Find one empty cell in boths areas
   const candidatesA = findCellsInArea({ area: leafA, map, cellTile: '.' });
-  const pointA = candidatesA[Math.floor(Math.random() * candidatesA.length)];
+  const positionA = candidatesA[Math.floor(Math.random() * candidatesA.length)];
 
   const candidatesB = findCellsInArea({ area: leafB, map, cellTile: '.' });
-  const pointB = candidatesB[Math.floor(Math.random() * candidatesB.length)];
+  const positionB = candidatesB[Math.floor(Math.random() * candidatesB.length)];
 
-  // Get walking path between the two cells
-  const points = walkGrid({ x: pointA[0], y: pointA[1] }, { x: pointB[0], y: pointB[1] });
+  // Get walking path between the two positions
+  const positions = walkGrid(
+    { x: positionA[0], y: positionA[1] },
+    { x: positionB[0], y: positionB[1] }
+  );
 
-  // Dig tunnel between the two points
-  points.forEach((point) => (newMap[point.y][point.x] = '.'));
-
-  return map;
+  // Dig tunnel between the two positions
+  positions.forEach((position) => (newMap[position[1]][position[0]] = '.'));
+  return newMap;
 };
 
 interface ConnectAdjacentLeavesOptions {
@@ -113,6 +115,7 @@ const connectAllLeaves = (leavesArray: Area[][], map: CellTile[][]): CellTile[][
       newMap = connectAdjacentLeaves(options);
       if (i === NUMBER_0F_SPLITS) {
         // TODO: Add more random connections like these
+        newMap = connectAdjacentLeaves(options);
         newMap = connectAdjacentLeaves(options);
         newMap = connectAdjacentLeaves(options);
       }
@@ -156,5 +159,18 @@ export const generateLevel = (): Level => {
   // Place playerSpawn on map
   map[spawn[1]][spawn[0]] = '@';
 
-  return { map, playerSpawn: [spawn[0], spawn[1]] };
+  // Create gameMap
+
+  const gameMap: CellData[][] = [];
+  for (let j = 0; j < GRID_HEIGHT; j += 1) {
+    gameMap[j] = [];
+    for (let i = 0; i < GRID_WIDTH; i += 1) {
+      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false };
+      if (i === spawn[0] && j === spawn[1]) {
+        gameMap[j][i].content = 'Player';
+      }
+    }
+  }
+
+  return { gameMap, playerSpawn: [spawn[0], spawn[1]] };
 };

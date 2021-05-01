@@ -1,4 +1,4 @@
-export const ANIMATION_SPEED = 400; // ms
+export const ANIMATION_SPEED = 250; // ms
 export const ANIMATION_STEPS = 64;
 export const PAUSE_TIME_BETWEEN_MOVES = 100; // ms
 
@@ -8,3 +8,6 @@ export const VIEWPORT_WIDTH_IN_PIXELS = NUMBER_OF_CELLS_IN_VIEWPORT * CELL_WIDTH
 
 export const GRID_WIDTH = 80; // number of cells
 export const GRID_HEIGHT = 50; // number of cells
+
+export const MAX_CLEAR_VISIBILITY = 2;
+export const MAX_VISIBILITY = 4;

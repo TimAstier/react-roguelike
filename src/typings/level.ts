@@ -1,7 +1,7 @@
-import { CellTile } from '../typings/cell';
+import { CellData } from '../typings/cell';
 import { Position } from '../typings/position';
 
 export interface Level {
-  map: CellTile[][];
+  gameMap: CellData[][];
   playerSpawn: Position;
 }

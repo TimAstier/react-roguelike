@@ -18,6 +18,8 @@
 - [x] Inventory component
 - [x] "Interaction text" component
 - [x] "Events text" component
+- [ ] Fix can see through diagonal walls
+- [ ] Doors
 - [ ] Improve generateLevel
 - [ ] Remember visibility of explored cells
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)

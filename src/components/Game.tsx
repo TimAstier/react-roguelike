@@ -68,7 +68,7 @@ export const Game: React.FC<Props> = (props) => {
   useEffect(() => {
     const level = generateLevel();
     dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
-    dispatch(gameActions.setCurrentMap(level.map));
+    dispatch(gameActions.setCurrentMap(level.gameMap));
   }, []);
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export const Game: React.FC<Props> = (props) => {
         playerPosition={state.playerPosition}
         fogOfWar={true}
         moveDirection={state.moveDirection}
-        tiles={state.currentMap}
+        gameMap={state.currentMap}
         shouldPlayerAnimate={state.shouldPlayerAnimate}
       />
     ) : null;

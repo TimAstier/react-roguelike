@@ -4,4 +4,5 @@ export type CellTile = ' ' | 'X' | '.' | '@';
 export interface CellData {
   content: CellContent;
   tile: CellTile;
+  revealed: boolean;
 }

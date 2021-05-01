@@ -1,5 +1,7 @@
 import { Area } from '../typings/area';
 
+const MINIMUM_ROOM_DIMENSION = 2;
+
 const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -16,8 +18,8 @@ export const getRandomAreaWithinArea = (area: Area): Area => {
   const originalWidth = area.end.x - area.origin.x;
   const originalHeight = area.end.y - area.origin.y;
 
-  const width = getRandomInt(2, originalWidth - 1);
-  const height = getRandomInt(2, originalHeight - 1);
+  const width = getRandomInt(MINIMUM_ROOM_DIMENSION + 1, originalWidth - 1);
+  const height = getRandomInt(MINIMUM_ROOM_DIMENSION + 1, originalHeight - 1);
 
   const originX = getRandomInt(area.origin.x, area.origin.x + originalWidth - width);
   const originY = getRandomInt(area.origin.y, area.origin.y + originalHeight - height);
