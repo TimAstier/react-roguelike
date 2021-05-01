@@ -72,10 +72,7 @@ const connectLeaves = (leafA: Area, leafB: Area, map: CellTile[][]) => {
   const positionB = candidatesB[Math.floor(Math.random() * candidatesB.length)];
 
   // Get walking path between the two positions
-  const positions = walkGrid(
-    { x: positionA[0], y: positionA[1] },
-    { x: positionB[0], y: positionB[1] }
-  );
+  const positions = walkGrid(positionA, positionB);
 
   // Dig tunnel between the two positions
   positions.forEach((position) => (newMap[position[1]][position[0]] = '.'));

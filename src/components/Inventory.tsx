@@ -45,8 +45,6 @@ const SlotsWrapper = styled.div`
   width: 85%;
 `;
 
-// TODO: Left arm / Right arm
-
 export const Inventory: React.FC = () => {
   return (
     <Wrapper>
