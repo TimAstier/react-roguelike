@@ -18,10 +18,15 @@
 - [x] Inventory component
 - [x] "Interaction text" component
 - [x] "Events text" component
+- [x] Remember visibility of explored cells
+- [ ] Storybook (to see tiles)
+- [ ] Add tiles to map in /pcg
+- [ ] Load game from map in /pcg
+- [ ] See map with RNG
+- [ ] Add HP state and design
 - [ ] Fix can see through diagonal walls
 - [ ] Doors
 - [ ] Improve generateLevel
-- [ ] Remember visibility of explored cells
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
 - [ ] NPCs
 - [ ] Monsters and attacks
