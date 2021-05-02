@@ -12,6 +12,7 @@ export const getSurroundingPositions = (position: Position, radius: number): Pos
   const left = Math.floor(position[0] - radius);
   const right = Math.ceil(position[0] + radius);
 
+  // Can be optimized further? See article.
   for (let y = top; y <= bottom; y++) {
     for (let x = left; x <= right; x++) {
       if (isInsideCircle({ center: position, position: [x, y], radius })) {
