@@ -1,4 +1,3 @@
-import { MAX_CLEAR_VISIBILITY, MAX_VISIBILITY } from '../constants/config';
 import { CellData } from '../typings/cell';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';

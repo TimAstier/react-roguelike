@@ -1,11 +1,10 @@
 import { Reducer } from 'react';
 
-import { GRID_HEIGHT, GRID_WIDTH, MAX_CLEAR_VISIBILITY, MAX_VISIBILITY } from '../constants/config';
+import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import { getSurroundingPositions } from '../utils/getSurroundingPositions';
-import { getVisibility } from '../utils/getVisibility';
+import { updateVisibility } from '../utils/updateVisibility';
 
 // ACTIONS
 
@@ -65,7 +64,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
   }
 
   const moveToNewPosition = (position: Position) => {
-    const newGameMap = state.currentMap;
+    let newGameMap = state.currentMap;
     if (newGameMap) {
       // Empty previous location
       newGameMap[state.playerPosition[1]][state.playerPosition[0]].content = 0;
@@ -73,44 +72,8 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
       // Move player
       newGameMap[position[1]][position[0]].content = 'Player';
 
-      // TODO: Only set to 'dim' to cells that just went out of visibility
-      // Then we should be able to remove "Set dark revealed cells to dim"
-      // First reset all cells to dark
-      newGameMap.forEach((row) => {
-        row.forEach((cell) => {
-          cell.visibility = 'dark';
-        });
-      });
-
-      // Get surroundingPositions
-      const surroundingPositions = getSurroundingPositions(position, MAX_VISIBILITY);
-
-      // Visibility
-      surroundingPositions.forEach((p) => {
-        const visibility = getVisibility({
-          position: p,
-          playerPosition: position,
-          gameMap: newGameMap,
-          maxClearVisibility: MAX_CLEAR_VISIBILITY,
-          maxVisibility: MAX_VISIBILITY,
-        });
-        newGameMap[p[1]][p[0]].visibility = visibility;
-
-        // Update revealed for visible cells
-        const visible = visibility === 'clear' || visibility === 'dim';
-        if (visible && newGameMap[p[1]][p[0]].revealed === false) {
-          newGameMap[p[1]][p[0]].revealed = true;
-        }
-      });
-
-      // Set dark revealed cells to dim
-      newGameMap.forEach((row, y) => {
-        row.forEach((cell, x) => {
-          if (cell.visibility === 'dark' && cell.revealed === true) {
-            newGameMap[y][x].visibility = 'dim';
-          }
-        });
-      });
+      // Update visibility
+      newGameMap = updateVisibility(position, newGameMap);
 
       return {
         ...state,

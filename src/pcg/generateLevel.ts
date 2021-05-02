@@ -8,6 +8,7 @@ import { CellData, CellTile } from '../typings/cell';
 import { Level } from '../typings/level';
 import { Position } from '../typings/position';
 import { findCellsInArea } from '../utils/findCellsInArea';
+import { updateVisibility } from '../utils/updateVisibility';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
 import { horizontalSplitArea } from './horizontalSplitArea';
@@ -176,10 +177,11 @@ export const generateLevel = (): Level => {
   // Place playerSpawn on map
   map[spawn[1]][spawn[0]] = '@';
 
-  // TODO: Initialise player visibility
-
   // Create gameMap
-  const gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT);
+  let gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT);
+
+  // Initialise visibility
+  gameMap = updateVisibility(spawn, gameMap);
 
   return { gameMap, playerSpawn: [spawn[0], spawn[1]] };
 };
