@@ -19,10 +19,11 @@
 - [x] "Interaction text" component
 - [x] "Events text" component
 - [x] Remember visibility of explored cells
-- [ ] Storybook (to see tiles)
+- [x] Reveal adjacent walls
+- [x] Toolbar (to see available tiles)
 - [ ] Add tiles to map in /pcg
 - [ ] Load game from map in /pcg
-- [ ] See map with RNG
+- [ ] Seed map with RNG
 - [ ] Add HP state and design
 - [ ] Fix can see through diagonal walls
 - [ ] Doors

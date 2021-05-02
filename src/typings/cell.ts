@@ -1,7 +1,7 @@
 import { Visibility } from '../typings/visibility';
 
 export type CellContent = 0 | 'Player';
-export type CellTile = ' ' | 'X' | '.' | '@';
+export type CellTile = ' ' | '#' | '.' | '@';
 
 export interface CellData {
   content: CellContent;

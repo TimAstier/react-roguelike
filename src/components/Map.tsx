@@ -11,7 +11,7 @@ import {
 import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import Cell from './Cell';
+import { Cell } from './Cell';
 
 interface StylingProps {
   left: number;
@@ -52,7 +52,7 @@ const Map: React.FC<Props> = ({
   shouldPlayerAnimate,
   inViewport,
 }) => {
-  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 15;
+  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 16;
 
   const renderCells = () => {
     return gameMap.map((row, posX) => {

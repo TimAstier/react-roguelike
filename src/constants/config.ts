@@ -7,7 +7,7 @@ export const NUMBER_OF_CELLS_IN_VIEWPORT = 21; // Has to be odd to center the pl
 export const VIEWPORT_WIDTH_IN_PIXELS = NUMBER_OF_CELLS_IN_VIEWPORT * CELL_WIDTH_IN_PIXELS + 1;
 
 export const GRID_WIDTH = 80; // number of cells
-export const GRID_HEIGHT = 50; // number of cells
+export const GRID_HEIGHT = 48; // number of cells
 
 // Circles on grid look nicer with N.5 radius.
 // See: https://www.redblobgames.com/grids/circle-drawing/#aesthetics

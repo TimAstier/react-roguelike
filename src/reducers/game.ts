@@ -73,6 +73,8 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
       // Move player
       newGameMap[position[1]][position[0]].content = 'Player';
 
+      // TODO: Only set to 'dim' to cells that just went out of visibility
+      // Then we should be able to remove "Set dark revealed cells to dim"
       // First reset all cells to dark
       newGameMap.forEach((row) => {
         row.forEach((cell) => {
@@ -129,7 +131,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
       nextTileY = state.playerPosition[1];
       nextTile = state.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[0] > 0 && nextTile !== 'X') {
+      if (state.playerPosition[0] > 0 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
@@ -143,7 +145,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
 
       nextTile = state.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== 'X') {
+      if (state.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
@@ -154,7 +156,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
         state.playerPosition[1] > 0 ? state.playerPosition[1] - 1 : state.playerPosition[1];
       nextTile = state.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[1] > 0 && nextTile !== 'X') {
+      if (state.playerPosition[1] > 0 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
@@ -167,7 +169,7 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
           : state.playerPosition[1];
       nextTile = state.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[1] < GRID_HEIGHT - 1 && nextTile !== 'X') {
+      if (state.playerPosition[1] < GRID_HEIGHT - 1 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
