@@ -7,14 +7,19 @@ import { Cell, CellProps } from '../Cell';
 const Wrapper = styled.div`
   background-color: grey;
   width: 170px;
-  border: red 2px solid;
   height: 94%;
   padding: 10px 10px;
 `;
 
 const CellWrapper = styled.div`
   display: flex;
-  background-color: yellow;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Label = styled.div`
+  font-size: 12px;
+  margin-left: 10px;
 `;
 
 const defaultCellProps: CellProps = {
@@ -32,13 +37,27 @@ export const Toolbar: React.FC = () => {
     <Wrapper>
       <p>Tiles</p>
       <CellWrapper>
-        <Cell {...defaultCellProps} tile={'.'} /> <div style={{ fontSize: 8 }}>Ground</div>
+        <Cell {...defaultCellProps} tile={'.'} />
+        <Label>Ground</Label>
       </CellWrapper>
-      <Cell {...defaultCellProps} tile={'#'} />
-      <Cell {...defaultCellProps} tile={'@'} />
-      <Cell {...defaultCellProps} tile={' '} />
+      <CellWrapper>
+        <Cell {...defaultCellProps} tile={'#'} />
+        <Label>Wall</Label>
+      </CellWrapper>
+      <CellWrapper>
+        <Cell {...defaultCellProps} tile={'@'} />
+        <Label>Spawn</Label>
+      </CellWrapper>
+      <CellWrapper>
+        <Cell {...defaultCellProps} tile={' '} />
+        <Label>Void</Label>
+      </CellWrapper>
+
       <p>Contents</p>
-      <Cell {...defaultCellProps} tile={'.'} content="Player" />
+      <CellWrapper>
+        <Cell {...defaultCellProps} tile={'.'} content="Player" />
+        <Label>Player</Label>
+      </CellWrapper>
     </Wrapper>
   );
 };
