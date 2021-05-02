@@ -26,6 +26,8 @@
 - [ ] Seed map with RNG
 - [ ] Add HP state and design
 - [ ] Fix can see through diagonal walls
+- [ ] Distinguish between 'dim revealed' and 'dim'?
+- [ ] Why can see more on the left side at the end of corridors?
 - [ ] Doors
 - [ ] Improve generateLevel
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)

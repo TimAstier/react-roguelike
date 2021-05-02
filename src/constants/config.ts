@@ -11,5 +11,5 @@ export const GRID_HEIGHT = 48; // number of cells
 
 // Circles on grid look nicer with N.5 radius.
 // See: https://www.redblobgames.com/grids/circle-drawing/#aesthetics
-export const MAX_CLEAR_VISIBILITY = 4.5;
-export const MAX_VISIBILITY = 6.5;
+export const MAX_CLEAR_VISIBILITY = 7.5;
+export const MAX_VISIBILITY = 9.5;

@@ -9,9 +9,17 @@ interface Options {
   position: Position;
   playerPosition: Position;
   gameMap: CellData[][];
+  maxClearVisibility: number;
+  maxVisibility: number;
 }
 
-export const getVisibility = ({ position, playerPosition, gameMap }: Options): Visibility => {
+export const getVisibility = ({
+  position,
+  playerPosition,
+  gameMap,
+  maxClearVisibility,
+  maxVisibility,
+}: Options): Visibility => {
   const [posX, posY] = position;
 
   // Prevent seing through walls
@@ -28,11 +36,11 @@ export const getVisibility = ({ position, playerPosition, gameMap }: Options): V
     }
   }
 
-  if (isInsideCircle({ center: playerPosition, position, radius: MAX_CLEAR_VISIBILITY })) {
+  if (isInsideCircle({ center: playerPosition, position, radius: maxClearVisibility })) {
     return 'clear';
   }
 
-  if (isInsideCircle({ center: playerPosition, position, radius: MAX_VISIBILITY })) {
+  if (isInsideCircle({ center: playerPosition, position, radius: maxVisibility })) {
     return 'dim';
   }
 

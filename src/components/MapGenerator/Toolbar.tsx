@@ -12,6 +12,11 @@ const Wrapper = styled.div`
   padding: 10px 10px;
 `;
 
+const CellWrapper = styled.div`
+  display: flex;
+  background-color: yellow;
+`;
+
 const defaultCellProps: CellProps = {
   content: 0,
   moveDirection: 'Up',
@@ -26,7 +31,9 @@ export const Toolbar: React.FC = () => {
   return (
     <Wrapper>
       <p>Tiles</p>
-      <Cell {...defaultCellProps} tile={'.'} />
+      <CellWrapper>
+        <Cell {...defaultCellProps} tile={'.'} /> <div style={{ fontSize: 8 }}>Ground</div>
+      </CellWrapper>
       <Cell {...defaultCellProps} tile={'#'} />
       <Cell {...defaultCellProps} tile={'@'} />
       <Cell {...defaultCellProps} tile={' '} />

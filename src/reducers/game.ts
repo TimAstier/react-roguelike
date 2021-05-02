@@ -1,6 +1,6 @@
 import { Reducer } from 'react';
 
-import { GRID_HEIGHT, GRID_WIDTH, MAX_VISIBILITY } from '../constants/config';
+import { GRID_HEIGHT, GRID_WIDTH, MAX_CLEAR_VISIBILITY, MAX_VISIBILITY } from '../constants/config';
 import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -91,6 +91,8 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
           position: p,
           playerPosition: position,
           gameMap: newGameMap,
+          maxClearVisibility: MAX_CLEAR_VISIBILITY,
+          maxVisibility: MAX_VISIBILITY,
         });
         newGameMap[p[1]][p[0]].visibility = visibility;
 
