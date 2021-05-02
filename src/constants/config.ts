@@ -9,5 +9,7 @@ export const VIEWPORT_WIDTH_IN_PIXELS = NUMBER_OF_CELLS_IN_VIEWPORT * CELL_WIDTH
 export const GRID_WIDTH = 80; // number of cells
 export const GRID_HEIGHT = 50; // number of cells
 
-export const MAX_CLEAR_VISIBILITY = 2;
-export const MAX_VISIBILITY = 4;
+// Circles on grid look nicer with N.5 radius.
+// See: https://www.redblobgames.com/grids/circle-drawing/#aesthetics
+export const MAX_CLEAR_VISIBILITY = 4.5;
+export const MAX_VISIBILITY = 6.5;

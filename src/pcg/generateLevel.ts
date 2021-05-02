@@ -157,12 +157,11 @@ export const generateLevel = (): Level => {
   map[spawn[1]][spawn[0]] = '@';
 
   // Create gameMap
-
   const gameMap: CellData[][] = [];
   for (let j = 0; j < GRID_HEIGHT; j += 1) {
     gameMap[j] = [];
     for (let i = 0; i < GRID_WIDTH; i += 1) {
-      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false };
+      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false, visibility: 'dark' };
       if (i === spawn[0] && j === spawn[1]) {
         gameMap[j][i].content = 'Player';
       }

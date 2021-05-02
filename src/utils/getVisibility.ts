@@ -1,70 +1,30 @@
-import { MAX_CLEAR_VISIBILITY, MAX_VISIBILITY } from '../constants/config';
+import { MAX_CLEAR_VISIBILITY } from '../constants/config';
 import { CellData } from '../typings/cell';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
+import { isInsideCircle } from '../utils/isInsideCircle';
 import { line } from './line';
 
 interface Options {
-  posX: number;
-  posY: number;
+  position: Position;
   playerPosition: Position;
   gameMap: CellData[][];
 }
 
-// TODO: Use getSurroundingPositions to make sure it's the same areas between visible and revealed
-export const getVisibility = ({ posX, posY, playerPosition, gameMap }: Options): Visibility => {
-  const [playerX, playerY] = playerPosition;
-
-  // We only consider points within MAX_VISIBILITY reach
-  if (Math.abs(playerX - posX) > MAX_VISIBILITY || Math.abs(playerY - posY) > MAX_VISIBILITY) {
-    return 'dark';
-  }
+export const getVisibility = ({ position, playerPosition, gameMap }: Options): Visibility => {
+  const [posX, posY] = position;
 
   // Check if there is a wall between point and player
-
   const inBetweenPoints = line([posX, posY], playerPosition);
-  // switched x y here?
-  if (inBetweenPoints.some((position) => gameMap[position[0]][position[1]].tile === 'X')) {
+  if (inBetweenPoints.some((p) => gameMap[p[1]][p[0]].tile === 'X')) {
     return 'dark';
   }
 
-  // Check distance for clear / dim / dark definition
+  // Use isInCircle
 
-  // TODO: use getSurroundingPosition
-  // This removes one square in the corners
-  // Should use getSurroundingPositions here?
-  if (
-    Math.abs(playerX - posX) === MAX_CLEAR_VISIBILITY &&
-    Math.abs(playerY - posY) === MAX_CLEAR_VISIBILITY
-  ) {
-    return 'dim';
-  }
-
-  if (
-    Math.abs(playerX - posX) <= MAX_CLEAR_VISIBILITY &&
-    Math.abs(playerY - posY) <= MAX_CLEAR_VISIBILITY
-  ) {
+  if (isInsideCircle({ center: playerPosition, position, radius: MAX_CLEAR_VISIBILITY })) {
     return 'clear';
   }
 
-  // TODO: use getSurroundingPosition
-  // This removes one square in the corners
-  // Should use getSurroundingPositions here?
-  if (Math.abs(playerX - posX) === MAX_VISIBILITY && Math.abs(playerY - posY) === MAX_VISIBILITY) {
-    return 'dark';
-  }
-
-  if (Math.abs(playerX - posX) <= MAX_VISIBILITY && Math.abs(playerY - posY) <= MAX_VISIBILITY) {
-    return 'dim';
-  }
-
-  return 'dark';
-};
-
-export const getPlayerVisibility = (options: Options): Visibility => {
-  const visibility = getVisibility(options);
-  if (visibility === 'dark' && options.gameMap[options.posX][options.posY].revealed === true) {
-    return 'dim';
-  }
-  return visibility;
+  return 'dim';
 };

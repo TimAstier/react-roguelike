@@ -11,7 +11,6 @@ import {
 import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import { getPlayerVisibility } from '../utils/getVisibility';
 import Cell from './Cell';
 
 interface StylingProps {
@@ -59,14 +58,7 @@ const Map: React.FC<Props> = ({
     return gameMap.map((row, posX) => {
       return row.map((cellData, posY) => {
         const position = `${posX}-${posY}`;
-        const visibility = fogOfWar
-          ? getPlayerVisibility({
-              posX,
-              posY,
-              playerPosition: [playerPosition[1], playerPosition[0]], // One last weird thing
-              gameMap,
-            })
-          : 'clear';
+        const visibility = fogOfWar ? cellData.visibility : 'clear';
         return (
           <Cell
             visibility={visibility}

@@ -5,7 +5,7 @@ import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { getSurroundingPositions } from '../utils/getSurroundingPositions';
-import { line } from '../utils/line';
+import { getVisibility } from '../utils/getVisibility';
 
 // ACTIONS
 
@@ -65,7 +65,6 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
   }
 
   const moveToNewPosition = (position: Position) => {
-    // Should revealed updates be handled here?
     const newGameMap = state.currentMap;
     if (newGameMap) {
       // Empty previous location
@@ -74,32 +73,51 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
       // Move player
       newGameMap[position[1]][position[0]].content = 'Player';
 
-      // Update revealed cells
-      const candidateRevealedPositions = getSurroundingPositions(position, MAX_VISIBILITY);
-      candidateRevealedPositions.forEach((p) => {
-        if (newGameMap[p[1]][p[0]].revealed === false) {
-          // TODO: Refactor this together with logic in getVisibility
-          // Something like isLosClear
-          const inBetweenPositions = line(position, p);
-          let hasWalls = false;
-          if (inBetweenPositions.some((pos) => newGameMap[pos[1]][pos[0]].tile === 'X')) {
-            hasWalls = true;
-          }
-          if (hasWalls === false) {
-            newGameMap[p[1]][p[0]].revealed = true;
-          }
+      // First reset all cells to dark
+      newGameMap.forEach((row) => {
+        row.forEach((cell) => {
+          cell.visibility = 'dark';
+        });
+      });
+
+      // Get surroundingPositions
+      const surroundingPositions = getSurroundingPositions(position, MAX_VISIBILITY);
+
+      // Visibility
+      surroundingPositions.forEach((p) => {
+        const visibility = getVisibility({
+          position: p,
+          playerPosition: position,
+          gameMap: newGameMap,
+        });
+        newGameMap[p[1]][p[0]].visibility = visibility;
+
+        // Update revealed for visible cells
+        const visible = visibility === 'clear' || visibility === 'dim';
+        if (visible && newGameMap[p[1]][p[0]].revealed === false) {
+          newGameMap[p[1]][p[0]].revealed = true;
         }
       });
-    }
 
-    return {
-      ...state,
-      currentMap: newGameMap,
-      moveDirection,
-      playerPosition: position,
-      playerPreviousPosition: state.playerPosition,
-      shouldPlayerAnimate: true,
-    };
+      // Set dark revealed cells to dim
+      newGameMap.forEach((row, y) => {
+        row.forEach((cell, x) => {
+          if (cell.visibility === 'dark' && cell.revealed === true) {
+            newGameMap[y][x].visibility = 'dim';
+          }
+        });
+      });
+
+      return {
+        ...state,
+        currentMap: newGameMap,
+        moveDirection,
+        playerPosition: position,
+        playerPreviousPosition: state.playerPosition,
+        shouldPlayerAnimate: true,
+      };
+    }
+    return state;
   };
 
   const moveAndStayAtSamePosition = () => ({ ...state, moveDirection, shouldPlayerAnimate: false });
