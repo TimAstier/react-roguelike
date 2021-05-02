@@ -2,11 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED } from '../constants/config';
-import { CELL_WIDTH_IN_PIXELS, GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
-import { CellData, CellTile } from '../typings/cell';
+import {
+  CELL_WIDTH_IN_PIXELS,
+  GRID_HEIGHT,
+  GRID_WIDTH,
+  NUMBER_OF_CELLS_IN_VIEWPORT,
+} from '../constants/config';
+import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import { getVisibility } from '../utils/getVisibility';
 import Cell from './Cell';
 
 interface StylingProps {
@@ -35,7 +39,7 @@ interface Props {
   moveDirection: MoveDirection;
   playerPosition: Position;
   fogOfWar: boolean;
-  tiles: CellTile[][];
+  gameMap: CellData[][];
   shouldPlayerAnimate: boolean;
   inViewport: boolean;
 }
@@ -44,48 +48,24 @@ const Map: React.FC<Props> = ({
   moveDirection,
   playerPosition,
   fogOfWar,
-  tiles,
+  gameMap,
   shouldPlayerAnimate,
   inViewport,
 }) => {
   const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 15;
 
-  const createMapContent = () => {
-    const mapContent: CellData[][] = [];
-    for (let j = 0; j < GRID_HEIGHT; j += 1) {
-      mapContent[j] = [];
-      for (let i = 0; i < GRID_WIDTH; i += 1) {
-        mapContent[j][i] = { content: 0, tile: ' ' };
-        mapContent[j][i].tile = tiles[j][i];
-        if (i === playerPosition[0] && j === playerPosition[1]) {
-          if (inViewport) {
-            mapContent[j][i].content = 'Player';
-          }
-        }
-      }
-    }
-    return mapContent;
-  };
-
   const renderCells = () => {
-    return createMapContent().map((row, posX) => {
-      return row.map((column, posY) => {
+    return gameMap.map((row, posX) => {
+      return row.map((cellData, posY) => {
         const position = `${posX}-${posY}`;
-        const visibility = fogOfWar
-          ? getVisibility({
-              posX,
-              posY,
-              playerPosition: [playerPosition[1], playerPosition[0]], // One last weird thing
-              tiles,
-            })
-          : 'clear';
+        const visibility = fogOfWar ? cellData.visibility : 'clear';
         return (
           <Cell
             visibility={visibility}
             key={position}
-            content={column.content}
+            content={cellData.content}
             moveDirection={moveDirection}
-            tile={column.tile}
+            tile={cellData.tile}
             shouldPlayerAnimate={shouldPlayerAnimate}
             cellWidth={cellWidth}
             inViewport={inViewport}
@@ -96,8 +76,10 @@ const Map: React.FC<Props> = ({
   };
 
   // Note: Should this logic be part of the Viewport?
-  const mapLeftPosition = (-playerPosition[0] + 5) * cellWidth;
-  const mapUpPosition = (-playerPosition[1] + 5) * cellWidth;
+  const mapLeftPosition =
+    (-playerPosition[0] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
+  const mapUpPosition =
+    (-playerPosition[1] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
 
   return (
     <Wrapper

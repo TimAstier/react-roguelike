@@ -1,41 +1,42 @@
+import { Position } from '../../typings/position';
 import { line } from '../line';
 
 describe('line', () => {
-  it('returns start and end for two adjacent points', () => {
-    const p0 = { x: 0, y: 0 };
-    const p1 = { x: 1, y: 0 };
+  it('returns start and end for two adjacent positions', () => {
+    const p0: Position = [0, 0];
+    const p1: Position = [1, 0];
     const expectedResult = [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
+      [0, 0],
+      [1, 0],
     ];
     expect(line(p0, p1)).toEqual(expectedResult);
   });
 
-  it('works for two points on same x axis', () => {
-    const p0 = { x: 0, y: 0 };
-    const p1 = { x: 3, y: 0 };
+  it('works for two positions on same x axis', () => {
+    const p0: Position = [0, 0];
+    const p1: Position = [3, 0];
     const expectedResult = [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 2, y: 0 },
-      { x: 3, y: 0 },
+      [0, 0],
+      [1, 0],
+      [2, 0],
+      [3, 0],
     ];
     expect(line(p0, p1)).toEqual(expectedResult);
   });
   it('works on advanced case', () => {
-    const p0 = { x: 1, y: 9 };
-    const p1 = { x: 6, y: 0 };
+    const p0: Position = [1, 9];
+    const p1: Position = [6, 0];
     const expectedResult = [
-      { x: 1, y: 9 },
-      { x: 2, y: 8 },
-      { x: 2, y: 7 },
-      { x: 3, y: 6 },
-      { x: 3, y: 5 },
-      { x: 4, y: 4 },
-      { x: 4, y: 3 },
-      { x: 5, y: 2 },
-      { x: 5, y: 1 },
-      { x: 6, y: 0 },
+      [1, 9],
+      [2, 8],
+      [2, 7],
+      [3, 6],
+      [3, 5],
+      [4, 4],
+      [4, 3],
+      [5, 2],
+      [5, 1],
+      [6, 0],
     ];
     expect(line(p0, p1)).toEqual(expectedResult);
   });

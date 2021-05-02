@@ -1,31 +1,31 @@
 // From: https://www.redblobgames.com/grids/line-drawing.html#supercover
 
-import { Point } from '../typings/point';
+import { Position } from '../typings/position';
 
-const diagonalDistance = (p0: Point, p1: Point) => {
-  const dx = p1.x - p0.x;
-  const dy = p1.y - p0.y;
+const diagonalDistance = (p0: Position, p1: Position) => {
+  const dx = p1[0] - p0[0];
+  const dy = p1[1] - p0[1];
   return Math.max(Math.abs(dx), Math.abs(dy));
 };
 
-const roundPoint = (p: Point) => {
-  return { x: Math.round(p.x), y: Math.round(p.y) } as Point;
+const roundPosition = (p: Position): Position => {
+  return [Math.round(p[0]), Math.round(p[1])];
 };
 
 const lerp = (start: number, end: number, t: number) => {
   return start + t * (end - start);
 };
 
-const lerpPoint = (p0: Point, p1: Point, t: number) => {
-  return { x: lerp(p0.x, p1.x, t), y: lerp(p0.y, p1.y, t) } as Point;
+const lerpPoint = (p0: Position, p1: Position, t: number): Position => {
+  return [lerp(p0[0], p1[0], t), lerp(p0[1], p1[1], t)];
 };
 
-export const line = (p0: Point, p1: Point): Point[] => {
-  const points: Point[] = [];
+export const line = (p0: Position, p1: Position): Position[] => {
+  const positions: Position[] = [];
   const N = diagonalDistance(p0, p1);
   for (let step = 0; step <= N; step++) {
     const t = N === 0 ? 0.0 : step / N;
-    points.push(roundPoint(lerpPoint(p0, p1, t)));
+    positions.push(roundPosition(lerpPoint(p0, p1, t)));
   }
-  return points;
+  return positions;
 };
