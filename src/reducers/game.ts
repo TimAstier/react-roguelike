@@ -1,4 +1,4 @@
-import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
+import { GRID_HEIGHT, GRID_WIDTH, INITIAL_MAX_HP } from '../constants/config';
 import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -58,6 +58,14 @@ export interface GameState {
   playerPosition: Position;
   playerPreviousPosition: Position;
   shouldPlayerAnimate: boolean;
+  characterName: string;
+  hp: number;
+  maxHp: number;
+  gold: number;
+  equipedItems: string[];
+  inventory: string[];
+  interactionText: string;
+  eventLogs: string[];
 }
 
 export const INITIAL_STATE: GameState = {
@@ -66,6 +74,14 @@ export const INITIAL_STATE: GameState = {
   playerPosition: [0, 0],
   playerPreviousPosition: [0, 0],
   shouldPlayerAnimate: false,
+  characterName: 'Kerhebos',
+  hp: INITIAL_MAX_HP,
+  maxHp: INITIAL_MAX_HP,
+  gold: 0,
+  equipedItems: [],
+  inventory: [],
+  interactionText: '',
+  eventLogs: [],
 };
 
 // REDUCER

@@ -1,6 +1,6 @@
 import { Visibility } from '../typings/visibility';
 
-export type CellContent = 0 | 'Player' | 'Sword';
+export type CellContent = 0 | 'Player' | 'Sword' | 'Ruby' | 'Key';
 export type CellTile = ' ' | '#' | '.' | '@';
 
 export interface CellData {

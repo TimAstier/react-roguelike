@@ -55,7 +55,7 @@ const Map: React.FC<Props> = ({
   inViewport,
   handleCellClick,
 }) => {
-  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 16;
+  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 20;
 
   const renderCells = () => {
     return gameMap.map((row, posX) => {

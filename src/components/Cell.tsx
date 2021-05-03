@@ -6,14 +6,7 @@ import { Sprite } from '../components/Sprite';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Visibility } from '../typings/visibility';
-import { lightenDarkenColor } from '../utils/lightenDarkenColor';
 import { Player } from './Player';
-
-const mapVisibilityToModifier: { [key in Visibility]: number } = {
-  clear: 0,
-  dim: -100,
-  dark: -300,
-};
 
 interface StylingProps {
   backgroundColor: string;
@@ -67,6 +60,12 @@ export const Cell: React.FC<CellProps> = ({
       if (content === 'Sword') {
         return <Sprite imageSrc={roguelikeitems} position={[2, 7]} pixelDimensions={16} />;
       }
+      if (content === 'Ruby') {
+        return <Sprite imageSrc={roguelikeitems} position={[3, 3]} pixelDimensions={16} />;
+      }
+      if (content === 'Key') {
+        return <Sprite imageSrc={roguelikeitems} position={[11, 3]} pixelDimensions={16} />;
+      }
     }
   };
 
@@ -83,7 +82,11 @@ export const Cell: React.FC<CellProps> = ({
     if (tile === '@') {
       return '@';
     }
-    return '.';
+    if (tile === '.') {
+      if (visibility !== 'dark') {
+        return '.';
+      }
+    }
   };
 
   const renderContentOrTile = () => {
@@ -96,20 +99,41 @@ export const Cell: React.FC<CellProps> = ({
     return renderTile();
   };
 
-  const visibilityModifier = mapVisibilityToModifier[visibility];
+  const getBackgroundColor = () => {
+    if (!revealed && inViewport) {
+      return 'rgb(0,0,0,1)';
+    }
+    if (tile === '.' || tile === '@') {
+      if (visibility === 'clear') {
+        return '#131226';
+      }
+      if (visibility === 'dim') {
+        return 'black';
+      }
+    }
+    if (tile === '#') {
+      return '#BEB5C4';
+    }
+    return 'rgb(0,0,0,1)';
+  };
 
-  const backgroundColor =
-    tile === '.' || tile === '@'
-      ? lightenDarkenColor('#ffffff', visibilityModifier)
-      : 'rgb(0,0,0,1)';
+  const getFontColor = () => {
+    if (tile === '#') {
+      return 'black';
+    }
+    if (visibility === 'dim') {
+      return '#555564';
+    }
+    return 'white';
+  };
 
   return (
     <Wrapper
       onClick={handleClick}
-      backgroundColor={backgroundColor}
+      backgroundColor={getBackgroundColor()}
       cellWidth={cellWidth}
       inViewport={inViewport}
-      color={tile === '#' ? 'white' : 'black'}
+      color={getFontColor()}
     >
       {renderContentOrTile()}
     </Wrapper>

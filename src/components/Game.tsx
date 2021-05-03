@@ -8,9 +8,10 @@ import { gameActions } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { DoubleBorders } from './DoubleBorders';
 import { EventLogs } from './EventLogs';
-import { InteractionLogs } from './InteractionLogs';
+import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
 import Map from './Map';
+import { PlayerStats } from './PlayerStats';
 import Viewport from './Viewport';
 
 const Wrapper = styled.div`
@@ -22,16 +23,6 @@ const SideWrapper = styled.div`
   background-color: black;
   color: white;
 `;
-
-const toggleFullScreen = () => {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
-  }
-};
 
 const LEFT_KEYCODE = 37;
 const UP_KEYCODE = 38;
@@ -119,7 +110,7 @@ export const Game: React.FC<Props> = (props) => {
 
   return (
     <div style={{ userSelect: 'none' }}>
-      <EventLogs />
+      <EventLogs eventLogs={props.state.eventLogs} />
       <Wrapper>
         <SideWrapper
           style={{
@@ -129,43 +120,15 @@ export const Game: React.FC<Props> = (props) => {
             boxSizing: 'border-box',
           }}
         >
-          <DoubleBorders>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
-              <div style={{ paddingLeft: 20, paddingRight: 20 }}>
-                <p>HP: 11/50</p>
-                <p>FO: 82/90</p>
-                <p>XP: 82/90</p>
-                <p>-----</p>
-                <p>STR: 13</p>
-                <p>DEX: 14</p>
-                <p>CON: 10</p>
-                <p>INT: 11</p>
-                <p>WIS: 8</p>
-                <p>CHA: 9</p>
-                <p>-----</p>
-              </div>
-              <div style={{ height: 80, paddingLeft: 20, paddingRight: 20 }}>
-                <div
-                  style={{ cursor: 'pointer', marginTop: 17 }}
-                  onClick={() => toggleFullScreen()}
-                >
-                  FULL SCR.
-                </div>
-                <div
-                  style={{ cursor: 'pointer', marginTop: 10 }}
-                  onClick={() => props.setWithBackgroundMusic(!props.withBackgroundMusic)}
-                >
-                  {props.withBackgroundMusic ? 'BGM: ON' : 'BGM: OFF'}
-                </div>
-              </div>
-            </div>
-          </DoubleBorders>
+          <PlayerStats
+            characterName={props.state.characterName}
+            hp={props.state.hp}
+            maxHp={props.state.maxHp}
+            gold={props.state.gold}
+            equipedItems={props.state.equipedItems}
+            withBackgroundMusic={props.withBackgroundMusic}
+            setWithBackgroundMusic={props.setWithBackgroundMusic}
+          />
         </SideWrapper>
         <div>
           <DoubleBorders>
@@ -179,10 +142,10 @@ export const Game: React.FC<Props> = (props) => {
             justifyContent: 'center',
           }}
         >
-          <Inventory />
+          <Inventory inventory={props.state.inventory} />
         </SideWrapper>
       </Wrapper>
-      <InteractionLogs />
+      <InteractionText interactionText={props.state.interactionText} />
     </div>
   );
 };

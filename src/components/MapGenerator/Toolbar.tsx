@@ -99,6 +99,20 @@ export const Toolbar: React.FC<Props> = (props) => {
         <Cell {...defaultCellProps} tile={'.'} content="Sword" />
         <Label>Sword</Label>
       </CellWrapper>
+      <CellWrapper
+        selected={props.selectedContent === 'Ruby'}
+        onClick={() => props.handleSelectedContent('Ruby')}
+      >
+        <Cell {...defaultCellProps} tile={'.'} content="Ruby" />
+        <Label>Ruby</Label>
+      </CellWrapper>
+      <CellWrapper
+        selected={props.selectedContent === 'Key'}
+        onClick={() => props.handleSelectedContent('Key')}
+      >
+        <Cell {...defaultCellProps} tile={'.'} content="Key" />
+        <Label>Key</Label>
+      </CellWrapper>
       <p>----</p>
       <Link to="/">PLAY</Link>
     </Wrapper>

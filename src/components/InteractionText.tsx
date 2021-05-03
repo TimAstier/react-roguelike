@@ -7,11 +7,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 75px;
   width: ${VIEWPORT_WIDTH_IN_PIXELS}px;
   background-color: black;
   color: white;
-  margin-bottom: 15px;
+  margin-top: 15px;
   padding: 5px;
   box-sizing: border-box;
   margin-left: auto;
@@ -19,9 +19,9 @@ const Wrapper = styled.div`
 `;
 
 interface Props {
-  eventLogs: string[];
+  interactionText: string;
 }
 
-export const EventLogs: React.FC<Props> = (props) => {
-  return <Wrapper>{props.eventLogs[props.eventLogs.length - 1]}</Wrapper>;
+export const InteractionText: React.FC<Props> = (props) => {
+  return <Wrapper>{props.interactionText}</Wrapper>;
 };

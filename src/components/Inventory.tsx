@@ -5,19 +5,6 @@ import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
 import { DoubleBorders } from './DoubleBorders';
 
-const Slot = styled.div`
-  height: 50px;
-  width: 50px;
-  background-color: black;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: solid 2px #6e6e6e;
-  border-radius: 10px;
-  box-sizing: border-box;
-`;
-
 interface ItemWrapperProps {
   hasItem: boolean;
 }
@@ -33,13 +20,6 @@ const ItemWrapper = styled.div<ItemWrapperProps>`
   border-radius: 6px;
 `;
 
-const PlaceholderSlot = styled.div`
-  height: 50px;
-  width: 50px;
-  background-color: black;
-  margin-bottom: 10px;
-`;
-
 const Wrapper = styled.div`
   width: 100%;
   padding-right: 5px;
@@ -47,90 +27,85 @@ const Wrapper = styled.div`
   box-sizing: border-box;
 `;
 
-const InnerWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const OtherItems = styled.div`
+const Items = styled.div`
   width: 85%;
   display: flex;
   flex-wrap: wrap;
-`;
-
-const EquipedWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  justify-content: center;
 `;
 
 const SingleItemWrapper = styled.div`
   box-sizing: border-box;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const Inventory: React.FC = () => {
+interface Props {
+  inventory: string[];
+}
+
+export const Inventory: React.FC<Props> = (props) => {
   return (
     <Wrapper>
-      <DoubleBorders>
-        <InnerWrapper>
-          <p>-----</p>
-          <EquipedWrapper>
-            <PlaceholderSlot />
-            <Slot>
-              <ItemWrapper hasItem={false} />
-            </Slot>{' '}
-            <PlaceholderSlot />
-            <Slot>
-              <ItemWrapper hasItem={true}>
-                <Sprite imageSrc={roguelikeitems} position={[3, 8]} pixelDimensions={16} />
-              </ItemWrapper>
-            </Slot>{' '}
-            <Slot>
-              <ItemWrapper hasItem={false} />
-            </Slot>{' '}
-            <Slot>
-              <ItemWrapper hasItem={false} />
-            </Slot>{' '}
-            <Slot>
-              <ItemWrapper hasItem={false} />
-            </Slot>{' '}
-            <Slot>
-              <ItemWrapper hasItem={false} />
-            </Slot>{' '}
-            <Slot>
-              <ItemWrapper hasItem={false} />
-            </Slot>{' '}
-          </EquipedWrapper>
-          <p>-----</p>
-          <OtherItems>
-            <SingleItemWrapper>
-              <ItemWrapper hasItem={true}>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
-            </SingleItemWrapper>
-            <SingleItemWrapper>
-              <ItemWrapper hasItem={false}></ItemWrapper>
-            </SingleItemWrapper>
-            <SingleItemWrapper>
-              <ItemWrapper hasItem={false}></ItemWrapper>
-            </SingleItemWrapper>
-            <SingleItemWrapper>
-              <ItemWrapper hasItem={false}></ItemWrapper>
-            </SingleItemWrapper>
-            <SingleItemWrapper>
-              <ItemWrapper hasItem={false}></ItemWrapper>
-            </SingleItemWrapper>
-          </OtherItems>
-        </InnerWrapper>
-      </DoubleBorders>
+      <div>
+        <DoubleBorders>
+          <div>
+            <Items>
+              <SingleItemWrapper>
+                {props.inventory.some((item) => item === 'Key') ? (
+                  <ItemWrapper hasItem={true}>
+                    <Sprite imageSrc={roguelikeitems} position={[11, 3]} pixelDimensions={16} />
+                  </ItemWrapper>
+                ) : (
+                  <SingleItemWrapper>
+                    <ItemWrapper hasItem={false}></ItemWrapper>
+                  </SingleItemWrapper>
+                )}
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+              <SingleItemWrapper>
+                <ItemWrapper hasItem={false}></ItemWrapper>
+              </SingleItemWrapper>
+            </Items>
+          </div>
+        </DoubleBorders>
+      </div>
     </Wrapper>
   );
 };

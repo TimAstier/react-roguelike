@@ -11,7 +11,7 @@
 
 This is a hobby project to see how React can be used to create a game.
 
-_Inspired by [the Danger Crew](https://thedangercrew.com/), [react-rpg](https://github.com/ASteinheiser/react-rpg.com), [rogue](https://playclassic.games/games/role-playing-dos-games-online/play-rogue-online/play/)._
+_Inspired by [the Danger Crew](https://thedangercrew.com/), [react-rpg](https://github.com/ASteinheiser/react-rpg.com), [rogue](https://playclassic.games/games/role-playing-dos-games-online/play-rogue-online/play/), Brogue, [HeadlessPanic](https://marcelmarki.com/headless-panic/index.html)_
 
 ## Contributing
 
@@ -59,6 +59,7 @@ See [ROADMAP](ROADMAP.md).
 - [Brogue](https://sites.google.com/site/broguegame/)
   - [Level generation in Brogue wiki](https://brogue.fandom.com/wiki/Level_Generation)
 - [Rogueliike dev FAQ](https://www.reddit.com/r/roguelikedev/wiki/faq_friday)
+- [Brogue terrain features](https://brogue.fandom.com/wiki/Terrain_Features)
 
 ## Resources
 
