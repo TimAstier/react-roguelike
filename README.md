@@ -70,6 +70,7 @@ See [ROADMAP](ROADMAP.md).
 ## 2D Art
 
 - [RPG items](https://opengameart.org/content/roguelikerpg-items)
+- [Roguelike monsters](https://opengameart.org/content/roguelike-monsters)
 - [Ravenmore icons](https://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0)
 - [Upgrade from Ravenmore icons](https://opengameart.org/content/golden-items-rip-upgrade-pack)
 - [Additions to Ravenmore icons](https://opengameart.org/node/83169)

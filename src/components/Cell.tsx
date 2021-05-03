@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import sword from '../assets/images/sword.png';
+import roguelikeitems from '../assets/images/roguelikeitems.png';
+import { Sprite } from '../components/Sprite';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Visibility } from '../typings/visibility';
@@ -62,7 +63,7 @@ export const Cell: React.FC<CellProps> = ({
     }
 
     if (content === 'Sword') {
-      return <img style={{ height: '100%', width: '100%' }} src={sword} />;
+      return <Sprite imageSrc={roguelikeitems} position={[2, 7]} pixelDimensions={16} />;
     }
 
     if (tile === '#') {
