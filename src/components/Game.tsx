@@ -72,6 +72,7 @@ export const Game: React.FC<Props> = (props) => {
       props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
       props.dispatch(gameActions.setCurrentMap(level.gameMap));
     }
+    props.dispatch(gameActions.initVisibility());
   }, []);
 
   useEffect(() => {

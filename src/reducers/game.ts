@@ -15,7 +15,8 @@ export type GameAction =
   | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
   | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellData[][] }
   | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position }
-  | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload };
+  | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
+  | { type: '@@GAME/INIT_VISIBILITY' };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -37,11 +38,16 @@ const updateCell = (payload: UpdateCellPayload): GameAction => ({
   payload,
 });
 
+const initVisibility = (): GameAction => ({
+  type: '@@GAME/INIT_VISIBILITY',
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
   initPlayerSpawn,
   updateCell,
+  initVisibility,
 };
 
 // INITIAL_STATE
@@ -165,5 +171,9 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
       return void (draft.playerPreviousPosition = action.playerSpawn);
     case '@@GAME/UPDATE_CELL':
       return reduceUpdateCell(draft, action.payload);
+    case '@@GAME/INIT_VISIBILITY':
+      if (draft.currentMap !== null) {
+        return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
+      }
   }
 };
