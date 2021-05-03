@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
@@ -97,6 +98,8 @@ export const Toolbar: React.FC<Props> = (props) => {
         <Cell {...defaultCellProps} tile={'.'} content="Sword" />
         <Label>Sword</Label>
       </CellWrapper>
+      <p>----</p>
+      <Link to="/">PLAY</Link>
     </Wrapper>
   );
 };

@@ -157,14 +157,17 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
 };
 
 const reduceUpdateCell = (state = INITIAL_STATE, payload: UpdateCellPayload) => {
+  // TODO: Make state immutable?
   const gameMap = state.currentMap;
+  const { position, cellData } = payload;
 
-  console.log(payload.position);
-  console.log(payload.cellData);
+  if (gameMap !== null) {
+    gameMap[position[1]][position[0]] = cellData;
+  }
 
   return {
     ...state,
-    // gameMap,
+    gameMap,
   };
 };
 

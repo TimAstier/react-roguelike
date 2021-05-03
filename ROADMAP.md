@@ -22,7 +22,7 @@
 - [x] Reveal adjacent walls
 - [x] Toolbar (to see available tiles)
 - [x] Add tiles to map in /pcg
-- [ ] Load game from map in /pcg
+- [x] Load game from map in /pcg
 - [ ] Seed map with RNG
 - [ ] Add HP state and design
 - [ ] Fix can see through diagonal walls

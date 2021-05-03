@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 // import seedrandom from 'seedrandom';
 import { generateLevel } from '../../pcg/generateLevel';
-import { game } from '../../reducers';
-import { gameActions, INITIAL_STATE } from '../../reducers/game';
-import { CellContent, CellTile } from '../../typings/cell';
+import { gameActions } from '../../reducers/game';
+import { GameAction, GameState } from '../../reducers/game';
+import { CellContent, CellData, CellTile } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import Map from '../Map';
 import { Toolbar } from './Toolbar';
@@ -18,8 +18,12 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-export const MapGenerator: React.FC = () => {
-  const [state, dispatch] = React.useReducer(game, INITIAL_STATE);
+interface Props {
+  state: GameState;
+  dispatch: React.Dispatch<GameAction>;
+}
+
+export const MapGenerator: React.FC<Props> = (props) => {
   const [selectedTile, setSelectedTile] = React.useState<CellTile | null>(null);
   const [selectedContent, setSelectedContent] = React.useState<CellContent | null>(null);
 
@@ -28,11 +32,12 @@ export const MapGenerator: React.FC = () => {
     // const seed = seedrandom('hello');
     // const newMap = generateMap(String(seed()));
     const level = generateLevel();
-    // dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
-    dispatch(gameActions.setCurrentMap(level.gameMap));
+    // TODO: Bug - Init visibility does not work
+    props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
+    props.dispatch(gameActions.setCurrentMap(level.gameMap));
   }, []);
 
-  if (state.currentMap === null) {
+  if (props.state.currentMap === null) {
     return <div>loading...</div>;
   }
 
@@ -46,20 +51,15 @@ export const MapGenerator: React.FC = () => {
     setSelectedContent(content);
   };
 
-  const handleCellClick = (position: Position) => {
-    if (state.currentMap !== null) {
-      const cellData = state.currentMap[position[1]][position[0]];
-
-      if (selectedTile) {
-        cellData.tile = selectedTile;
-      }
-
-      if (selectedContent) {
-        cellData.content = selectedContent;
-      }
-
-      dispatch(gameActions.updateCell({ position, cellData }));
+  const handleCellClick = (position: Position, cellData: CellData) => {
+    if (selectedTile) {
+      cellData.tile = selectedTile;
     }
+
+    if (selectedContent) {
+      cellData.content = selectedContent;
+    }
+    props.dispatch(gameActions.updateCell({ position, cellData }));
   };
 
   return (
@@ -75,7 +75,7 @@ export const MapGenerator: React.FC = () => {
         playerPosition={[0, 0]}
         fogOfWar={false}
         moveDirection={'Up'}
-        gameMap={state.currentMap}
+        gameMap={props.state.currentMap}
         shouldPlayerAnimate={false}
         handleCellClick={handleCellClick}
       />
