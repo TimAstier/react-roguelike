@@ -1,6 +1,6 @@
 import { maps } from '../../data/maps';
 import { createGameMap } from '../../pcg/generateLevel';
-import { Position } from '../../typings/Position';
+import { Position } from '../../typings/position';
 import { getVisibility } from '../getVisibility';
 
 const maxClearVisibility = 4.5;
