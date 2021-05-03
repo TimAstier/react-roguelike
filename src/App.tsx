@@ -10,6 +10,8 @@ import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
 import { Game } from './components/Game';
 import { MapGenerator } from './components/MapGenerator';
 import { useDetectUserInput } from './hooks/useDetectUserInput';
+import { game } from './reducers';
+import { INITIAL_STATE } from './reducers/game';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,10 +19,12 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: black;
   height: 100%;
+  width: 100%;
   font-family: UglyTerminal;
 `;
 
 export const App: React.FC = () => {
+  const [state, dispatch] = React.useReducer(game, INITIAL_STATE);
   const [play, { stop }] = useSound<HowlOptions>(crystalCaveSong, { loop: true, volume: 0.1 });
   const didUserInput = useDetectUserInput();
   const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(false);
@@ -45,12 +49,14 @@ export const App: React.FC = () => {
         <Switch>
           <Route exact path="/">
             <Game
+              state={state}
+              dispatch={dispatch}
               withBackgroundMusic={withBackgroundMusic}
               setWithBackgroundMusic={setWithBackgroundMusic}
             />
           </Route>
           <Route exact path="/pcg">
-            <MapGenerator />
+            <MapGenerator state={state} dispatch={dispatch} />
           </Route>
         </Switch>
       </Router>

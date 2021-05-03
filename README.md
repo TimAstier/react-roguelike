@@ -1,7 +1,7 @@
 <div align="center">
 <h1>React RPG game</h1>
 
-<p>A RPG game built with React and TypeScript.</p>
+<p>A roguelike game built with React and TypeScript.</p>
 <p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
 </div>
 
@@ -65,6 +65,7 @@ See [ROADMAP](ROADMAP.md).
 - [open-game-art.org](opengameart.org)
   - [rpg-sound-pack](https://opengameart.org/content/rpg-sound-pack)
 - [game-icons.net](https://game-icons.net/)
+- [PixelArt online editor](https://www.pixelartcss.com/)
 
 ## 2D Art
 

@@ -11,7 +11,7 @@ import {
 import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import Cell from './Cell';
+import { Cell } from './Cell';
 
 interface StylingProps {
   left: number;
@@ -42,6 +42,7 @@ interface Props {
   gameMap: CellData[][];
   shouldPlayerAnimate: boolean;
   inViewport: boolean;
+  handleCellClick?: (position: Position, cellData: CellData) => void;
 }
 
 const Map: React.FC<Props> = ({
@@ -51,8 +52,9 @@ const Map: React.FC<Props> = ({
   gameMap,
   shouldPlayerAnimate,
   inViewport,
+  handleCellClick,
 }) => {
-  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 15;
+  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 16;
 
   const renderCells = () => {
     return gameMap.map((row, posX) => {
@@ -69,6 +71,9 @@ const Map: React.FC<Props> = ({
             shouldPlayerAnimate={shouldPlayerAnimate}
             cellWidth={cellWidth}
             inViewport={inViewport}
+            handleClick={
+              handleCellClick ? () => handleCellClick([posY, posX], cellData) : undefined
+            }
           />
         );
       });

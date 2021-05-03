@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
 import { generateLevel } from '../pcg/generateLevel';
-import { game } from '../reducers';
-import { gameActions, INITIAL_STATE } from '../reducers/game';
+import { GameAction, GameState } from '../reducers/game';
+import { gameActions } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { DoubleBorders } from './DoubleBorders';
 import { EventLogs } from './EventLogs';
@@ -57,18 +57,21 @@ const mapKeyCodeToDirection = (keyCode: number): MoveDirection | undefined => {
 };
 
 interface Props {
+  state: GameState;
+  dispatch: React.Dispatch<GameAction>;
   withBackgroundMusic: boolean;
   setWithBackgroundMusic: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Game: React.FC<Props> = (props) => {
-  const [state, dispatch] = React.useReducer(game, INITIAL_STATE);
   const lastMoveDate = useRef(Date.now());
 
   useEffect(() => {
-    const level = generateLevel();
-    dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
-    dispatch(gameActions.setCurrentMap(level.gameMap));
+    if (props.state.currentMap === null) {
+      const level = generateLevel();
+      props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
+      props.dispatch(gameActions.setCurrentMap(level.gameMap));
+    }
   }, []);
 
   useEffect(() => {
@@ -91,7 +94,7 @@ export const Game: React.FC<Props> = (props) => {
       lastMoveDate.current = Date.now();
       const direction = mapKeyCodeToDirection(keyCode);
       if (direction) {
-        dispatch(gameActions.movePlayer(direction));
+        props.dispatch(gameActions.movePlayer(direction));
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -101,14 +104,14 @@ export const Game: React.FC<Props> = (props) => {
   }, []);
 
   const renderGameContent = () => {
-    return state.currentMap ? (
+    return props.state.currentMap ? (
       <Map
         inViewport={true}
-        playerPosition={state.playerPosition}
+        playerPosition={props.state.playerPosition}
         fogOfWar={true}
-        moveDirection={state.moveDirection}
-        gameMap={state.currentMap}
-        shouldPlayerAnimate={state.shouldPlayerAnimate}
+        moveDirection={props.state.moveDirection}
+        gameMap={props.state.currentMap}
+        shouldPlayerAnimate={props.state.shouldPlayerAnimate}
       />
     ) : null;
   };

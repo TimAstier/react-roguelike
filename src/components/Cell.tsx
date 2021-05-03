@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import sword from '../assets/images/sword.png';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Visibility } from '../typings/visibility';
@@ -33,7 +34,7 @@ const Wrapper = styled.div<StylingProps>`
   color: ${(p) => p.color};
 `;
 
-interface Props {
+export interface CellProps {
   content: CellContent;
   moveDirection: MoveDirection;
   tile: CellTile;
@@ -41,9 +42,10 @@ interface Props {
   visibility: Visibility;
   cellWidth: number;
   inViewport: boolean;
+  handleClick?: () => void;
 }
 
-const Cell: React.FC<Props> = ({
+export const Cell: React.FC<CellProps> = ({
   content,
   moveDirection,
   tile,
@@ -51,13 +53,22 @@ const Cell: React.FC<Props> = ({
   visibility,
   cellWidth,
   inViewport,
+  handleClick,
 }) => {
   const renderContent = () => {
-    if (content === 'Player') {
+    if (content === 'Player' && inViewport) {
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
-    if (tile === 'X') {
-      return ''; // return '#';
+
+    if (content === 'Sword') {
+      return <img style={{ height: '100%', width: '100%' }} src={sword} />;
+    }
+
+    if (tile === '#') {
+      if (visibility !== 'dark') {
+        return '#';
+      }
+      return '';
     }
     if (tile === ' ') {
       return '';
@@ -77,14 +88,13 @@ const Cell: React.FC<Props> = ({
 
   return (
     <Wrapper
+      onClick={handleClick}
       backgroundColor={backgroundColor}
       cellWidth={cellWidth}
       inViewport={inViewport}
-      color={tile === 'X' ? 'white' : 'black'}
+      color={tile === '#' ? 'white' : 'black'}
     >
       {renderContent()}
     </Wrapper>
   );
 };
-
-export default Cell;

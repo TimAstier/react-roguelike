@@ -6,7 +6,9 @@ import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { Area } from '../typings/area';
 import { CellData, CellTile } from '../typings/cell';
 import { Level } from '../typings/level';
+import { Position } from '../typings/position';
 import { findCellsInArea } from '../utils/findCellsInArea';
+import { updateVisibility } from '../utils/updateVisibility';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
 import { horizontalSplitArea } from './horizontalSplitArea';
@@ -24,7 +26,7 @@ const createEmptyMap = (width: number, height: number): CellTile[][] => {
   for (let j = 0; j < height; j++) {
     map[j] = [];
     for (let i = 0; i < width; i++) {
-      map[j][i] = 'X';
+      map[j][i] = '#';
     }
   }
   return map;
@@ -35,7 +37,7 @@ const placeRectangleOnMap = (map: CellTile[][], area: Area): CellTile[][] => {
   for (let i = area.origin.x; i <= area.end.x; i++) {
     for (let j = area.origin.y; j <= area.end.y; j++) {
       if (i === area.origin.x || i === area.end.x || j === area.origin.y || j === area.end.y) {
-        newMap[j][i] = 'X';
+        newMap[j][i] = '#';
       } else {
         newMap[j][i] = '.';
       }
@@ -146,6 +148,25 @@ const generateMap = (): CellTile[][] => {
   return resultMap;
 };
 
+export const createGameMap = (
+  map: CellTile[][],
+  spawn: Position,
+  width: number,
+  height: number
+): CellData[][] => {
+  const gameMap: CellData[][] = [];
+  for (let j = 0; j < height; j += 1) {
+    gameMap[j] = [];
+    for (let i = 0; i < width; i += 1) {
+      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false, visibility: 'dark' };
+      if (i === spawn[0] && j === spawn[1]) {
+        gameMap[j][i].content = 'Player';
+      }
+    }
+  }
+  return gameMap;
+};
+
 export const generateLevel = (): Level => {
   const map = generateMap();
 
@@ -157,16 +178,10 @@ export const generateLevel = (): Level => {
   map[spawn[1]][spawn[0]] = '@';
 
   // Create gameMap
-  const gameMap: CellData[][] = [];
-  for (let j = 0; j < GRID_HEIGHT; j += 1) {
-    gameMap[j] = [];
-    for (let i = 0; i < GRID_WIDTH; i += 1) {
-      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false, visibility: 'dark' };
-      if (i === spawn[0] && j === spawn[1]) {
-        gameMap[j][i].content = 'Player';
-      }
-    }
-  }
+  let gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT);
+
+  // Initialise visibility
+  gameMap = updateVisibility(spawn, gameMap);
 
   return { gameMap, playerSpawn: [spawn[0], spawn[1]] };
 };
