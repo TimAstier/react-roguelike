@@ -11276,6 +11276,11 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-immer@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/use-immer/-/use-immer-0.5.1.tgz#3862ebbb194ebfe66b8eb221082c2fb2585f8fe1"
+  integrity sha512-Orb7PokM+jiLQfA1oJ3B3P7Guq0c2IxUHHmBpLeEMnJiz4ZOMlj9mkqq6D7iXJsnurRX0EOB134annf3RjEWHw==
+
 use-sound@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-2.1.0.tgz#af22bbba4368af3e5795a6d08f31de7466584d84"

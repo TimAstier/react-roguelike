@@ -52,14 +52,15 @@ export const MapGenerator: React.FC<Props> = (props) => {
   };
 
   const handleCellClick = (position: Position, cellData: CellData) => {
+    const updatedCellData = { ...cellData };
     if (selectedTile) {
-      cellData.tile = selectedTile;
+      updatedCellData.tile = selectedTile;
     }
 
     if (selectedContent) {
-      cellData.content = selectedContent;
+      updatedCellData.content = selectedContent;
     }
-    props.dispatch(gameActions.updateCell({ position, cellData }));
+    props.dispatch(gameActions.updateCell({ position, cellData: updatedCellData }));
   };
 
   return (

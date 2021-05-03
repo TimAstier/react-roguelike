@@ -1,5 +1,3 @@
-import { Reducer } from 'react';
-
 import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { CellData, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
@@ -66,126 +64,106 @@ export const INITIAL_STATE: GameState = {
 
 // REDUCER
 
-const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) => {
+const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) => {
   let nextTileX: number;
   let nextTileY: number;
   let nextTile: CellTile;
 
-  if (state.currentMap === null) {
-    return state;
+  if (draft.currentMap === null) {
+    return;
   }
 
   const moveToNewPosition = (position: Position) => {
-    let newGameMap = state.currentMap;
-    if (newGameMap) {
+    if (draft.currentMap) {
       // Empty previous location
-      newGameMap[state.playerPosition[1]][state.playerPosition[0]].content = 0;
+      draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
 
       // Move player
-      newGameMap[position[1]][position[0]].content = 'Player';
+      draft.currentMap[position[1]][position[0]].content = 'Player';
 
       // Update visibility
-      newGameMap = updateVisibility(position, newGameMap);
+      draft.currentMap = updateVisibility(position, draft.currentMap);
 
-      return {
-        ...state,
-        currentMap: newGameMap,
-        moveDirection,
-        playerPosition: position,
-        playerPreviousPosition: state.playerPosition,
-        shouldPlayerAnimate: true,
-      };
+      // Update player position
+      draft.playerPreviousPosition = draft.playerPosition;
+      draft.playerPosition = position;
+      draft.shouldPlayerAnimate = true;
+      draft.moveDirection = moveDirection;
     }
-    return state;
   };
 
-  const moveAndStayAtSamePosition = () => ({ ...state, moveDirection, shouldPlayerAnimate: false });
+  const moveAndStayAtSamePosition = () => ({ ...draft, moveDirection, shouldPlayerAnimate: false });
 
   switch (moveDirection) {
     case 'Left':
       nextTileX =
-        state.playerPosition[0] > 0 ? state.playerPosition[0] - 1 : state.playerPosition[0];
-      nextTileY = state.playerPosition[1];
-      nextTile = state.currentMap[nextTileY][nextTileX].tile;
+        draft.playerPosition[0] > 0 ? draft.playerPosition[0] - 1 : draft.playerPosition[0];
+      nextTileY = draft.playerPosition[1];
+      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[0] > 0 && nextTile !== '#') {
+      if (draft.playerPosition[0] > 0 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
 
     case 'Right':
       nextTileX =
-        state.playerPosition[0] < GRID_WIDTH
-          ? state.playerPosition[0] + 1
-          : state.playerPosition[0];
-      nextTileY = state.playerPosition[1];
+        draft.playerPosition[0] < GRID_WIDTH
+          ? draft.playerPosition[0] + 1
+          : draft.playerPosition[0];
+      nextTileY = draft.playerPosition[1];
 
-      nextTile = state.currentMap[nextTileY][nextTileX].tile;
+      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== '#') {
+      if (draft.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
 
     case 'Up':
-      nextTileX = state.playerPosition[0];
+      nextTileX = draft.playerPosition[0];
       nextTileY =
-        state.playerPosition[1] > 0 ? state.playerPosition[1] - 1 : state.playerPosition[1];
-      nextTile = state.currentMap[nextTileY][nextTileX].tile;
+        draft.playerPosition[1] > 0 ? draft.playerPosition[1] - 1 : draft.playerPosition[1];
+      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[1] > 0 && nextTile !== '#') {
+      if (draft.playerPosition[1] > 0 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
 
     case 'Down':
-      nextTileX = state.playerPosition[0];
+      nextTileX = draft.playerPosition[0];
       nextTileY =
-        state.playerPosition[1] < GRID_HEIGHT - 1
-          ? state.playerPosition[1] + 1
-          : state.playerPosition[1];
-      nextTile = state.currentMap[nextTileY][nextTileX].tile;
+        draft.playerPosition[1] < GRID_HEIGHT - 1
+          ? draft.playerPosition[1] + 1
+          : draft.playerPosition[1];
+      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
 
-      if (state.playerPosition[1] < GRID_HEIGHT - 1 && nextTile !== '#') {
+      if (draft.playerPosition[1] < GRID_HEIGHT - 1 && nextTile !== '#') {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
       return moveAndStayAtSamePosition();
-
-    default:
-      return state;
   }
 };
 
-const reduceUpdateCell = (state = INITIAL_STATE, payload: UpdateCellPayload) => {
-  // TODO: Make state immutable?
-  const gameMap = state.currentMap;
+const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => {
   const { position, cellData } = payload;
 
-  if (gameMap !== null) {
-    gameMap[position[1]][position[0]] = cellData;
+  if (draft.currentMap !== null) {
+    draft.currentMap[position[1]][position[0]] = cellData;
   }
-
-  return {
-    ...state,
-    gameMap,
-  };
 };
 
-export const game: Reducer<GameState, GameAction> = (state = INITIAL_STATE, action) => {
+export const game = (draft = INITIAL_STATE, action: GameAction): GameState | void => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
-      return reduceMovePlayer(state, action.direction);
+      return reduceMovePlayer(draft, action.direction);
     case '@@GAME/SET_CURRENT_MAP':
-      return { ...state, currentMap: action.currentMap };
+      return void (draft.currentMap = action.currentMap);
     case '@@GAME/INIT_PLAYER_SPAWN':
-      return {
-        ...state,
-        playerPosition: action.playerSpawn,
-        playerPreviousPosition: action.playerSpawn,
-      };
+      draft.playerPosition = action.playerSpawn;
+      return void (draft.playerPreviousPosition = action.playerSpawn);
     case '@@GAME/UPDATE_CELL':
-      return reduceUpdateCell(state, action.payload);
-    default:
-      return INITIAL_STATE;
+      return reduceUpdateCell(draft, action.payload);
   }
 };
