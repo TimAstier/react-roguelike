@@ -23,6 +23,7 @@
 - [x] Toolbar (to see available tiles)
 - [x] Add tiles to map in /pcg
 - [x] Load game from map in /pcg
+- [ ] Add Cell logic to render tiles or content depending on visibility and revealed
 - [ ] Seed map with RNG
 - [ ] Add HP state and design
 - [ ] Fix can see through diagonal walls

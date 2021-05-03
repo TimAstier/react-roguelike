@@ -56,6 +56,7 @@ export const Cell: React.FC<CellProps> = ({
   handleClick,
 }) => {
   const renderContent = () => {
+    // TODO Hide content and tiles that are not visible
     if (content === 'Player' && inViewport) {
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
