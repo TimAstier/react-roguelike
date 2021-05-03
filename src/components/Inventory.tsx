@@ -7,7 +7,8 @@ import gemBlue from '../assets/images/ravenmore64/gemBlue.png';
 import gemGreen from '../assets/images/ravenmore64/gemGreen.png';
 import helmet from '../assets/images/ravenmore64/helmet.png';
 import shieldSmall from '../assets/images/ravenmore64/shieldSmall.png';
-import swordWood from '../assets/images/ravenmore64/swordWood.png';
+// import swordWood from '../assets/images/ravenmore64/swordWood.png';
+import sword from '../assets/images/sword.png';
 // import { Sprite } from './Sprite';
 import { DoubleBorders } from './DoubleBorders';
 
@@ -56,7 +57,7 @@ export const Inventory: React.FC = () => {
           </Slot>{' '}
           <PlaceholderSlot />
           <Slot>
-            <img src={swordWood} />
+            <img style={{ height: '80%', width: '80%' }} src={sword} />
           </Slot>{' '}
           <Slot>
             <img src={armor} />

@@ -6,7 +6,8 @@ import {
   CELL_WIDTH_IN_PIXELS,
   GRID_HEIGHT,
   GRID_WIDTH,
-  NUMBER_OF_CELLS_IN_VIEWPORT,
+  NUMBER_OF_CELLS_IN_VIEWPORT_X,
+  NUMBER_OF_CELLS_IN_VIEWPORT_Y,
 } from '../constants/config';
 import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
@@ -82,9 +83,9 @@ const Map: React.FC<Props> = ({
 
   // Note: Should this logic be part of the Viewport?
   const mapLeftPosition =
-    (-playerPosition[0] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
+    (-playerPosition[0] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2)) * cellWidth;
   const mapUpPosition =
-    (-playerPosition[1] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
+    (-playerPosition[1] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_Y / 2)) * cellWidth;
 
   return (
     <Wrapper
