@@ -65,6 +65,7 @@ const Map: React.FC<Props> = ({
         return (
           <Cell
             visibility={visibility}
+            revealed={cellData.revealed}
             key={position}
             content={cellData.content}
             moveDirection={moveDirection}

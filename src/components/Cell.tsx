@@ -44,6 +44,7 @@ export interface CellProps {
   cellWidth: number;
   inViewport: boolean;
   handleClick?: () => void;
+  revealed: boolean;
 }
 
 export const Cell: React.FC<CellProps> = ({
@@ -55,17 +56,21 @@ export const Cell: React.FC<CellProps> = ({
   cellWidth,
   inViewport,
   handleClick,
+  revealed,
 }) => {
+  const renderPlayer = () => {
+    return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
+  };
+
   const renderContent = () => {
-    // TODO Hide content and tiles that are not visible
-    if (content === 'Player' && inViewport) {
-      return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
+    if (revealed || !inViewport) {
+      if (content === 'Sword') {
+        return <Sprite imageSrc={roguelikeitems} position={[2, 7]} pixelDimensions={16} />;
+      }
     }
+  };
 
-    if (content === 'Sword') {
-      return <Sprite imageSrc={roguelikeitems} position={[2, 7]} pixelDimensions={16} />;
-    }
-
+  const renderTile = () => {
     if (tile === '#') {
       if (visibility !== 'dark') {
         return '#';
@@ -79,6 +84,16 @@ export const Cell: React.FC<CellProps> = ({
       return '@';
     }
     return '.';
+  };
+
+  const renderContentOrTile = () => {
+    if (content === 'Player') {
+      return renderPlayer();
+    }
+    if (content !== 0 && (revealed || !inViewport)) {
+      return renderContent();
+    }
+    return renderTile();
   };
 
   const visibilityModifier = mapVisibilityToModifier[visibility];
@@ -96,7 +111,7 @@ export const Cell: React.FC<CellProps> = ({
       inViewport={inViewport}
       color={tile === '#' ? 'white' : 'black'}
     >
-      {renderContent()}
+      {renderContentOrTile()}
     </Wrapper>
   );
 };

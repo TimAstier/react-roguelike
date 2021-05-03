@@ -41,6 +41,7 @@ const defaultCellProps: CellProps = {
   visibility: 'clear',
   cellWidth: CELL_WIDTH_IN_PIXELS,
   inViewport: true,
+  revealed: true,
 };
 
 interface Props {

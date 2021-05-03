@@ -18,14 +18,18 @@ const Slot = styled.div`
   box-sizing: border-box;
 `;
 
-const ItemWrapper = styled.div`
+interface ItemWrapperProps {
+  hasItem: boolean;
+}
+
+const ItemWrapper = styled.div<ItemWrapperProps>`
   box-sizing: border-box;
   width: 25px;
   height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: ${(p) => (p.hasItem ? 'white' : '#6e6e6e')};
   border-radius: 6px;
 `;
 
@@ -81,64 +85,48 @@ export const Inventory: React.FC = () => {
           <EquipedWrapper>
             <PlaceholderSlot />
             <Slot>
-              <ItemWrapper />
+              <ItemWrapper hasItem={false} />
             </Slot>{' '}
             <PlaceholderSlot />
             <Slot>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
+              <ItemWrapper hasItem={true}>
+                <Sprite imageSrc={roguelikeitems} position={[3, 8]} pixelDimensions={16} />
               </ItemWrapper>
             </Slot>{' '}
             <Slot>
-              <ItemWrapper />
+              <ItemWrapper hasItem={false} />
             </Slot>{' '}
             <Slot>
-              <ItemWrapper />
+              <ItemWrapper hasItem={false} />
             </Slot>{' '}
             <Slot>
-              <ItemWrapper />
+              <ItemWrapper hasItem={false} />
             </Slot>{' '}
-            <Slot></Slot>{' '}
             <Slot>
-              <ItemWrapper />
+              <ItemWrapper hasItem={false} />
+            </Slot>{' '}
+            <Slot>
+              <ItemWrapper hasItem={false} />
             </Slot>{' '}
           </EquipedWrapper>
           <p>-----</p>
           <OtherItems>
             <SingleItemWrapper>
-              <ItemWrapper>
+              <ItemWrapper hasItem={true}>
                 <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
               </ItemWrapper>
             </SingleItemWrapper>
             <SingleItemWrapper>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
+              <ItemWrapper hasItem={false}></ItemWrapper>
             </SingleItemWrapper>
             <SingleItemWrapper>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
+              <ItemWrapper hasItem={false}></ItemWrapper>
             </SingleItemWrapper>
             <SingleItemWrapper>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
+              <ItemWrapper hasItem={false}></ItemWrapper>
             </SingleItemWrapper>
             <SingleItemWrapper>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
-            </SingleItemWrapper>
-            <SingleItemWrapper>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
-            </SingleItemWrapper>
-            <SingleItemWrapper>
-              <ItemWrapper>
-                <Sprite imageSrc={roguelikeitems} position={[0, 0]} pixelDimensions={16} />
-              </ItemWrapper>
+              <ItemWrapper hasItem={false}></ItemWrapper>
             </SingleItemWrapper>
           </OtherItems>
         </InnerWrapper>
