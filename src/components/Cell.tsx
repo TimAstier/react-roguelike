@@ -108,7 +108,7 @@ export const Cell: React.FC<CellProps> = ({
         return '#131226';
       }
       if (visibility === 'dim') {
-        return 'black';
+        return '#020211';
       }
     }
     if (tile === '#') {

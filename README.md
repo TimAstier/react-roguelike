@@ -92,12 +92,14 @@ See [ROADMAP](ROADMAP.md).
 - [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
 - [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
 - [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- [user-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
 
 ## Credits
 
 - Music from Pixelsphere.org / The Cynic Project: https://opengameart.org/content/crystal-cave-song18
 - Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/)
 - [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter).
+- Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 
 ## License
 

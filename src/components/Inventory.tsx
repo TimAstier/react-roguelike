@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
+import { NUMBER_OF_INVENTORY_SLOTS } from '../constants/config';
+import { getItem } from '../constants/items';
+import { ItemType } from '../typings/itemType';
 import { DoubleBorders } from './DoubleBorders';
 
-interface ItemWrapperProps {
-  hasItem: boolean;
-}
-
-const ItemWrapper = styled.div<ItemWrapperProps>`
+const ItemWrapper = styled.div`
   box-sizing: border-box;
   width: 25px;
   height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(p) => (p.hasItem ? 'white' : '#6e6e6e')};
+  background-color: #131226;
   border-radius: 6px;
 `;
 
@@ -48,62 +47,49 @@ const SingleItemWrapper = styled.div`
 `;
 
 interface Props {
-  inventory: string[];
+  inventory: ItemType[];
 }
 
+const renderItemSlot = (itemType: ItemType | null, index: number) => {
+  if (itemType) {
+    return (
+      <SingleItemWrapper key={`slot-${index}`}>
+        <ItemWrapper key={itemType}>
+          <Sprite
+            imageSrc={roguelikeitems}
+            position={getItem(itemType)?.spritePosition || [0, 0]}
+            pixelDimensions={16}
+          />
+        </ItemWrapper>
+      </SingleItemWrapper>
+    );
+  }
+  return (
+    <SingleItemWrapper key={`slot-${index}`}>
+      <ItemWrapper></ItemWrapper>
+    </SingleItemWrapper>
+  );
+};
+
 export const Inventory: React.FC<Props> = (props) => {
+  const renderItemSlots = () => {
+    const itemSlots: ReactNode[] = [];
+    for (let i = 0; i < NUMBER_OF_INVENTORY_SLOTS; i++) {
+      if (props.inventory[i]) {
+        itemSlots.push(renderItemSlot(props.inventory[i], i));
+      } else {
+        itemSlots.push(renderItemSlot(null, i));
+      }
+    }
+
+    return itemSlots;
+  };
+
   return (
     <Wrapper>
       <div>
         <DoubleBorders>
-          <div>
-            <Items>
-              <SingleItemWrapper>
-                {props.inventory.some((item) => item === 'Key') ? (
-                  <ItemWrapper hasItem={true}>
-                    <Sprite imageSrc={roguelikeitems} position={[11, 3]} pixelDimensions={16} />
-                  </ItemWrapper>
-                ) : (
-                  <SingleItemWrapper>
-                    <ItemWrapper hasItem={false}></ItemWrapper>
-                  </SingleItemWrapper>
-                )}
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-              <SingleItemWrapper>
-                <ItemWrapper hasItem={false}></ItemWrapper>
-              </SingleItemWrapper>
-            </Items>
-          </div>
+          <Items>{renderItemSlots()}</Items>
         </DoubleBorders>
       </div>
     </Wrapper>

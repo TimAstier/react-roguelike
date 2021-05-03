@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import roguelikeitems from '../assets/images/roguelikeitems.png';
 import rpgicons from '../assets/images/rpgicons.png';
 import { Sprite } from '../components/Sprite';
+import { ItemType } from '../typings/itemType';
 import { DoubleBorders } from './DoubleBorders';
 
 const Wrapper = styled.div`
@@ -35,18 +36,14 @@ const Slot = styled.div`
   box-sizing: border-box;
 `;
 
-interface ItemWrapperProps {
-  hasItem: boolean;
-}
-
-const ItemWrapper = styled.div<ItemWrapperProps>`
+const ItemWrapper = styled.div`
   box-sizing: border-box;
   width: 25px;
   height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(p) => (p.hasItem ? 'white' : '#6e6e6e')};
+  background-color: #131226;
   border-radius: 6px;
 `;
 
@@ -74,7 +71,7 @@ interface Props {
   hp: number;
   maxHp: number;
   gold: number;
-  equipedItems: string[];
+  equipedItems: ItemType[];
 }
 
 export const PlayerStats: React.FC<Props> = (props) => {
@@ -115,34 +112,34 @@ export const PlayerStats: React.FC<Props> = (props) => {
       <EquipedWrapper>
         <PlaceholderSlot />
         <Slot>
-          <ItemWrapper hasItem={false} />
+          <ItemWrapper />
         </Slot>{' '}
         <PlaceholderSlot />
         {props.equipedItems.some((item) => item === 'Sword') ? (
           <Slot>
-            <ItemWrapper hasItem={true}>
+            <ItemWrapper>
               <Sprite imageSrc={roguelikeitems} position={[3, 8]} pixelDimensions={16} />
             </ItemWrapper>
           </Slot>
         ) : (
           <Slot>
-            <ItemWrapper hasItem={false} />
+            <ItemWrapper />
           </Slot>
         )}
         <Slot>
-          <ItemWrapper hasItem={false} />
+          <ItemWrapper />
         </Slot>{' '}
         <Slot>
-          <ItemWrapper hasItem={false} />
+          <ItemWrapper />
         </Slot>{' '}
         <Slot>
-          <ItemWrapper hasItem={false} />
+          <ItemWrapper />
         </Slot>{' '}
         <Slot>
-          <ItemWrapper hasItem={false} />
+          <ItemWrapper />
         </Slot>{' '}
         <Slot>
-          <ItemWrapper hasItem={false} />
+          <ItemWrapper />
         </Slot>{' '}
       </EquipedWrapper>
       <div>

@@ -1,5 +1,6 @@
 import { GRID_HEIGHT, GRID_WIDTH, INITIAL_MAX_HP } from '../constants/config';
 import { CellData, CellTile } from '../typings/cell';
+import { ItemType } from '../typings/itemType';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { updateVisibility } from '../utils/updateVisibility';
@@ -62,8 +63,8 @@ export interface GameState {
   hp: number;
   maxHp: number;
   gold: number;
-  equipedItems: string[];
-  inventory: string[];
+  equipedItems: ItemType[];
+  inventory: ItemType[];
   interactionText: string;
   eventLogs: string[];
 }
@@ -80,8 +81,15 @@ export const INITIAL_STATE: GameState = {
   gold: 0,
   equipedItems: [],
   inventory: [],
-  interactionText: '',
-  eventLogs: [],
+  interactionText: 'You enter the dungeon.',
+  eventLogs: [
+    '1) You take 4 damage.',
+    '2) You see a Ghost.',
+    '3) You catch on fire',
+    '4) The spider bites you for 5 piercing damage.',
+    '5) You miss the spider.',
+    '6) Hey',
+  ],
 };
 
 // REDUCER

@@ -17,3 +17,4 @@ export const MAX_CLEAR_VISIBILITY = 6.5;
 export const MAX_VISIBILITY = 8.5;
 
 export const INITIAL_MAX_HP = 30;
+export const NUMBER_OF_INVENTORY_SLOTS = 8;

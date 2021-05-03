@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75px;
+  height: 50px;
   width: ${VIEWPORT_WIDTH_IN_PIXELS}px;
   background-color: black;
   color: white;
@@ -16,6 +16,8 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
+  font-family: Ubuntu Mono;
+  font-size: 22px;
 `;
 
 interface Props {

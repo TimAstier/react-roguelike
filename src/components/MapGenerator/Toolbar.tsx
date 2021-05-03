@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
+import { ITEMS } from '../../constants/items';
 import { CellContent, CellTile } from '../../typings/cell';
 import { Cell, CellProps } from '../Cell';
 
@@ -92,27 +93,18 @@ export const Toolbar: React.FC<Props> = (props) => {
         <Cell {...defaultCellProps} tile={'.'} content="Player" />
         <Label>Player</Label>
       </CellWrapper>
-      <CellWrapper
-        selected={props.selectedContent === 'Sword'}
-        onClick={() => props.handleSelectedContent('Sword')}
-      >
-        <Cell {...defaultCellProps} tile={'.'} content="Sword" />
-        <Label>Sword</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedContent === 'Ruby'}
-        onClick={() => props.handleSelectedContent('Ruby')}
-      >
-        <Cell {...defaultCellProps} tile={'.'} content="Ruby" />
-        <Label>Ruby</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedContent === 'Key'}
-        onClick={() => props.handleSelectedContent('Key')}
-      >
-        <Cell {...defaultCellProps} tile={'.'} content="Key" />
-        <Label>Key</Label>
-      </CellWrapper>
+      {ITEMS.map((item) => {
+        return (
+          <CellWrapper
+            key={item.type}
+            selected={props.selectedContent === item.type}
+            onClick={() => props.handleSelectedContent(item.type)}
+          >
+            <Cell {...defaultCellProps} tile={'.'} content={item.type} />
+            <Label>{item.type}</Label>
+          </CellWrapper>
+        );
+      })}
       <p>----</p>
       <Link to="/">PLAY</Link>
     </Wrapper>
