@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import sword from '../assets/images/sword.png';
 import { CellContent, CellTile } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Visibility } from '../typings/visibility';
@@ -41,6 +42,7 @@ export interface CellProps {
   visibility: Visibility;
   cellWidth: number;
   inViewport: boolean;
+  handleClick?: () => void;
 }
 
 export const Cell: React.FC<CellProps> = ({
@@ -51,11 +53,17 @@ export const Cell: React.FC<CellProps> = ({
   visibility,
   cellWidth,
   inViewport,
+  handleClick,
 }) => {
   const renderContent = () => {
     if (content === 'Player' && inViewport) {
       return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
     }
+
+    if (content === 'Sword') {
+      return <img style={{ height: '100%', width: '100%' }} src={sword} />;
+    }
+
     if (tile === '#') {
       if (visibility !== 'dark') {
         return '#';
@@ -80,6 +88,7 @@ export const Cell: React.FC<CellProps> = ({
 
   return (
     <Wrapper
+      onClick={handleClick}
       backgroundColor={backgroundColor}
       cellWidth={cellWidth}
       inViewport={inViewport}

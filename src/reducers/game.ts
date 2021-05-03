@@ -8,10 +8,16 @@ import { updateVisibility } from '../utils/updateVisibility';
 
 // ACTIONS
 
+interface UpdateCellPayload {
+  cellData: CellData;
+  position: Position;
+}
+
 export type GameAction =
   | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
   | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellData[][] }
-  | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position };
+  | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position }
+  | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -28,10 +34,16 @@ const initPlayerSpawn = (playerSpawn: Position): GameAction => ({
   playerSpawn,
 });
 
+const updateCell = (payload: UpdateCellPayload): GameAction => ({
+  type: '@@GAME/UPDATE_CELL',
+  payload,
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
   initPlayerSpawn,
+  updateCell,
 };
 
 // INITIAL_STATE
@@ -144,6 +156,18 @@ const reduceMovePlayer = (state = INITIAL_STATE, moveDirection: MoveDirection) =
   }
 };
 
+const reduceUpdateCell = (state = INITIAL_STATE, payload: UpdateCellPayload) => {
+  const gameMap = state.currentMap;
+
+  console.log(payload.position);
+  console.log(payload.cellData);
+
+  return {
+    ...state,
+    // gameMap,
+  };
+};
+
 export const game: Reducer<GameState, GameAction> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
@@ -156,6 +180,8 @@ export const game: Reducer<GameState, GameAction> = (state = INITIAL_STATE, acti
         playerPosition: action.playerSpawn,
         playerPreviousPosition: action.playerSpawn,
       };
+    case '@@GAME/UPDATE_CELL':
+      return reduceUpdateCell(state, action.payload);
     default:
       return INITIAL_STATE;
   }

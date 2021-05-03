@@ -21,7 +21,7 @@
 - [x] Remember visibility of explored cells
 - [x] Reveal adjacent walls
 - [x] Toolbar (to see available tiles)
-- [ ] Add tiles to map in /pcg
+- [x] Add tiles to map in /pcg
 - [ ] Load game from map in /pcg
 - [ ] Seed map with RNG
 - [ ] Add HP state and design

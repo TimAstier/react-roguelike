@@ -42,6 +42,7 @@ interface Props {
   gameMap: CellData[][];
   shouldPlayerAnimate: boolean;
   inViewport: boolean;
+  handleCellClick?: (position: Position) => void;
 }
 
 const Map: React.FC<Props> = ({
@@ -51,6 +52,7 @@ const Map: React.FC<Props> = ({
   gameMap,
   shouldPlayerAnimate,
   inViewport,
+  handleCellClick,
 }) => {
   const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 16;
 
@@ -69,6 +71,7 @@ const Map: React.FC<Props> = ({
             shouldPlayerAnimate={shouldPlayerAnimate}
             cellWidth={cellWidth}
             inViewport={inViewport}
+            handleClick={handleCellClick ? () => handleCellClick([posY, posX]) : undefined}
           />
         );
       });
