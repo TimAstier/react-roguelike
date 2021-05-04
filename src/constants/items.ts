@@ -28,6 +28,18 @@ export const ITEMS: Item[] = [
     imageSrc: roguelikeitems,
     nameInSentence: 'a key',
   },
+  {
+    type: 'SmallGold',
+    spritePosition: [8, 3],
+    imageSrc: roguelikeitems,
+    nameInSentence: 'some gold',
+  },
+  {
+    type: 'BigGold',
+    spritePosition: [7, 3],
+    imageSrc: roguelikeitems,
+    nameInSentence: 'a lot of gold',
+  },
 ];
 
 export const getItem = (itemType: ItemType): Item | undefined => {
