@@ -39,7 +39,7 @@ const Label = styled.div`
 const defaultCellProps: CellProps = {
   content: 0,
   moveDirection: 'Up',
-  tile: '.',
+  tileType: '.',
   shouldPlayerAnimate: false,
   visibility: 'clear',
   cellWidth: CELL_WIDTH_IN_PIXELS,
@@ -65,7 +65,7 @@ export const Toolbar: React.FC<Props> = (props) => {
             selected={props.selectedTile === tile.type}
             onClick={() => props.handleSelectedTile(tile.type)}
           >
-            <Cell {...defaultCellProps} tile={tile.type} />
+            <Cell {...defaultCellProps} tileType={tile.type} />
             <Label>{tile.name}</Label>
           </CellWrapper>
         );
@@ -75,7 +75,7 @@ export const Toolbar: React.FC<Props> = (props) => {
         selected={props.selectedContent === 'Player'}
         onClick={() => props.handleSelectedContent('Player')}
       >
-        <Cell {...defaultCellProps} tile={'.'} content="Player" />
+        <Cell {...defaultCellProps} tileType={'.'} content="Player" />
         <Label>Player</Label>
       </CellWrapper>
       {ITEMS.map((item) => {
@@ -85,7 +85,7 @@ export const Toolbar: React.FC<Props> = (props) => {
             selected={props.selectedContent === item.type}
             onClick={() => props.handleSelectedContent(item.type)}
           >
-            <Cell {...defaultCellProps} tile={'.'} content={item.type} />
+            <Cell {...defaultCellProps} tileType={'.'} content={item.type} />
             <Label>{item.type}</Label>
           </CellWrapper>
         );

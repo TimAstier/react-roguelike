@@ -205,7 +205,7 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   const { tileType, visibility, revealed, content } = payload;
 
   if (content === 'Player') {
-    draft.interactionText = 'This is you. Yes, you are a blue square.';
+    draft.interactionText = 'This is you.';
     return;
   }
 

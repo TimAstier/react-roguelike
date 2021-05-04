@@ -3,15 +3,13 @@ import styled from 'styled-components';
 
 import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
-import { getTile } from '../constants/tiles';
+import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../constants/tiles';
 import { GameAction, gameActions, HoverCellPayload } from '../reducers/game';
 import { CellContent } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { TileType } from '../typings/tileType';
 import { Visibility } from '../typings/visibility';
 import { Player } from './Player';
-
-const NON_REVEALED_BACKGROUND_COLOR = 'rgb(0,0,0,1)';
 
 interface StylingProps {
   backgroundColor: string;
@@ -36,7 +34,7 @@ const Wrapper = styled.div<StylingProps>`
 export interface CellProps {
   content: CellContent;
   moveDirection: MoveDirection;
-  tile: TileType;
+  tileType: TileType;
   shouldPlayerAnimate: boolean;
   visibility: Visibility;
   cellWidth: number;
@@ -49,7 +47,7 @@ export interface CellProps {
 export const Cell: React.FC<CellProps> = ({
   content,
   moveDirection,
-  tile,
+  tileType,
   shouldPlayerAnimate,
   visibility,
   cellWidth,
@@ -58,6 +56,8 @@ export const Cell: React.FC<CellProps> = ({
   revealed,
   dispatch,
 }) => {
+  const tile = getTile(tileType);
+
   const renderPlayer = () => {
     return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
   };
@@ -77,22 +77,8 @@ export const Cell: React.FC<CellProps> = ({
   };
 
   const renderTile = () => {
-    if (tile === '#') {
-      if (visibility !== 'dark' || revealed) {
-        return '#';
-      }
-      return '';
-    }
-    if (tile === ' ') {
-      return '';
-    }
-    if (tile === '@') {
-      return '@';
-    }
-    if (tile === '.') {
-      if (visibility !== 'dark' || revealed) {
-        return '.';
-      }
+    if (visibility !== 'dark' || revealed) {
+      return tileType;
     }
   };
 
@@ -111,22 +97,22 @@ export const Cell: React.FC<CellProps> = ({
       return NON_REVEALED_BACKGROUND_COLOR;
     }
     if (visibility === 'clear') {
-      return getTile(tile)?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+      return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
     if (visibility === 'dim' || revealed) {
-      return getTile(tile)?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+      return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
     return NON_REVEALED_BACKGROUND_COLOR;
   };
 
   const getFontColor = () => {
-    if (tile === '#') {
-      return 'black';
+    if (visibility === 'clear') {
+      return tile?.clearFontColor || DEFAULT_FONT_COLOR;
     }
     if (visibility === 'dim' || revealed) {
-      return '#555564';
+      return tile?.dimFontColor || DEFAULT_FONT_COLOR;
     }
-    return '#5C606A';
+    return DEFAULT_FONT_COLOR;
   };
 
   const handleMouseEnter = (payload: HoverCellPayload) => {
@@ -143,7 +129,7 @@ export const Cell: React.FC<CellProps> = ({
 
   return (
     <Wrapper
-      onMouseEnter={() => handleMouseEnter({ tileType: tile, visibility, revealed, content })}
+      onMouseEnter={() => handleMouseEnter({ tileType, visibility, revealed, content })}
       onMouseLeave={() => handleMouseLeave()}
       onClick={handleClick}
       backgroundColor={getBackgroundColor()}
