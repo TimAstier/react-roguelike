@@ -1,7 +1,7 @@
 import { Area } from '../../typings/area';
 import { Position } from '../../typings/position';
+import { TileType } from '../../typings/tileType';
 import { findCellsInArea } from '../findCellsInArea';
-import { TileType } from './tileType';
 
 const map: TileType[][] = [
   [' ', ' ', '.', ' ', '#', ' ', ' '],
