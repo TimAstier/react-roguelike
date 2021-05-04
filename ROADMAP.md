@@ -25,6 +25,7 @@
 - [x] Load game from map in /pcg
 - [x] Add Cell logic to render tiles or content depending on visibility and revealed
 - [x] Add HP state and design
+- [x] Describe tiles via hover on cell in InteractionText.
 - [ ] Seed map with RNG
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?

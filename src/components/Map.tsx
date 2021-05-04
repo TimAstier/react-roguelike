@@ -9,6 +9,7 @@ import {
   NUMBER_OF_CELLS_IN_VIEWPORT_X,
   NUMBER_OF_CELLS_IN_VIEWPORT_Y,
 } from '../constants/config';
+import { GameAction } from '../reducers/game';
 import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -44,6 +45,7 @@ interface Props {
   shouldPlayerAnimate: boolean;
   inViewport: boolean;
   handleCellClick?: (position: Position, cellData: CellData) => void;
+  dispatch?: React.Dispatch<GameAction>;
 }
 
 const Map: React.FC<Props> = ({
@@ -54,6 +56,7 @@ const Map: React.FC<Props> = ({
   shouldPlayerAnimate,
   inViewport,
   handleCellClick,
+  dispatch,
 }) => {
   const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 20;
 
@@ -76,6 +79,7 @@ const Map: React.FC<Props> = ({
             handleClick={
               handleCellClick ? () => handleCellClick([posY, posX], cellData) : undefined
             }
+            dispatch={dispatch}
           />
         );
       });

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
+import { GameAction, gameActions, HoverCellPayload } from '../reducers/game';
 import { CellContent } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { TileType } from '../typings/tileType';
@@ -39,6 +40,7 @@ export interface CellProps {
   inViewport: boolean;
   handleClick?: () => void;
   revealed: boolean;
+  dispatch?: React.Dispatch<GameAction>;
 }
 
 export const Cell: React.FC<CellProps> = ({
@@ -51,6 +53,7 @@ export const Cell: React.FC<CellProps> = ({
   inViewport,
   handleClick,
   revealed,
+  dispatch,
 }) => {
   const renderPlayer = () => {
     return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
@@ -72,7 +75,7 @@ export const Cell: React.FC<CellProps> = ({
 
   const renderTile = () => {
     if (tile === '#') {
-      if (visibility !== 'dark') {
+      if (visibility !== 'dark' || revealed) {
         return '#';
       }
       return '';
@@ -84,7 +87,7 @@ export const Cell: React.FC<CellProps> = ({
       return '@';
     }
     if (tile === '.') {
-      if (visibility !== 'dark') {
+      if (visibility !== 'dark' || revealed) {
         return '.';
       }
     }
@@ -108,12 +111,17 @@ export const Cell: React.FC<CellProps> = ({
       if (visibility === 'clear') {
         return '#131226';
       }
-      if (visibility === 'dim') {
+      if (visibility === 'dim' || revealed) {
         return '#020211';
       }
     }
     if (tile === '#') {
-      return '#BEB5C4';
+      if (visibility === 'clear') {
+        return '#BEB5C4';
+      }
+      if (visibility === 'dim' || revealed) {
+        return '#6E6E6E';
+      }
     }
     return 'rgb(0,0,0,1)';
   };
@@ -122,14 +130,28 @@ export const Cell: React.FC<CellProps> = ({
     if (tile === '#') {
       return 'black';
     }
-    if (visibility === 'dim') {
+    if (visibility === 'dim' || revealed) {
       return '#555564';
     }
-    return 'white';
+    return '#5C606A';
+  };
+
+  const handleMouseEnter = (payload: HoverCellPayload) => {
+    if (dispatch !== undefined) {
+      return dispatch(gameActions.hoverCell(payload));
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (dispatch !== undefined) {
+      return dispatch(gameActions.hoverAwayFromCell());
+    }
   };
 
   return (
     <Wrapper
+      onMouseEnter={() => handleMouseEnter({ tileType: tile, visibility, revealed, content })}
+      onMouseLeave={() => handleMouseLeave()}
       onClick={handleClick}
       backgroundColor={getBackgroundColor()}
       cellWidth={cellWidth}

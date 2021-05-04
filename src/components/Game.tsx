@@ -104,6 +104,7 @@ export const Game: React.FC<Props> = (props) => {
         moveDirection={props.state.moveDirection}
         gameMap={props.state.currentMap}
         shouldPlayerAnimate={props.state.shouldPlayerAnimate}
+        dispatch={props.dispatch}
       />
     ) : null;
   };

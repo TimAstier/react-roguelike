@@ -1,9 +1,12 @@
 import { GRID_HEIGHT, GRID_WIDTH, INITIAL_MAX_HP } from '../constants/config';
-import { CellData } from '../typings/cell';
+import { getItem } from '../constants/items';
+import { getTile } from '../constants/tiles';
+import { CellContent, CellData } from '../typings/cell';
 import { ItemType } from '../typings/itemType';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { TileType } from '../typings/tileType';
+import { Visibility } from '../typings/visibility';
 import { updateVisibility } from '../utils/updateVisibility';
 
 // ACTIONS
@@ -13,12 +16,21 @@ interface UpdateCellPayload {
   position: Position;
 }
 
+export interface HoverCellPayload {
+  tileType: TileType;
+  visibility: Visibility;
+  revealed: boolean;
+  content: CellContent;
+}
+
 export type GameAction =
   | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
   | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellData[][] }
   | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position }
   | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
-  | { type: '@@GAME/INIT_VISIBILITY' };
+  | { type: '@@GAME/INIT_VISIBILITY' }
+  | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
+  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -44,12 +56,23 @@ const initVisibility = (): GameAction => ({
   type: '@@GAME/INIT_VISIBILITY',
 });
 
+const hoverCell = (payload: HoverCellPayload): GameAction => ({
+  type: '@@GAME/HOVER_CELL',
+  payload,
+});
+
+const hoverAwayFromCell = (): GameAction => ({
+  type: '@@GAME/HOVER_AWAY_FROM_CELL',
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
   initPlayerSpawn,
   updateCell,
   initVisibility,
+  hoverCell,
+  hoverAwayFromCell,
 };
 
 // INITIAL_STATE
@@ -83,14 +106,7 @@ export const INITIAL_STATE: GameState = {
   equipedItems: [],
   inventory: [],
   interactionText: 'You enter the dungeon.',
-  eventLogs: [
-    '1) You take 4 damage.',
-    '2) You see a Ghost.',
-    '3) You catch on fire',
-    '4) The spider bites you for 5 piercing damage.',
-    '5) You miss the spider.',
-    '6) Hey',
-  ],
+  eventLogs: [],
 };
 
 // REDUCER
@@ -185,6 +201,44 @@ const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => 
   }
 };
 
+const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
+  const { tileType, visibility, revealed, content } = payload;
+
+  if (content === 'Player') {
+    draft.interactionText = 'This is you. Yes, you are a blue square.';
+    return;
+  }
+
+  if (revealed === false) {
+    return;
+  }
+
+  let verb = 'see';
+
+  if (visibility === 'dark' && revealed === true) {
+    verb = 'remember seing';
+  }
+
+  if (visibility === 'dim' && revealed) {
+    verb = 'remember seing';
+  }
+
+  if (visibility === 'dim') {
+    verb = 'get a glimpse of';
+  }
+
+  let object;
+
+  if (content !== 0) {
+    object = getItem(content)?.nameInSentence;
+  } else {
+    object = getTile(tileType)?.nameInSentence;
+  }
+
+  const interactionText = `You ${verb} ${object}.`;
+  draft.interactionText = interactionText;
+};
+
 export const game = (draft = INITIAL_STATE, action: GameAction): GameState | void => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
@@ -200,5 +254,10 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
       if (draft.currentMap !== null) {
         return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
       }
+      break;
+    case '@@GAME/HOVER_CELL':
+      return reduceHoverCell(draft, action.payload);
+    case '@@GAME/HOVER_AWAY_FROM_CELL':
+      return void (draft.interactionText = '');
   }
 };

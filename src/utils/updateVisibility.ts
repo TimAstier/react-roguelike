@@ -36,14 +36,5 @@ export const updateVisibility = (position: Position, gameMap: CellData[][]): Cel
     }
   });
 
-  // Set dark revealed cells to dim
-  newGameMap.forEach((row, y) => {
-    row.forEach((cell, x) => {
-      if (cell.visibility === 'dark' && cell.revealed === true) {
-        newGameMap[y][x].visibility = 'dim';
-      }
-    });
-  });
-
   return newGameMap;
 };

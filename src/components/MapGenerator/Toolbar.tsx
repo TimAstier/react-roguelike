@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
 import { ITEMS } from '../../constants/items';
+import { TILES } from '../../constants/tiles';
 import { CellContent } from '../../typings/cell';
 import { TileType } from '../../typings/tileType';
 import { Cell, CellProps } from '../Cell';
@@ -57,35 +58,18 @@ export const Toolbar: React.FC<Props> = (props) => {
   return (
     <Wrapper>
       <p>Tiles</p>
-      <CellWrapper
-        selected={props.selectedTile === '.'}
-        onClick={() => props.handleSelectedTile('.')}
-      >
-        <Cell {...defaultCellProps} tile={'.'} />
-        <Label>Ground</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedTile === '#'}
-        onClick={() => props.handleSelectedTile('#')}
-      >
-        <Cell {...defaultCellProps} tile={'#'} />
-        <Label>Wall</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedTile === '@'}
-        onClick={() => props.handleSelectedTile('@')}
-      >
-        <Cell {...defaultCellProps} tile={'@'} />
-        <Label>Spawn</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedTile === ' '}
-        onClick={() => props.handleSelectedTile(' ')}
-      >
-        <Cell {...defaultCellProps} tile={' '} />
-        <Label>Void</Label>
-      </CellWrapper>
-
+      {TILES.map((tile) => {
+        return (
+          <CellWrapper
+            key={tile.name}
+            selected={props.selectedTile === tile.type}
+            onClick={() => props.handleSelectedTile(tile.type)}
+          >
+            <Cell {...defaultCellProps} tile={tile.type} />
+            <Label>{tile.name}</Label>
+          </CellWrapper>
+        );
+      })}
       <p>Contents</p>
       <CellWrapper
         selected={props.selectedContent === 'Player'}
