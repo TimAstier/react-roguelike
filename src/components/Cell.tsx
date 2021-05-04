@@ -3,12 +3,15 @@ import styled from 'styled-components';
 
 import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
+import { getTile } from '../constants/tiles';
 import { GameAction, gameActions, HoverCellPayload } from '../reducers/game';
 import { CellContent } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { TileType } from '../typings/tileType';
 import { Visibility } from '../typings/visibility';
 import { Player } from './Player';
+
+const NON_REVEALED_BACKGROUND_COLOR = 'rgb(0,0,0,1)';
 
 interface StylingProps {
   backgroundColor: string;
@@ -105,25 +108,15 @@ export const Cell: React.FC<CellProps> = ({
 
   const getBackgroundColor = () => {
     if (!revealed && inViewport) {
-      return 'rgb(0,0,0,1)';
+      return NON_REVEALED_BACKGROUND_COLOR;
     }
-    if (tile === '.' || tile === '@') {
-      if (visibility === 'clear') {
-        return '#131226';
-      }
-      if (visibility === 'dim' || revealed) {
-        return '#020211';
-      }
+    if (visibility === 'clear') {
+      return getTile(tile)?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
-    if (tile === '#') {
-      if (visibility === 'clear') {
-        return '#BEB5C4';
-      }
-      if (visibility === 'dim' || revealed) {
-        return '#6E6E6E';
-      }
+    if (visibility === 'dim' || revealed) {
+      return getTile(tile)?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
-    return 'rgb(0,0,0,1)';
+    return NON_REVEALED_BACKGROUND_COLOR;
   };
 
   const getFontColor = () => {
