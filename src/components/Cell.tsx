@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
+import { getItem } from '../constants/items';
 import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../constants/tiles';
 import { GameAction, gameActions, HoverCellPayload } from '../reducers/game';
 import { CellContent } from '../typings/cell';
@@ -62,17 +62,14 @@ export const Cell: React.FC<CellProps> = ({
     return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
   };
 
-  const renderContent = () => {
-    if (revealed || !inViewport) {
-      if (content === 'Sword') {
-        return <Sprite imageSrc={roguelikeitems} position={[2, 7]} pixelDimensions={16} />;
-      }
-      if (content === 'Ruby') {
-        return <Sprite imageSrc={roguelikeitems} position={[3, 3]} pixelDimensions={16} />;
-      }
-      if (content === 'Key') {
-        return <Sprite imageSrc={roguelikeitems} position={[11, 3]} pixelDimensions={16} />;
-      }
+  const renderItem = () => {
+    if ((revealed || !inViewport) && content !== 0 && content !== 'Player') {
+      const item = getItem(content);
+      return (
+        item && (
+          <Sprite imageSrc={item.imageSrc} position={item.spritePosition} pixelDimensions={16} />
+        )
+      );
     }
   };
 
@@ -87,7 +84,7 @@ export const Cell: React.FC<CellProps> = ({
       return renderPlayer();
     }
     if (content !== 0 && (revealed || !inViewport)) {
-      return renderContent();
+      return renderItem();
     }
     return renderTile();
   };
