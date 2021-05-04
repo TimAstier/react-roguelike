@@ -125,6 +125,16 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       // Empty previous location
       draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
 
+      // Loot item
+      const content = draft.currentMap[position[1]][position[0]].content;
+      if (content && content !== 'Player') {
+        const item = getItem(content);
+        if (item) {
+          draft.inventory.push(content);
+          draft.eventLogs.push(`You found ${item.nameInSentence}.`);
+        }
+      }
+
       // Move player
       draft.currentMap[position[1]][position[0]].content = 'Player';
 

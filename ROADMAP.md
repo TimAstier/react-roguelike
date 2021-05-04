@@ -26,6 +26,7 @@
 - [x] Add Cell logic to render tiles or content depending on visibility and revealed
 - [x] Add HP state and design
 - [x] Describe tiles via hover on cell in InteractionText.
+- [x] Player stats
 - [ ] Seed map with RNG
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?
@@ -40,5 +41,4 @@
 - [ ] Environment: grass, water, plants...
 - [ ] Throw items
 - [ ] Keyboard shortcuts
-- [ ] Player stats
 - [ ] Use requestAnimationFrame for player movement. See for example [this code](https://github.com/KilroggD/rpg-react-redux/blob/master/src/tile-view/GameLoop.js) and [explanations](https://levelup.gitconnected.com/rpg-game-with-react-redux-html5-part-1-build-a-tile-map-9144fd867830), or [this code](https://github.com/ASteinheiser/react-rpg.com/blob/edd9d6f2af131822f97b3b49eb91696ec5e3f497/src/features/player/index.js).
