@@ -9,9 +9,9 @@ interface Props {
   position: Position;
 }
 
-const Wrapper = styled.img<Props>`
-  width: ${(p) => p.pixelDimensions + 4}px;
-  height: ${(p) => p.pixelDimensions + 4}px;
+const Wrapper = styled.div<Props>`
+  width: ${(p) => p.pixelDimensions}px;
+  height: ${(p) => p.pixelDimensions}px;
   background: url(${(p) => p.imageSrc}) no-repeat;
   background-position: ${(p) => -p.position[0] * p.pixelDimensions}px
     ${(p) => -p.position[1] * p.pixelDimensions}px;

@@ -1,9 +1,9 @@
 import { Area } from '../../typings/area';
-import { CellTile } from '../../typings/cell';
 import { Position } from '../../typings/position';
+import { TileType } from '../../typings/tileType';
 import { findCellsInArea } from '../findCellsInArea';
 
-const map: CellTile[][] = [
+const map: TileType[][] = [
   [' ', ' ', '.', ' ', '#', ' ', ' '],
   [' ', '.', '.', '#', ' ', ' ', '#'],
   ['#', '#', '.', ' ', ' ', '.', '.'],
@@ -12,7 +12,7 @@ const map: CellTile[][] = [
 describe('findCellsInArea', () => {
   it('works for area covering the whole map', () => {
     const area: Area = { origin: { x: 0, y: 0 }, end: { x: 6, y: 2 } };
-    const cellTile: CellTile = '.';
+    const cellTile: TileType = '.';
     const expectedPositions: Position[] = [
       [2, 0],
       [1, 1],
@@ -25,7 +25,7 @@ describe('findCellsInArea', () => {
   });
   it('works for partial area', () => {
     const area: Area = { origin: { x: 2, y: 0 }, end: { x: 5, y: 1 } };
-    const cellTile: CellTile = '#';
+    const cellTile: TileType = '#';
     const expectedPositions: Position[] = [
       [4, 0],
       [3, 1],
@@ -34,7 +34,7 @@ describe('findCellsInArea', () => {
   });
   it('works for partial in lower right corner', () => {
     const area: Area = { origin: { x: 2, y: 1 }, end: { x: 6, y: 2 } };
-    const cellTile: CellTile = ' ';
+    const cellTile: TileType = ' ';
     const expectedPositions: Position[] = [
       [4, 1],
       [5, 1],

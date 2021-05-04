@@ -4,6 +4,7 @@ import { HowlOptions } from 'howler';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
+import { useImmerReducer } from 'use-immer';
 import useSound from 'use-sound';
 
 import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
@@ -24,7 +25,7 @@ const Wrapper = styled.div`
 `;
 
 export const App: React.FC = () => {
-  const [state, dispatch] = React.useReducer(game, INITIAL_STATE);
+  const [state, dispatch] = useImmerReducer(game, INITIAL_STATE);
   const [play, { stop }] = useSound<HowlOptions>(crystalCaveSong, { loop: true, volume: 0.1 });
   const didUserInput = useDetectUserInput();
   const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(false);

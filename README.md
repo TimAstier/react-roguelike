@@ -11,7 +11,7 @@
 
 This is a hobby project to see how React can be used to create a game.
 
-_Inspired by [the Danger Crew](https://thedangercrew.com/), [react-rpg](https://github.com/ASteinheiser/react-rpg.com), [rogue](https://playclassic.games/games/role-playing-dos-games-online/play-rogue-online/play/)._
+_Inspired by [the Danger Crew](https://thedangercrew.com/), [react-rpg](https://github.com/ASteinheiser/react-rpg.com), [rogue](https://playclassic.games/games/role-playing-dos-games-online/play-rogue-online/play/), Brogue, [HeadlessPanic](https://marcelmarki.com/headless-panic/index.html)_
 
 ## Contributing
 
@@ -59,6 +59,7 @@ See [ROADMAP](ROADMAP.md).
 - [Brogue](https://sites.google.com/site/broguegame/)
   - [Level generation in Brogue wiki](https://brogue.fandom.com/wiki/Level_Generation)
 - [Rogueliike dev FAQ](https://www.reddit.com/r/roguelikedev/wiki/faq_friday)
+- [Brogue terrain features](https://brogue.fandom.com/wiki/Terrain_Features)
 
 ## Resources
 
@@ -70,6 +71,7 @@ See [ROADMAP](ROADMAP.md).
 ## 2D Art
 
 - [RPG items](https://opengameart.org/content/roguelikerpg-items)
+- [Roguelike monsters](https://opengameart.org/content/roguelike-monsters)
 - [Ravenmore icons](https://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0)
 - [Upgrade from Ravenmore icons](https://opengameart.org/content/golden-items-rip-upgrade-pack)
 - [Additions to Ravenmore icons](https://opengameart.org/node/83169)
@@ -90,12 +92,14 @@ See [ROADMAP](ROADMAP.md).
 - [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
 - [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
 - [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- [user-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
 
 ## Credits
 
 - Music from Pixelsphere.org / The Cynic Project: https://opengameart.org/content/crystal-cave-song18
 - Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/)
 - [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter).
+- Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 
 ## License
 

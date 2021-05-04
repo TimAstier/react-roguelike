@@ -1,8 +1,8 @@
-import { CellTile } from '../../typings/cell';
+import { TileType } from '../../typings/tileType';
 
 // prettier-ignore
 
-export const testMap: CellTile[][] = [
+export const testMap: TileType[][] = [
   ['#', '#', '#', '#', '#', '#', '#','#', '#', '#', '#', '#', '#', '#', '#'],
   ['#', '.', '#', '#', '#', '#', '#','#', '.', '#', '#', '#', '#', '#', '#'],
   ['#', '#', '.', '#', '#', '#', '#','#', '.', '#', '#', '.', '#', '#', '#'],

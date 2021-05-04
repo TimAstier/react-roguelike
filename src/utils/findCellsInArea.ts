@@ -1,11 +1,11 @@
 import { Area } from '../typings/area';
-import { CellTile } from '../typings/cell';
 import { Position } from '../typings/position';
+import { TileType } from '../typings/tileType';
 
 interface Options {
   area: Area;
-  map: CellTile[][];
-  cellTile: CellTile;
+  map: TileType[][];
+  cellTile: TileType;
 }
 
 export const findCellsInArea = ({ area, map, cellTile }: Options): Position[] => {

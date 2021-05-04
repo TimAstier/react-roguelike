@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
-import { CellContent, CellTile } from '../../typings/cell';
+import { ITEMS } from '../../constants/items';
+import { TILES } from '../../constants/tiles';
+import { CellContent } from '../../typings/cell';
+import { TileType } from '../../typings/tileType';
 import { Cell, CellProps } from '../Cell';
 
 const Wrapper = styled.div`
@@ -36,16 +39,17 @@ const Label = styled.div`
 const defaultCellProps: CellProps = {
   content: 0,
   moveDirection: 'Up',
-  tile: '.',
+  tileType: '.',
   shouldPlayerAnimate: false,
   visibility: 'clear',
   cellWidth: CELL_WIDTH_IN_PIXELS,
   inViewport: true,
+  revealed: true,
 };
 
 interface Props {
-  selectedTile: CellTile | null;
-  handleSelectedTile: (tile: CellTile) => void;
+  selectedTile: TileType | null;
+  handleSelectedTile: (tile: TileType) => void;
   selectedContent: CellContent | null;
   handleSelectedContent: (content: CellContent) => void;
 }
@@ -54,50 +58,38 @@ export const Toolbar: React.FC<Props> = (props) => {
   return (
     <Wrapper>
       <p>Tiles</p>
-      <CellWrapper
-        selected={props.selectedTile === '.'}
-        onClick={() => props.handleSelectedTile('.')}
-      >
-        <Cell {...defaultCellProps} tile={'.'} />
-        <Label>Ground</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedTile === '#'}
-        onClick={() => props.handleSelectedTile('#')}
-      >
-        <Cell {...defaultCellProps} tile={'#'} />
-        <Label>Wall</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedTile === '@'}
-        onClick={() => props.handleSelectedTile('@')}
-      >
-        <Cell {...defaultCellProps} tile={'@'} />
-        <Label>Spawn</Label>
-      </CellWrapper>
-      <CellWrapper
-        selected={props.selectedTile === ' '}
-        onClick={() => props.handleSelectedTile(' ')}
-      >
-        <Cell {...defaultCellProps} tile={' '} />
-        <Label>Void</Label>
-      </CellWrapper>
-
+      {TILES.map((tile) => {
+        return (
+          <CellWrapper
+            key={tile.name}
+            selected={props.selectedTile === tile.type}
+            onClick={() => props.handleSelectedTile(tile.type)}
+          >
+            <Cell {...defaultCellProps} tileType={tile.type} />
+            <Label>{tile.name}</Label>
+          </CellWrapper>
+        );
+      })}
       <p>Contents</p>
       <CellWrapper
         selected={props.selectedContent === 'Player'}
         onClick={() => props.handleSelectedContent('Player')}
       >
-        <Cell {...defaultCellProps} tile={'.'} content="Player" />
+        <Cell {...defaultCellProps} tileType={'.'} content="Player" />
         <Label>Player</Label>
       </CellWrapper>
-      <CellWrapper
-        selected={props.selectedContent === 'Sword'}
-        onClick={() => props.handleSelectedContent('Sword')}
-      >
-        <Cell {...defaultCellProps} tile={'.'} content="Sword" />
-        <Label>Sword</Label>
-      </CellWrapper>
+      {ITEMS.map((item) => {
+        return (
+          <CellWrapper
+            key={item.type}
+            selected={props.selectedContent === item.type}
+            onClick={() => props.handleSelectedContent(item.type)}
+          >
+            <Cell {...defaultCellProps} tileType={'.'} content={item.type} />
+            <Label>{item.type}</Label>
+          </CellWrapper>
+        );
+      })}
       <p>----</p>
       <Link to="/">PLAY</Link>
     </Wrapper>

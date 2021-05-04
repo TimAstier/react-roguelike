@@ -1,18 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import sword from '../assets/images/sword.png';
-import { CellContent, CellTile } from '../typings/cell';
+import { Sprite } from '../components/Sprite';
+import { getItem } from '../constants/items';
+import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../constants/tiles';
+import { GameAction, gameActions, HoverCellPayload } from '../reducers/game';
+import { CellContent } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
+import { TileType } from '../typings/tileType';
 import { Visibility } from '../typings/visibility';
-import { lightenDarkenColor } from '../utils/lightenDarkenColor';
 import { Player } from './Player';
-
-const mapVisibilityToModifier: { [key in Visibility]: number } = {
-  clear: 0,
-  dim: -100,
-  dark: -300,
-};
 
 interface StylingProps {
   backgroundColor: string;
@@ -37,64 +34,107 @@ const Wrapper = styled.div<StylingProps>`
 export interface CellProps {
   content: CellContent;
   moveDirection: MoveDirection;
-  tile: CellTile;
+  tileType: TileType;
   shouldPlayerAnimate: boolean;
   visibility: Visibility;
   cellWidth: number;
   inViewport: boolean;
   handleClick?: () => void;
+  revealed: boolean;
+  dispatch?: React.Dispatch<GameAction>;
 }
 
 export const Cell: React.FC<CellProps> = ({
   content,
   moveDirection,
-  tile,
+  tileType,
   shouldPlayerAnimate,
   visibility,
   cellWidth,
   inViewport,
   handleClick,
+  revealed,
+  dispatch,
 }) => {
-  const renderContent = () => {
-    if (content === 'Player' && inViewport) {
-      return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
-    }
+  const tile = getTile(tileType);
 
-    if (content === 'Sword') {
-      return <img style={{ height: '100%', width: '100%' }} src={sword} />;
-    }
-
-    if (tile === '#') {
-      if (visibility !== 'dark') {
-        return '#';
-      }
-      return '';
-    }
-    if (tile === ' ') {
-      return '';
-    }
-    if (tile === '@') {
-      return '@';
-    }
-    return '.';
+  const renderPlayer = () => {
+    return <Player moveDirection={moveDirection} shouldPlayerAnimate={shouldPlayerAnimate} />;
   };
 
-  const visibilityModifier = mapVisibilityToModifier[visibility];
+  const renderItem = () => {
+    if ((revealed || !inViewport) && content !== 0 && content !== 'Player') {
+      const item = getItem(content);
+      return (
+        item && (
+          <Sprite imageSrc={item.imageSrc} position={item.spritePosition} pixelDimensions={16} />
+        )
+      );
+    }
+  };
 
-  const backgroundColor =
-    tile === '.' || tile === '@'
-      ? lightenDarkenColor('#ffffff', visibilityModifier)
-      : 'rgb(0,0,0,1)';
+  const renderTile = () => {
+    if (visibility !== 'dark' || revealed) {
+      return tileType;
+    }
+  };
+
+  const renderContentOrTile = () => {
+    if (content === 'Player') {
+      return renderPlayer();
+    }
+    if (content !== 0 && (revealed || !inViewport)) {
+      return renderItem();
+    }
+    return renderTile();
+  };
+
+  const getBackgroundColor = () => {
+    if (!revealed && inViewport) {
+      return NON_REVEALED_BACKGROUND_COLOR;
+    }
+    if (visibility === 'clear') {
+      return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+    }
+    if (visibility === 'dim' || revealed) {
+      return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+    }
+    return NON_REVEALED_BACKGROUND_COLOR;
+  };
+
+  const getFontColor = () => {
+    if (visibility === 'clear') {
+      return tile?.clearFontColor || DEFAULT_FONT_COLOR;
+    }
+    if (visibility === 'dim' || revealed) {
+      return tile?.dimFontColor || DEFAULT_FONT_COLOR;
+    }
+    return DEFAULT_FONT_COLOR;
+  };
+
+  const handleMouseEnter = (payload: HoverCellPayload) => {
+    if (dispatch !== undefined) {
+      return dispatch(gameActions.hoverCell(payload));
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (dispatch !== undefined) {
+      return dispatch(gameActions.hoverAwayFromCell());
+    }
+  };
 
   return (
     <Wrapper
+      onMouseEnter={() => handleMouseEnter({ tileType, visibility, revealed, content })}
+      onMouseLeave={() => handleMouseLeave()}
       onClick={handleClick}
-      backgroundColor={backgroundColor}
+      backgroundColor={getBackgroundColor()}
       cellWidth={cellWidth}
       inViewport={inViewport}
-      color={tile === '#' ? 'white' : 'black'}
+      color={getFontColor()}
     >
-      {renderContent()}
+      {renderContentOrTile()}
     </Wrapper>
   );
 };

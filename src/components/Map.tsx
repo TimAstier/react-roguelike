@@ -6,8 +6,10 @@ import {
   CELL_WIDTH_IN_PIXELS,
   GRID_HEIGHT,
   GRID_WIDTH,
-  NUMBER_OF_CELLS_IN_VIEWPORT,
+  NUMBER_OF_CELLS_IN_VIEWPORT_X,
+  NUMBER_OF_CELLS_IN_VIEWPORT_Y,
 } from '../constants/config';
+import { GameAction } from '../reducers/game';
 import { CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -43,6 +45,7 @@ interface Props {
   shouldPlayerAnimate: boolean;
   inViewport: boolean;
   handleCellClick?: (position: Position, cellData: CellData) => void;
+  dispatch?: React.Dispatch<GameAction>;
 }
 
 const Map: React.FC<Props> = ({
@@ -53,8 +56,9 @@ const Map: React.FC<Props> = ({
   shouldPlayerAnimate,
   inViewport,
   handleCellClick,
+  dispatch,
 }) => {
-  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 16;
+  const cellWidth = inViewport ? CELL_WIDTH_IN_PIXELS : 20;
 
   const renderCells = () => {
     return gameMap.map((row, posX) => {
@@ -64,16 +68,18 @@ const Map: React.FC<Props> = ({
         return (
           <Cell
             visibility={visibility}
+            revealed={cellData.revealed}
             key={position}
             content={cellData.content}
             moveDirection={moveDirection}
-            tile={cellData.tile}
+            tileType={cellData.tile}
             shouldPlayerAnimate={shouldPlayerAnimate}
             cellWidth={cellWidth}
             inViewport={inViewport}
             handleClick={
               handleCellClick ? () => handleCellClick([posY, posX], cellData) : undefined
             }
+            dispatch={dispatch}
           />
         );
       });
@@ -82,9 +88,9 @@ const Map: React.FC<Props> = ({
 
   // Note: Should this logic be part of the Viewport?
   const mapLeftPosition =
-    (-playerPosition[0] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
+    (-playerPosition[0] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2)) * cellWidth;
   const mapUpPosition =
-    (-playerPosition[1] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT / 2)) * cellWidth;
+    (-playerPosition[1] + Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_Y / 2)) * cellWidth;
 
   return (
     <Wrapper

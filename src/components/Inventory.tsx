@@ -1,34 +1,22 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-import armor from '../assets/images/ravenmore64/armor.png';
-import backpack from '../assets/images/ravenmore64/backpack.png';
-import gemBlue from '../assets/images/ravenmore64/gemBlue.png';
-import gemGreen from '../assets/images/ravenmore64/gemGreen.png';
-import helmet from '../assets/images/ravenmore64/helmet.png';
-import shieldSmall from '../assets/images/ravenmore64/shieldSmall.png';
-import swordWood from '../assets/images/ravenmore64/swordWood.png';
-// import { Sprite } from './Sprite';
+import roguelikeitems from '../assets/images/roguelikeitems.png';
+import { Sprite } from '../components/Sprite';
+import { NUMBER_OF_INVENTORY_SLOTS } from '../constants/config';
+import { getItem } from '../constants/items';
+import { ItemType } from '../typings/itemType';
 import { DoubleBorders } from './DoubleBorders';
 
-const Slot = styled.div`
-  height: 50px;
-  width: 50px;
-  background-color: black;
-  margin-bottom: 10px;
+const ItemWrapper = styled.div`
+  box-sizing: border-box;
+  width: 25px;
+  height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 2px #6e6e6e;
-  border-radius: 10px;
-  box-sizing: border-box;
-`;
-
-const PlaceholderSlot = styled.div`
-  height: 50px;
-  width: 50px;
-  background-color: black;
-  margin-bottom: 10px;
+  background-color: #131226;
+  border-radius: 6px;
 `;
 
 const Wrapper = styled.div`
@@ -38,51 +26,72 @@ const Wrapper = styled.div`
   box-sizing: border-box;
 `;
 
-const SlotsWrapper = styled.div`
+const Items = styled.div`
+  width: 85%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  justify-content: center;
 `;
 
-export const Inventory: React.FC = () => {
+const SingleItemWrapper = styled.div`
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+interface Props {
+  inventory: ItemType[];
+}
+
+const renderItemSlot = (itemType: ItemType | null, index: number) => {
+  if (itemType) {
+    return (
+      <SingleItemWrapper key={`slot-${index}`}>
+        <ItemWrapper key={itemType}>
+          <Sprite
+            imageSrc={roguelikeitems}
+            position={getItem(itemType)?.spritePosition || [0, 0]}
+            pixelDimensions={16}
+          />
+        </ItemWrapper>
+      </SingleItemWrapper>
+    );
+  }
+  return (
+    <SingleItemWrapper key={`slot-${index}`}>
+      <ItemWrapper></ItemWrapper>
+    </SingleItemWrapper>
+  );
+};
+
+export const Inventory: React.FC<Props> = (props) => {
+  const renderItemSlots = () => {
+    const itemSlots: ReactNode[] = [];
+    for (let i = 0; i < NUMBER_OF_INVENTORY_SLOTS; i++) {
+      if (props.inventory[i]) {
+        itemSlots.push(renderItemSlot(props.inventory[i], i));
+      } else {
+        itemSlots.push(renderItemSlot(null, i));
+      }
+    }
+
+    return itemSlots;
+  };
+
   return (
     <Wrapper>
-      <DoubleBorders>
-        <SlotsWrapper>
-          <PlaceholderSlot />
-          <Slot>
-            <img src={helmet} />
-          </Slot>{' '}
-          <PlaceholderSlot />
-          <Slot>
-            <img src={swordWood} />
-          </Slot>{' '}
-          <Slot>
-            <img src={armor} />
-          </Slot>{' '}
-          <Slot>
-            <img src={shieldSmall} />
-          </Slot>{' '}
-          <Slot>
-            <img src={gemBlue} />
-          </Slot>{' '}
-          <Slot></Slot>{' '}
-          <Slot>
-            <img src={gemGreen} />
-          </Slot>{' '}
-          <PlaceholderSlot />
-          <PlaceholderSlot />
-          <PlaceholderSlot />
-          <PlaceholderSlot />{' '}
-          <Slot>
-            <img src={backpack} />
-          </Slot>{' '}
-          <PlaceholderSlot />
-          <Slot /> <Slot /> <Slot />
-          <Slot /> <Slot /> <Slot />
-        </SlotsWrapper>
-      </DoubleBorders>
+      <div>
+        <DoubleBorders>
+          <Items>{renderItemSlots()}</Items>
+        </DoubleBorders>
+      </div>
     </Wrapper>
   );
 };
