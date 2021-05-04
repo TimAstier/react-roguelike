@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import roguelikeitems from '../assets/images/roguelikeitems.png';
 import { Sprite } from '../components/Sprite';
-import { CellContent, CellTile } from '../typings/cell';
+import { CellContent } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
+import { TileType } from '../typings/tileType';
 import { Visibility } from '../typings/visibility';
 import { Player } from './Player';
 
@@ -31,7 +32,7 @@ const Wrapper = styled.div<StylingProps>`
 export interface CellProps {
   content: CellContent;
   moveDirection: MoveDirection;
-  tile: CellTile;
+  tile: TileType;
   shouldPlayerAnimate: boolean;
   visibility: Visibility;
   cellWidth: number;

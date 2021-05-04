@@ -1,8 +1,9 @@
 import { GRID_HEIGHT, GRID_WIDTH, INITIAL_MAX_HP } from '../constants/config';
-import { CellData, CellTile } from '../typings/cell';
+import { CellData } from '../typings/cell';
 import { ItemType } from '../typings/itemType';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
+import { TileType } from '../typings/tileType';
 import { updateVisibility } from '../utils/updateVisibility';
 
 // ACTIONS
@@ -97,7 +98,7 @@ export const INITIAL_STATE: GameState = {
 const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) => {
   let nextTileX: number;
   let nextTileY: number;
-  let nextTile: CellTile;
+  let nextTile: TileType;
 
   if (draft.currentMap === null) {
     return;

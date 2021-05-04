@@ -4,9 +4,10 @@
 
 import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { Area } from '../typings/area';
-import { CellData, CellTile } from '../typings/cell';
+import { CellData } from '../typings/cell';
 import { Level } from '../typings/level';
 import { Position } from '../typings/position';
+import { TileType } from '../typings/tileType';
 import { findCellsInArea } from '../utils/findCellsInArea';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
@@ -20,8 +21,8 @@ const fullMap: Area = {
   end: { x: GRID_WIDTH - 1, y: GRID_HEIGHT - 1 },
 };
 
-const createEmptyMap = (width: number, height: number): CellTile[][] => {
-  const map: CellTile[][] = [];
+const createEmptyMap = (width: number, height: number): TileType[][] => {
+  const map: TileType[][] = [];
   for (let j = 0; j < height; j++) {
     map[j] = [];
     for (let i = 0; i < width; i++) {
@@ -31,7 +32,7 @@ const createEmptyMap = (width: number, height: number): CellTile[][] => {
   return map;
 };
 
-const placeRectangleOnMap = (map: CellTile[][], area: Area): CellTile[][] => {
+const placeRectangleOnMap = (map: TileType[][], area: Area): TileType[][] => {
   const newMap = map;
   for (let i = area.origin.x; i <= area.end.x; i++) {
     for (let j = area.origin.y; j <= area.end.y; j++) {
@@ -62,7 +63,7 @@ const getLeavesArray = () => {
   return leavesArray;
 };
 
-const connectLeaves = (leafA: Area, leafB: Area, map: CellTile[][]) => {
+const connectLeaves = (leafA: Area, leafB: Area, map: TileType[][]) => {
   const newMap = map;
 
   // Find one empty cell in boths areas
@@ -82,7 +83,7 @@ const connectLeaves = (leafA: Area, leafB: Area, map: CellTile[][]) => {
 
 interface ConnectAdjacentLeavesOptions {
   leavesArray: Area[][];
-  map: CellTile[][];
+  map: TileType[][];
   index: number;
   leavesDepth: number;
 }
@@ -100,7 +101,7 @@ const connectAdjacentLeaves = ({
   );
 };
 
-const connectAllLeaves = (leavesArray: Area[][], map: CellTile[][]): CellTile[][] => {
+const connectAllLeaves = (leavesArray: Area[][], map: TileType[][]): TileType[][] => {
   let newMap = map;
   for (let i = 0; i <= NUMBER_0F_SPLITS; i++) {
     for (let j = 1; j <= 2 ** (NUMBER_0F_SPLITS - i); j++) {
@@ -122,7 +123,7 @@ const connectAllLeaves = (leavesArray: Area[][], map: CellTile[][]): CellTile[][
   return newMap;
 };
 
-const generateMap = (): CellTile[][] => {
+const generateMap = (): TileType[][] => {
   // TODO: Use seed as param
   // const rng = seedrandom(String(seed));
 
@@ -148,7 +149,7 @@ const generateMap = (): CellTile[][] => {
 };
 
 export const createGameMap = (
-  map: CellTile[][],
+  map: TileType[][],
   spawn: Position,
   width: number,
   height: number

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
 import { ITEMS } from '../../constants/items';
-import { CellContent, CellTile } from '../../typings/cell';
+import { CellContent } from '../../typings/cell';
+import { TileType } from '../../typings/tileType';
 import { Cell, CellProps } from '../Cell';
 
 const Wrapper = styled.div`
@@ -46,8 +47,8 @@ const defaultCellProps: CellProps = {
 };
 
 interface Props {
-  selectedTile: CellTile | null;
-  handleSelectedTile: (tile: CellTile) => void;
+  selectedTile: TileType | null;
+  handleSelectedTile: (tile: TileType) => void;
   selectedContent: CellContent | null;
   handleSelectedContent: (content: CellContent) => void;
 }

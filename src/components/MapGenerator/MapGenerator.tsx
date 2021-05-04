@@ -5,8 +5,9 @@ import styled from 'styled-components';
 import { generateLevel } from '../../pcg/generateLevel';
 import { gameActions } from '../../reducers/game';
 import { GameAction, GameState } from '../../reducers/game';
-import { CellContent, CellData, CellTile } from '../../typings/cell';
+import { CellContent, CellData } from '../../typings/cell';
 import { Position } from '../../typings/position';
+import { TileType } from '../../typings/tileType';
 import Map from '../Map';
 import { Toolbar } from './Toolbar';
 
@@ -24,7 +25,7 @@ interface Props {
 }
 
 export const MapGenerator: React.FC<Props> = (props) => {
-  const [selectedTile, setSelectedTile] = React.useState<CellTile | null>(null);
+  const [selectedTile, setSelectedTile] = React.useState<TileType | null>(null);
   const [selectedContent, setSelectedContent] = React.useState<CellContent | null>(null);
 
   React.useEffect(() => {
@@ -41,7 +42,7 @@ export const MapGenerator: React.FC<Props> = (props) => {
     return <div>loading...</div>;
   }
 
-  const handleSelectedTile = (tile: CellTile) => {
+  const handleSelectedTile = (tile: TileType) => {
     setSelectedContent(null);
     setSelectedTile(tile);
   };
