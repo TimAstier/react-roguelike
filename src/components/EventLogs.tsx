@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   font-size: 16px;
   padding: 5px 12px 5px 12px;
   font-weight: 400;
+  box-shadow: inset 0px 5px 5px black, inset 0px -5px 5px black;
 `;
 
 const Log = styled.div`

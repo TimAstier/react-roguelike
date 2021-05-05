@@ -310,8 +310,9 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/HOVER_AWAY_FROM_CELL':
       return void (draft.interactionText = '');
     case '@@GAME/UPDATE_GAME_MODE':
-      if (action.gameMode === 'move') {
+      if (action.gameMode === 'move' || action.gameMode === draft.gameMode) {
         draft.interactionText = '';
+        return void (draft.gameMode = 'move');
       }
       return void (draft.gameMode = action.gameMode);
   }
