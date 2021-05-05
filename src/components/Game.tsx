@@ -155,10 +155,24 @@ export const Game: React.FC<Props> = (props) => {
           style={{
             marginLeft: '15px',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'column',
           }}
         >
           <Inventory inventory={props.state.inventory} />
+          <div>
+            <DoubleBorders>
+              <p
+                style={{ cursor: 'pointer' }}
+                onClick={() => props.dispatch(gameActions.updateGameMode('inspect'))}
+              >
+                <span style={{ color: 'gold' }}>I</span>
+                <span style={{ color: props.state.gameMode === 'inspect' ? 'gold' : 'white' }}>
+                  nspect
+                </span>
+              </p>
+            </DoubleBorders>
+          </div>
         </SideWrapper>
       </Wrapper>
       <InteractionText interactionText={props.state.interactionText} />
