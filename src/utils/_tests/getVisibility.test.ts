@@ -46,7 +46,7 @@ describe('getVisibility', () => {
     });
     expect(visibility).toEqual('dark');
   });
-  it('works for adjacent walls', () => {
+  it('allows seeing adjacent walls', () => {
     const gameMap = createGameMap(maps.testMap, [11, 3], 15, 8);
     const playerPosition: Position = [11, 3];
     const position: Position = [11, 1];
@@ -136,5 +136,62 @@ describe('getVisibility', () => {
       maxVisibility,
     });
     expect(visibility).toEqual('clear');
+  });
+  it('prevents seing through doors', () => {
+    const gameMap = createGameMap(maps.testMap, [11, 3], 15, 8);
+    const playerPosition: Position = [1, 3];
+    const position: Position = [1, 5];
+    const visibility = getVisibility({
+      position,
+      playerPosition,
+      gameMap,
+      maxClearVisibility,
+      maxVisibility,
+    });
+    expect(visibility).toEqual('dark');
+  });
+  it('allows seeing adjacent doors', () => {
+    const gameMap = createGameMap(maps.testMap, [11, 3], 15, 8);
+    const playerPosition: Position = [1, 3];
+    const position: Position = [1, 4];
+    const visibility = getVisibility({
+      position,
+      playerPosition,
+      gameMap,
+      maxClearVisibility,
+      maxVisibility,
+    });
+    expect(visibility).toEqual('clear');
+  });
+  it('allows seeing both ways when standing on a door', () => {
+    const gameMap = createGameMap(maps.testMap, [11, 3], 15, 8);
+    const playerPosition: Position = [1, 4];
+    const positionA: Position = [1, 3];
+    const positionB: Position = [1, 4];
+    const positionC: Position = [1, 5];
+    const visibilityA = getVisibility({
+      position: positionA,
+      playerPosition,
+      gameMap,
+      maxClearVisibility,
+      maxVisibility,
+    });
+    const visibilityB = getVisibility({
+      position: positionB,
+      playerPosition,
+      gameMap,
+      maxClearVisibility,
+      maxVisibility,
+    });
+    const visibilityC = getVisibility({
+      position: positionC,
+      playerPosition,
+      gameMap,
+      maxClearVisibility,
+      maxVisibility,
+    });
+    expect(visibilityA).toEqual('clear');
+    expect(visibilityB).toEqual('clear');
+    expect(visibilityC).toEqual('clear');
   });
 });

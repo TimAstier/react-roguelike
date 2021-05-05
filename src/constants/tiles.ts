@@ -50,6 +50,15 @@ export const TILES: Tile[] = [
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
   },
+  {
+    type: '+',
+    name: 'woodenDoor',
+    nameInSentence: 'a wooden door',
+    clearBackgroundColor: '#732e1d',
+    dimBackgroundColor: '#511E12',
+    clearFontColor: '#EB833D',
+    dimFontColor: '#EB833D',
+  },
 ];
 
 export const getTile = (tileType: TileType): Tile | undefined => {
