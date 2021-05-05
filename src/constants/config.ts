@@ -18,3 +18,8 @@ export const MAX_VISIBILITY = 8.5;
 
 export const INITIAL_MAX_HP = 30;
 export const NUMBER_OF_INVENTORY_SLOTS = 8;
+
+export const SMALL_GOLD_AMOUNT = 20;
+export const SMALL_GOLD_MODIFIER = 12;
+export const BIG_GOLD_AMOUNT = 100;
+export const BIG_GOLD_MODIFIER = 50;

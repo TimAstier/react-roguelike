@@ -23,6 +23,8 @@ const Wrapper = styled.div<StylingProps>`
   box-sizing: border-box;
   width: ${(p) => `${p.cellWidth}px`};
   height: ${(p) => `${p.cellWidth}px`};
+  min-width: ${(p) => `${p.cellWidth}px`};
+  min-height: ${(p) => `${p.cellWidth}px`};
   display: flex;
   justify-content: center;
   align-items: center;
