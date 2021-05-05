@@ -10,6 +10,7 @@ import {
 import { getItem } from '../constants/items';
 import { getTile } from '../constants/tiles';
 import { CellContent, CellData } from '../typings/cell';
+import { GameMode } from '../typings/gameMode';
 import { ItemType } from '../typings/itemType';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -39,7 +40,8 @@ export type GameAction =
   | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
   | { type: '@@GAME/INIT_VISIBILITY' }
   | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
-  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
+  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' }
+  | { type: '@@GAME/UPDATE_GAME_MODE'; gameMode: GameMode };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -74,6 +76,11 @@ const hoverAwayFromCell = (): GameAction => ({
   type: '@@GAME/HOVER_AWAY_FROM_CELL',
 });
 
+const updateGameMode = (gameMode: GameMode): GameAction => ({
+  type: '@@GAME/UPDATE_GAME_MODE',
+  gameMode,
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
@@ -82,6 +89,7 @@ export const gameActions = {
   initVisibility,
   hoverCell,
   hoverAwayFromCell,
+  updateGameMode,
 };
 
 // INITIAL_STATE
@@ -100,6 +108,7 @@ export interface GameState {
   inventory: ItemType[];
   interactionText: string;
   eventLogs: string[];
+  gameMode: GameMode;
 }
 
 export const INITIAL_STATE: GameState = {
@@ -116,6 +125,7 @@ export const INITIAL_STATE: GameState = {
   inventory: [],
   interactionText: 'You enter the dungeon.',
   eventLogs: [],
+  gameMode: 'move',
 };
 
 // REDUCER
@@ -249,6 +259,7 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   }
 
   let verb = 'see';
+  let location = '';
 
   if (visibility === 'dark' && revealed === true) {
     verb = 'remember seing';
@@ -270,7 +281,11 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
     object = getTile(tileType)?.nameInSentence;
   }
 
-  const interactionText = `You ${verb} ${object}.`;
+  if (verb === 'remember seing') {
+    location = ' here';
+  }
+
+  const interactionText = `You ${verb} ${object}${location}.`;
   draft.interactionText = interactionText;
 };
 
@@ -294,5 +309,10 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
       return reduceHoverCell(draft, action.payload);
     case '@@GAME/HOVER_AWAY_FROM_CELL':
       return void (draft.interactionText = '');
+    case '@@GAME/UPDATE_GAME_MODE':
+      if (action.gameMode === 'move') {
+        draft.interactionText = '';
+      }
+      return void (draft.gameMode = action.gameMode);
   }
 };

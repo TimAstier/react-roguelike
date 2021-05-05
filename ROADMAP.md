@@ -27,9 +27,9 @@
 - [x] Add HP state and design
 - [x] Describe tiles via hover on cell in InteractionText.
 - [x] Player stats
+- [x] Fix interaction text showing when mouse hovers as consequence of player movement
 - [ ] Seed map with RNG
 - [ ] Fix can see through diagonal walls
-- [ ] Fix interaction text showing when mouse hovers as consequence of player movement
 - [ ] Why can see more on the left side at the end of corridors?
 - [ ] Doors
 - [ ] Improve generateLevel

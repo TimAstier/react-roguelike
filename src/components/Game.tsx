@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
@@ -24,25 +24,20 @@ const SideWrapper = styled.div`
   color: white;
 `;
 
-const LEFT_KEYCODE = 37;
-const UP_KEYCODE = 38;
-const RIGHT_KEYCODE = 39;
-const DOWN_KEYCODE = 40;
+const GAME_KEYS = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Escape', 'i'];
 
-const GAME_KEYS = [LEFT_KEYCODE, RIGHT_KEYCODE, UP_KEYCODE, DOWN_KEYCODE];
-
-const mapKeyCodeToDirection = (keyCode: number): MoveDirection | undefined => {
-  if (!GAME_KEYS.includes(keyCode)) {
+const mapKeyCodeToDirection = (key: string): MoveDirection | undefined => {
+  if (!GAME_KEYS.includes(key)) {
     return undefined;
   }
-  switch (keyCode) {
-    case LEFT_KEYCODE:
+  switch (key) {
+    case 'ArrowLeft':
       return 'Left';
-    case RIGHT_KEYCODE:
+    case 'ArrowRight':
       return 'Right';
-    case UP_KEYCODE:
+    case 'ArrowUp':
       return 'Up';
-    case DOWN_KEYCODE:
+    case 'ArrowDown':
       return 'Down';
   }
 };
@@ -55,9 +50,10 @@ interface Props {
 }
 
 export const Game: React.FC<Props> = (props) => {
-  const lastMoveDate = useRef(Date.now());
+  const lastMoveDate = React.useRef(Date.now());
+  const [pointerEvents, setPointerEvents] = React.useState<'auto' | 'none'>('auto');
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (props.state.currentMap === null) {
       const level = generateLevel();
       props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
@@ -66,16 +62,32 @@ export const Game: React.FC<Props> = (props) => {
     props.dispatch(gameActions.initVisibility());
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    // We prevent pointer events while the player is moving to avoid lags
+    const value = props.state.gameMode === 'move' ? 'none' : 'auto';
+    setPointerEvents(value);
+  }, [props.state.gameMode]);
+
+  React.useEffect(() => {
     const handleKeyDown = (event: any) => {
-      const keyCode: number = event.keyCode;
+      const key: string = event.key;
 
       // Prevent reacting to other keys
-      if (!GAME_KEYS.includes(keyCode)) {
+      if (!GAME_KEYS.includes(key)) {
         return;
       }
 
+      if (key === 'i') {
+        return props.dispatch(gameActions.updateGameMode('inspect'));
+      }
+
+      if (key === 'Escape') {
+        return props.dispatch(gameActions.updateGameMode('move'));
+      }
+
       event.preventDefault();
+
+      props.dispatch(gameActions.updateGameMode('move'));
 
       // Prevent moving again before animation is finished
       if (Date.now() - lastMoveDate.current < ANIMATION_SPEED + PAUSE_TIME_BETWEEN_MOVES) {
@@ -84,11 +96,12 @@ export const Game: React.FC<Props> = (props) => {
 
       // Perform the move
       lastMoveDate.current = Date.now();
-      const direction = mapKeyCodeToDirection(keyCode);
+      const direction = mapKeyCodeToDirection(key);
       if (direction) {
         props.dispatch(gameActions.movePlayer(direction));
       }
     };
+
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
@@ -109,8 +122,10 @@ export const Game: React.FC<Props> = (props) => {
     ) : null;
   };
 
+  const cursor = props.state.gameMode === 'move' ? 'default' : 'help';
+
   return (
-    <div style={{ userSelect: 'none' }}>
+    <div style={{ userSelect: 'none', cursor }}>
       <EventLogs eventLogs={props.state.eventLogs} />
       <Wrapper>
         <SideWrapper
@@ -131,7 +146,7 @@ export const Game: React.FC<Props> = (props) => {
             setWithBackgroundMusic={props.setWithBackgroundMusic}
           />
         </SideWrapper>
-        <div>
+        <div style={{ pointerEvents }}>
           <DoubleBorders>
             <Viewport>{renderGameContent()}</Viewport>
           </DoubleBorders>
