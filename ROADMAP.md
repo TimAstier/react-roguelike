@@ -28,18 +28,24 @@
 - [x] Describe tiles via hover on cell in InteractionText.
 - [x] Player stats
 - [x] Fix interaction text showing when mouse hovers as consequence of player movement
+- [x] Doors
+- [x] Keyboard shortcuts
+- [x] Interaction text when hitting walls
+- [ ] Hunger clock with impact on visibility
+- [ ] Pillar tile to climb and increase visibility
+- [ ] Creatures
+- [ ] Show (?) for entities/items in dim light
+- [ ] Attacks
+- [ ] Creatures' AI
 - [ ] Seed map with RNG
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?
-- [ ] Doors
 - [ ] Improve generateLevel
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
 - [ ] NPCs
-- [ ] Monsters and attacks
 - [ ] Player death
 - [ ] Active conditions
 - [ ] Rest
 - [ ] Environment: grass, water, plants...
 - [ ] Throw items
-- [ ] Keyboard shortcuts
 - [ ] Use requestAnimationFrame for player movement. See for example [this code](https://github.com/KilroggD/rpg-react-redux/blob/master/src/tile-view/GameLoop.js) and [explanations](https://levelup.gitconnected.com/rpg-game-with-react-redux-html5-part-1-build-a-tile-map-9144fd867830), or [this code](https://github.com/ASteinheiser/react-rpg.com/blob/edd9d6f2af131822f97b3b49eb91696ec5e3f497/src/features/player/index.js).

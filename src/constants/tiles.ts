@@ -3,7 +3,7 @@ import { TileType } from '../typings/tileType';
 export const NON_REVEALED_BACKGROUND_COLOR = 'rgb(0,0,0,1)';
 export const DEFAULT_FONT_COLOR = '#5C606A';
 
-interface Tile {
+export interface Tile {
   type: TileType;
   name: string;
   nameInSentence: string;
@@ -11,6 +11,9 @@ interface Tile {
   dimBackgroundColor: string;
   clearFontColor: string;
   dimFontColor: string;
+  // flammability: number;
+  // opacity: number;
+  canWalkThrough: boolean;
 }
 
 export const TILES: Tile[] = [
@@ -22,6 +25,7 @@ export const TILES: Tile[] = [
     dimBackgroundColor: 'rgb(0,0,0,1)',
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
+    canWalkThrough: true,
   },
   {
     type: '#',
@@ -31,6 +35,7 @@ export const TILES: Tile[] = [
     dimBackgroundColor: '#6E6E6E',
     clearFontColor: 'black',
     dimFontColor: 'black',
+    canWalkThrough: false,
   },
   {
     type: '.',
@@ -40,6 +45,7 @@ export const TILES: Tile[] = [
     dimBackgroundColor: '#020211',
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
+    canWalkThrough: true,
   },
   {
     type: '@',
@@ -49,6 +55,7 @@ export const TILES: Tile[] = [
     dimBackgroundColor: '#020211',
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
+    canWalkThrough: true,
   },
   {
     type: '+',
@@ -58,6 +65,7 @@ export const TILES: Tile[] = [
     dimBackgroundColor: '#511E12',
     clearFontColor: '#EB833D',
     dimFontColor: '#EB833D',
+    canWalkThrough: true,
   },
 ];
 

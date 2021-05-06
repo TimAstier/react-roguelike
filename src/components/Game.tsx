@@ -87,12 +87,12 @@ export const Game: React.FC<Props> = (props) => {
 
       event.preventDefault();
 
-      props.dispatch(gameActions.updateGameMode('move'));
-
       // Prevent moving again before animation is finished
       if (Date.now() - lastMoveDate.current < ANIMATION_SPEED + PAUSE_TIME_BETWEEN_MOVES) {
         return;
       }
+
+      props.dispatch(gameActions.updateGameMode('move'));
 
       // Perform the move
       lastMoveDate.current = Date.now();
