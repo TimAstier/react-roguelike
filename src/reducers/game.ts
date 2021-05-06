@@ -8,7 +8,7 @@ import {
   SMALL_GOLD_MODIFIER,
 } from '../constants/config';
 import { getItem } from '../constants/items';
-import { getTile } from '../constants/tiles';
+import { getTile, Tile } from '../constants/tiles';
 import { CellContent, CellData } from '../typings/cell';
 import { GameMode } from '../typings/gameMode';
 import { ItemType } from '../typings/itemType';
@@ -133,11 +133,14 @@ export const INITIAL_STATE: GameState = {
 const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) => {
   let nextTileX: number;
   let nextTileY: number;
-  let nextTile: TileType;
+  let nextTileType: TileType;
+  let nextTile: Tile | undefined;
 
   if (draft.currentMap === null) {
     return;
   }
+
+  draft.moveDirection = moveDirection;
 
   const moveToNewPosition = (position: Position) => {
     if (draft.currentMap) {
@@ -180,23 +183,26 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       draft.playerPreviousPosition = draft.playerPosition;
       draft.playerPosition = position;
       draft.shouldPlayerAnimate = true;
-      draft.moveDirection = moveDirection;
     }
   };
 
-  const moveAndStayAtSamePosition = () => ({ ...draft, moveDirection, shouldPlayerAnimate: false });
+  const moveAndStayAtSamePosition = (tileNameInSentence: string | undefined) => {
+    draft.interactionText = `You hit ${tileNameInSentence || ''}.`;
+    draft.shouldPlayerAnimate = false;
+  };
 
   switch (moveDirection) {
     case 'Left':
       nextTileX =
         draft.playerPosition[0] > 0 ? draft.playerPosition[0] - 1 : draft.playerPosition[0];
       nextTileY = draft.playerPosition[1];
-      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[0] > 0 && nextTile !== '#') {
+      if (draft.playerPosition[0] > 0 && nextTile?.canWalkThrough === true) {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return moveAndStayAtSamePosition();
+      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
 
     case 'Right':
       nextTileX =
@@ -204,24 +210,25 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
           ? draft.playerPosition[0] + 1
           : draft.playerPosition[0];
       nextTileY = draft.playerPosition[1];
+      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTile = getTile(nextTileType);
 
-      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
-
-      if (draft.playerPosition[0] < GRID_WIDTH - 1 && nextTile !== '#') {
+      if (draft.playerPosition[0] < GRID_WIDTH - 1 && nextTile?.canWalkThrough === true) {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return moveAndStayAtSamePosition();
+      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
 
     case 'Up':
       nextTileX = draft.playerPosition[0];
       nextTileY =
         draft.playerPosition[1] > 0 ? draft.playerPosition[1] - 1 : draft.playerPosition[1];
-      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[1] > 0 && nextTile !== '#') {
+      if (draft.playerPosition[1] > 0 && nextTile?.canWalkThrough === true) {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return moveAndStayAtSamePosition();
+      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
 
     case 'Down':
       nextTileX = draft.playerPosition[0];
@@ -229,12 +236,13 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
         draft.playerPosition[1] < GRID_HEIGHT - 1
           ? draft.playerPosition[1] + 1
           : draft.playerPosition[1];
-      nextTile = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
+      nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[1] < GRID_HEIGHT - 1 && nextTile !== '#') {
+      if (draft.playerPosition[1] < GRID_HEIGHT - 1 && nextTile?.canWalkThrough === true) {
         return moveToNewPosition([nextTileX, nextTileY]);
       }
-      return moveAndStayAtSamePosition();
+      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
   }
 };
 
