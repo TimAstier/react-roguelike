@@ -1,6 +1,6 @@
+import { TileType } from '../constants/tiles';
 import { Area } from '../typings/area';
 import { Position } from '../typings/position';
-import { TileType } from '../typings/tileType';
 
 interface Options {
   area: Area;

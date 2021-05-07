@@ -1,5 +1,3 @@
-/* Should use sass to get CELL_WIDTH_IN_PIXELS as variable. */
-
 html,
 body,
 #root {
@@ -14,39 +12,3 @@ body,
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-@keyframes moveLeft {
-  0% {
-    transform: translate3d(25px, 0, 0) rotate(-90deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(-90deg);
-  }
-}
-
-@keyframes moveRight {
-  0% {
-    transform: translate3d(-25px, 0, 0) rotate(90deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(90deg);
-  }
-}
-
-@keyframes moveUp {
-  0% {
-    transform: translate3d(0, 25px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes moveDown {
-  0% {
-    transform: translate3d(0, -25px, 0) rotate(180deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(180deg);
-  }
-}

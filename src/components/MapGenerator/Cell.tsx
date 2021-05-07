@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Sprite } from '../../components/Sprite';
 import { getItem } from '../../constants/items';
 import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../../constants/tiles';
+import { TileType } from '../../constants/tiles';
 import { CellContent } from '../../typings/cell';
 import { MoveDirection } from '../../typings/moveDirection';
-import { TileType } from '../../typings/tileType';
-import { Player } from '.././Player';
+import { Sprite } from '../Shared/Sprite';
+import { Player } from './Player';
 
 interface StylingProps {
   backgroundColor: string;
@@ -38,17 +38,11 @@ export interface CellProps {
   handleClick: () => void;
 }
 
-export const Cell: React.FC<CellProps> = ({
-  content,
-  moveDirection,
-  tileType,
-  cellWidth,
-  handleClick,
-}) => {
+export const Cell: React.FC<CellProps> = ({ content, tileType, cellWidth, handleClick }) => {
   const tile = getTile(tileType);
 
   const renderPlayer = () => {
-    return <Player moveDirection={moveDirection} shouldPlayerAnimate={false} />;
+    return <Player />;
   };
 
   const renderItem = () => {
@@ -74,22 +68,8 @@ export const Cell: React.FC<CellProps> = ({
     return renderTile();
   };
 
-  // const handleMouseEnter = (payload: HoverCellPayload) => {
-  //   if (dispatch !== undefined) {
-  //     return dispatch(gameActions.hoverCell(payload));
-  //   }
-  // };
-
-  // const handleMouseLeave = () => {
-  //   if (dispatch !== undefined) {
-  //     return dispatch(gameActions.hoverAwayFromCell());
-  //   }
-  // };
-
   return (
     <Wrapper
-      // onMouseEnter={() => handleMouseEnter({ tileType, visibility, revealed, content })}
-      // onMouseLeave={() => handleMouseLeave()}
       onClick={handleClick}
       backgroundColor={tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR}
       cellWidth={cellWidth}

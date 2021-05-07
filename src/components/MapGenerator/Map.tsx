@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { GRID_HEIGHT, GRID_WIDTH } from '../../constants/config';
+import { CELL_WIDTH_MAP_GENERATOR, GRID_HEIGHT, GRID_WIDTH } from '../../constants/config';
 import { CellData } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { Cell } from './Cell';
-
-const CELL_WIDTH_MAP_GENERATOR = 20;
 
 interface StylingProps {
   cellWidth: number;

@@ -1,7 +1,7 @@
-import { TileType } from '../typings/tileType';
-
 export const NON_REVEALED_BACKGROUND_COLOR = 'rgb(0,0,0,1)';
 export const DEFAULT_FONT_COLOR = '#5C606A';
+
+export type TileType = ' ' | '#' | '.' | '@' | '+';
 
 export interface Tile {
   type: TileType;

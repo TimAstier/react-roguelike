@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { VIEWPORT_WIDTH_IN_PIXELS } from '../constants/config';
+import { VIEWPORT_WIDTH_IN_PIXELS } from '../../constants/config';
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { TileType } from '../../constants/tiles';
 // import seedrandom from 'seedrandom';
 import { generateLevel } from '../../pcg/generateLevel';
 import { gameActions } from '../../reducers/game';
 import { GameAction, GameState } from '../../reducers/game';
 import { CellContent, CellData } from '../../typings/cell';
 import { Position } from '../../typings/position';
-import { TileType } from '../../typings/tileType';
 import Map from './Map';
 import { Toolbar } from './Toolbar';
 
@@ -33,7 +33,6 @@ export const MapGenerator: React.FC<Props> = (props) => {
     // const seed = seedrandom('hello');
     // const newMap = generateMap(String(seed()));
     const level = generateLevel();
-    // TODO: Bug - Init visibility does not work
     props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
     props.dispatch(gameActions.setCurrentMap(level.gameMap));
   }, []);

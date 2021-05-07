@@ -8,13 +8,12 @@ import {
   SMALL_GOLD_MODIFIER,
 } from '../constants/config';
 import { getItem } from '../constants/items';
-import { getTile, Tile } from '../constants/tiles';
+import { ItemType } from '../constants/items';
+import { getTile, Tile, TileType } from '../constants/tiles';
 import { CellContent, CellData } from '../typings/cell';
 import { GameMode } from '../typings/gameMode';
-import { ItemType } from '../typings/itemType';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import { TileType } from '../typings/tileType';
 import { Visibility } from '../typings/visibility';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
 import { updateVisibility } from '../utils/updateVisibility';
