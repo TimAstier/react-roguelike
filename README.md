@@ -14,13 +14,13 @@ This is a hobby project to see how React can be used to create a roguelike game.
 ## Built with
 
 - [react](https://reactjs.org/) - a JavaScript library for building user interfaces
+- [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- [konva.js](https://konvajs.org/) - HTML5 2d canvas js library
+- [react-konva](https://konvajs.org/docs/react/Intro.html) - declarative canvas components for React
+- [use-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
 - [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
 - [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
-- [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
-- [user-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
-- [konva.js](https://konvajs.org/) - HTML5 2d canvas js library
-- [react-konva](https://konvajs.org/docs/react/Intro.html) - declarative canvas components for React
 - [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
 
 ## Contributing
