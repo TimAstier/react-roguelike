@@ -31,11 +31,10 @@
 - [x] Doors
 - [x] Keyboard shortcuts
 - [x] Interaction text when hitting walls
-- [ ] Add Changelog
+- [x] Only see "something" when an item is in dim light.
 - [ ] Hunger clock with impact on visibility
 - [ ] Pillar tile to climb and increase visibility
 - [ ] Creatures
-- [ ] Show (?) for entities/items in dim light
 - [ ] Attacks
 - [ ] Creatures' AI
 - [ ] Seed map with RNG

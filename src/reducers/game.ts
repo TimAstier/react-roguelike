@@ -255,7 +255,12 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
     return;
   }
 
-  if (revealed === false) {
+  if (revealed === false && visibility === 'dark') {
+    return;
+  }
+
+  if (visibility === 'dim' && !revealed && content !== 0) {
+    draft.interactionText = 'You discern something on the ground.';
     return;
   }
 

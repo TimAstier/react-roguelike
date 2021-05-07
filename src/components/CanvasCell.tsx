@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Image, Rect, Text } from 'react-konva';
+import { Circle, Group, Image, Rect, Text } from 'react-konva';
 
 import { CELL_WIDTH_IN_PIXELS } from '../constants/config';
 import { getItem } from '../constants/items';
@@ -44,15 +44,36 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   const Item = () => {
-    if (revealed && content !== 0 && content !== 'Player') {
+    if (content !== 0 && content !== 'Player') {
+      if (visibility === 'dark' && !revealed) {
+        return null;
+      }
+      if (visibility === 'dim' && !revealed) {
+        return (
+          <Circle
+            x={position[0] * CELL_WIDTH_IN_PIXELS + CELL_WIDTH_IN_PIXELS / 2}
+            y={position[1] * CELL_WIDTH_IN_PIXELS + CELL_WIDTH_IN_PIXELS / 2}
+            radius={5}
+            fill={DEFAULT_FONT_COLOR}
+            opacity={0.3}
+          />
+        );
+      }
+
+      let opacity = 0;
+      if (visibility === 'clear') {
+        opacity = 1;
+      } else if (visibility === 'dim' || revealed) {
+        opacity = 0.3;
+      }
       return item ? (
         <Image
-          x={position[0] * CELL_WIDTH_IN_PIXELS}
-          y={position[1] * CELL_WIDTH_IN_PIXELS}
+          x={position[0] * CELL_WIDTH_IN_PIXELS + (CELL_WIDTH_IN_PIXELS - 16) / 2}
+          y={position[1] * CELL_WIDTH_IN_PIXELS + (CELL_WIDTH_IN_PIXELS - 16) / 2}
           image={itemsImage}
           width={16}
           height={16}
-          perfectDrawEnabled={false}
+          opacity={opacity}
           crop={{
             x: item.spritePosition[0] * 16,
             y: item.spritePosition[1] * 16,
@@ -81,14 +102,14 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   const renderContentOrTile = () => {
-    if (content !== 0 && content !== 'Player' && revealed) {
+    if (content !== 0 && content !== 'Player') {
       return <Item />;
     }
     return renderTile();
   };
 
   const getBackgroundColor = () => {
-    if (!revealed) {
+    if (!revealed && visibility === 'dark') {
       return NON_REVEALED_BACKGROUND_COLOR;
     }
     if (visibility === 'clear') {
