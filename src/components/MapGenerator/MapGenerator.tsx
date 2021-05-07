@@ -8,7 +8,7 @@ import { GameAction, GameState } from '../../reducers/game';
 import { CellContent, CellData } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { TileType } from '../../typings/tileType';
-import Map from '../Map';
+import Map from './Map';
 import { Toolbar } from './Toolbar';
 
 const Wrapper = styled.div`
@@ -72,15 +72,7 @@ export const MapGenerator: React.FC<Props> = (props) => {
         selectedContent={selectedContent}
         handleSelectedContent={handleSelectedContent}
       />
-      <Map
-        inViewport={false}
-        playerPosition={[0, 0]}
-        fogOfWar={false}
-        moveDirection={'Up'}
-        gameMap={props.state.currentMap}
-        shouldPlayerAnimate={false}
-        handleCellClick={handleCellClick}
-      />
+      <Map gameMap={props.state.currentMap} handleCellClick={handleCellClick} />
     </Wrapper>
   );
 };

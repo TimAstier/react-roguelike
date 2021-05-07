@@ -76,10 +76,10 @@ const hoverAwayFromCell = (): GameAction => ({
   type: '@@GAME/HOVER_AWAY_FROM_CELL',
 });
 
-const updateGameMode = (gameMode: GameMode): GameAction => ({
-  type: '@@GAME/UPDATE_GAME_MODE',
-  gameMode,
-});
+// const updateGameMode = (gameMode: GameMode): GameAction => ({
+//   type: '@@GAME/UPDATE_GAME_MODE',
+//   gameMode,
+// });
 
 export const gameActions = {
   movePlayer,
@@ -89,7 +89,7 @@ export const gameActions = {
   initVisibility,
   hoverCell,
   hoverAwayFromCell,
-  updateGameMode,
+  // updateGameMode,
 };
 
 // INITIAL_STATE
@@ -140,6 +140,7 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
     return;
   }
 
+  draft.interactionText = '';
   draft.moveDirection = moveDirection;
 
   const moveToNewPosition = (position: Position) => {
@@ -317,11 +318,11 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
       return reduceHoverCell(draft, action.payload);
     case '@@GAME/HOVER_AWAY_FROM_CELL':
       return void (draft.interactionText = '');
-    case '@@GAME/UPDATE_GAME_MODE':
-      if (action.gameMode === 'move' || action.gameMode === draft.gameMode) {
-        draft.interactionText = '';
-        return void (draft.gameMode = 'move');
-      }
-      return void (draft.gameMode = action.gameMode);
+    // case '@@GAME/UPDATE_GAME_MODE':
+    //   if (action.gameMode === 'move' || action.gameMode === draft.gameMode) {
+    //     draft.interactionText = '';
+    //     return void (draft.gameMode = 'move');
+    //   }
+    //   return void (draft.gameMode = action.gameMode);
   }
 };

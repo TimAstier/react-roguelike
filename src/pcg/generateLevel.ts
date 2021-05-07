@@ -158,7 +158,7 @@ export const createGameMap = (
   for (let j = 0; j < height; j += 1) {
     gameMap[j] = [];
     for (let i = 0; i < width; i += 1) {
-      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false, visibility: 'dark' };
+      gameMap[j][i] = { content: 0, tile: map[j][i], revealed: false, visibility: 'clear' };
       if (i === spawn[0] && j === spawn[1]) {
         gameMap[j][i].content = 'Player';
       }
@@ -180,5 +180,5 @@ export const generateLevel = (): Level => {
   // Create gameMap
   const gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT);
 
-  return { gameMap, playerSpawn: [spawn[0], spawn[1]] };
+  return { gameMap, playerSpawn: spawn };
 };

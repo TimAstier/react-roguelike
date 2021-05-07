@@ -85,6 +85,19 @@ See [ROADMAP](ROADMAP.md).
 - https://www.redblobgames.com/pathfinding/tower-defense/
 - [A\* and Dijkstra](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
 
+## Canvas research
+
+- [roguelike-tutorial](https://github.com/maetl/roguelike-tutorial) - uses canvas
+  - https://github.com/maetl/roguelike-tutorial/commit/fb25399646de4a948d3c4434e513a4cee7501d12
+- [Tutorial about making games with canvas](https://www.youtube.com/watch?v=VLpjfr7mgT0&list=PL9ZqDLjDY8PnEdPILwGwhi63r7eWot2TP&ab_channel=JavaScriptTeacherJavaScriptTeacher)
+- [Canvas rpg tutorial](https://blog.calebnance.com/phaser/simple-canvas-start.html)
+- [w3school game dev/canvas tutorial](https://www.w3schools.com/graphics/game_intro.asp)
+- [Example of canvas in react](https://github.com/spcbrn/game_r/blob/master/src/components/GameCanvas.js)
+
+- [React and canvas hook](https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258)
+- [Konva](https://konvajs.org/docs/overview.html)
+- [react-konva](https://konvajs.org/docs/react/Intro.html)
+
 ## Built with
 
 - [react](https://reactjs.org/) - a JavaScript library for building user interfaces

@@ -7,7 +7,7 @@ import { ITEMS } from '../../constants/items';
 import { TILES } from '../../constants/tiles';
 import { CellContent } from '../../typings/cell';
 import { TileType } from '../../typings/tileType';
-import { Cell, CellProps } from '../Cell';
+import { Cell, CellProps } from './Cell';
 
 const Wrapper = styled.div`
   background-color: grey;
@@ -40,11 +40,8 @@ const defaultCellProps: CellProps = {
   content: 0,
   moveDirection: 'Up',
   tileType: '.',
-  shouldPlayerAnimate: false,
-  visibility: 'clear',
   cellWidth: CELL_WIDTH_IN_PIXELS,
-  inViewport: true,
-  revealed: true,
+  handleClick: () => false,
 };
 
 interface Props {

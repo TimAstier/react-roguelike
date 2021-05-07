@@ -31,6 +31,7 @@
 - [x] Doors
 - [x] Keyboard shortcuts
 - [x] Interaction text when hitting walls
+- [ ] Add Changelog
 - [ ] Hunger clock with impact on visibility
 - [ ] Pillar tile to climb and increase visibility
 - [ ] Creatures
