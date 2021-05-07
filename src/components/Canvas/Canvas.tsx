@@ -10,7 +10,7 @@ import {
   VIEWPORT_HEIGHT_IN_PIXELS,
   VIEWPORT_WIDTH_IN_PIXELS,
 } from '../../constants/config';
-import { GameAction } from '../../reducers/game';
+import { GameAction, gameActions } from '../../reducers/game';
 import { CellData } from '../../typings/cell';
 import { MoveDirection } from '../../typings/moveDirection';
 import { Position } from '../../typings/position';
@@ -68,7 +68,7 @@ const renderCells = (
     });
 };
 
-const renderPlayer = (moveDirection: MoveDirection) => {
+const renderPlayer = (moveDirection: MoveDirection, dispatch: React.Dispatch<GameAction>) => {
   const playerWidth = 0.6 * CELL_WIDTH_IN_PIXELS;
   const frontWidth = 0.3 * CELL_WIDTH_IN_PIXELS;
   let frontXModifier: number;
@@ -93,8 +93,20 @@ const renderPlayer = (moveDirection: MoveDirection) => {
       break;
   }
 
+  const handleMouseEnter = () =>
+    dispatch(
+      gameActions.hoverCell({
+        tileType: '.',
+        visibility: 'clear',
+        revealed: true,
+        content: 'Player',
+      })
+    );
+
+  const handleMouseLeave = () => dispatch(gameActions.hoverAwayFromCell());
+
   return (
-    <Group>
+    <Group onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Rect
         width={playerWidth}
         height={playerWidth}
@@ -132,7 +144,7 @@ export const Canvas: React.FC<Props> = (props) => {
         <Group offsetX={offsetX} offsetY={offsetY}>
           {renderCells(props.gameMap, itemsImage, props.playerPosition, props.dispatch)}
         </Group>
-        {renderPlayer(props.moveDirection)}
+        {renderPlayer(props.moveDirection, props.dispatch)}
       </Layer>
     </Stage>
   );
