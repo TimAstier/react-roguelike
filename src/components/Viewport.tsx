@@ -10,8 +10,6 @@ const Wrapper = styled.div`
   background-color: black;
 `;
 
-const Viewport: React.FC = (props) => {
+export const Viewport: React.FC = (props) => {
   return <Wrapper>{props.children}</Wrapper>;
 };
-
-export default Viewport;

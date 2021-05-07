@@ -1,3 +1,4 @@
+import FontFaceObserver from 'fontfaceobserver';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -8,11 +9,11 @@ import { gameActions } from '../reducers/game';
 import { MoveDirection } from '../typings/moveDirection';
 import { DoubleBorders } from './DoubleBorders';
 import { EventLogs } from './EventLogs';
+import { GameCanvas } from './GameCanvas';
 import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
-import Map from './Map';
 import { PlayerStats } from './PlayerStats';
-import Viewport from './Viewport';
+import { Viewport } from './Viewport';
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ interface Props {
 
 export const Game: React.FC<Props> = (props) => {
   const lastMoveDate = React.useRef(Date.now());
-  const [pointerEvents, setPointerEvents] = React.useState<'auto' | 'none'>('auto');
+  const [areFontsLoaded, setAreFontsLoaded] = React.useState(false);
 
   React.useEffect(() => {
     if (props.state.currentMap === null) {
@@ -63,10 +64,12 @@ export const Game: React.FC<Props> = (props) => {
   }, []);
 
   React.useEffect(() => {
-    // We prevent pointer events while the player is moving to avoid lags
-    const value = props.state.gameMode === 'move' ? 'none' : 'auto';
-    setPointerEvents(value);
-  }, [props.state.gameMode]);
+    const font = new FontFaceObserver('UglyTerminal');
+
+    Promise.all([font.load()]).then(function () {
+      setAreFontsLoaded(true);
+    });
+  }, []);
 
   React.useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -77,22 +80,12 @@ export const Game: React.FC<Props> = (props) => {
         return;
       }
 
-      if (key === 'i') {
-        return props.dispatch(gameActions.updateGameMode('inspect'));
-      }
-
-      if (key === 'Escape') {
-        return props.dispatch(gameActions.updateGameMode('move'));
-      }
-
       event.preventDefault();
 
       // Prevent moving again before animation is finished
       if (Date.now() - lastMoveDate.current < ANIMATION_SPEED + PAUSE_TIME_BETWEEN_MOVES) {
         return;
       }
-
-      props.dispatch(gameActions.updateGameMode('move'));
 
       // Perform the move
       lastMoveDate.current = Date.now();
@@ -108,24 +101,12 @@ export const Game: React.FC<Props> = (props) => {
     };
   }, []);
 
-  const renderGameContent = () => {
-    return props.state.currentMap ? (
-      <Map
-        inViewport={true}
-        playerPosition={props.state.playerPosition}
-        fogOfWar={true}
-        moveDirection={props.state.moveDirection}
-        gameMap={props.state.currentMap}
-        shouldPlayerAnimate={props.state.shouldPlayerAnimate}
-        dispatch={props.dispatch}
-      />
-    ) : null;
-  };
-
-  const cursor = props.state.gameMode === 'move' ? 'default' : 'help';
+  if (!areFontsLoaded) {
+    return null;
+  }
 
   return (
-    <div style={{ userSelect: 'none', cursor }}>
+    <div style={{ userSelect: 'none' }}>
       <EventLogs eventLogs={props.state.eventLogs} />
       <Wrapper>
         <SideWrapper
@@ -146,9 +127,18 @@ export const Game: React.FC<Props> = (props) => {
             setWithBackgroundMusic={props.setWithBackgroundMusic}
           />
         </SideWrapper>
-        <div style={{ pointerEvents }}>
+        <div>
           <DoubleBorders>
-            <Viewport>{renderGameContent()}</Viewport>
+            <Viewport>
+              {props.state.currentMap && (
+                <GameCanvas
+                  playerPosition={props.state.playerPosition}
+                  gameMap={props.state.currentMap}
+                  moveDirection={props.state.moveDirection}
+                  dispatch={props.dispatch}
+                />
+              )}
+            </Viewport>
           </DoubleBorders>
         </div>
         <SideWrapper
@@ -160,19 +150,6 @@ export const Game: React.FC<Props> = (props) => {
           }}
         >
           <Inventory inventory={props.state.inventory} />
-          <div>
-            <DoubleBorders>
-              <p
-                style={{ cursor: 'pointer' }}
-                onClick={() => props.dispatch(gameActions.updateGameMode('inspect'))}
-              >
-                <span style={{ color: 'gold' }}>I</span>
-                <span style={{ color: props.state.gameMode === 'inspect' ? 'gold' : 'white' }}>
-                  nspect
-                </span>
-              </p>
-            </DoubleBorders>
-          </div>
         </SideWrapper>
       </Wrapper>
       <InteractionText interactionText={props.state.interactionText} />

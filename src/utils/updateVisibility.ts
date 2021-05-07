@@ -30,7 +30,7 @@ export const updateVisibility = (position: Position, gameMap: CellData[][]): Cel
     newGameMap[p[1]][p[0]].visibility = visibility;
 
     // Update revealed for visible cells
-    const visible = visibility === 'clear' || visibility === 'dim';
+    const visible = visibility === 'clear';
     if (visible && newGameMap[p[1]][p[0]].revealed === false) {
       newGameMap[p[1]][p[0]].revealed = true;
     }
