@@ -1,12 +1,11 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-import roguelikeitems from '../assets/images/roguelikeitems.png';
-import { Sprite } from '../components/Sprite';
-import { NUMBER_OF_INVENTORY_SLOTS } from '../constants/config';
-import { getItem } from '../constants/items';
-import { ItemType } from '../typings/itemType';
-import { DoubleBorders } from './DoubleBorders';
+import roguelikeitems from '../../assets/images/roguelikeitems.png';
+import { NUMBER_OF_INVENTORY_SLOTS } from '../../constants/config';
+import { getItem, ItemType } from '../../constants/items';
+import { DoubleBorders } from '../Shared/DoubleBorders';
+import { Sprite } from '../Shared/Sprite';
 
 const ItemWrapper = styled.div`
   box-sizing: border-box;

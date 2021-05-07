@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
 import { ITEMS } from '../../constants/items';
-import { TILES } from '../../constants/tiles';
+import { TILES, TileType } from '../../constants/tiles';
 import { CellContent } from '../../typings/cell';
-import { TileType } from '../../typings/tileType';
 import { Cell, CellProps } from './Cell';
 
 const Wrapper = styled.div`

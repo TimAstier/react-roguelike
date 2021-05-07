@@ -1,14 +1,18 @@
 import React from 'react';
 import { Circle, Group, Image, Rect, Text } from 'react-konva';
 
-import { CELL_WIDTH_IN_PIXELS } from '../constants/config';
-import { getItem } from '../constants/items';
-import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../constants/tiles';
-import { GameAction, gameActions, HoverCellPayload } from '../reducers/game';
-import { CellContent } from '../typings/cell';
-import { Position } from '../typings/position';
-import { TileType } from '../typings/tileType';
-import { Visibility } from '../typings/visibility';
+import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
+import { getItem } from '../../constants/items';
+import {
+  DEFAULT_FONT_COLOR,
+  getTile,
+  NON_REVEALED_BACKGROUND_COLOR,
+  TileType,
+} from '../../constants/tiles';
+import { GameAction, gameActions, HoverCellPayload } from '../../reducers/game';
+import { CellContent } from '../../typings/cell';
+import { Position } from '../../typings/position';
+import { Visibility } from '../../typings/visibility';
 
 export interface CellProps {
   content: CellContent;

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import roguelikeitems from '../assets/images/roguelikeitems.png';
-import rpgicons from '../assets/images/rpgicons.png';
-import { Sprite } from '../components/Sprite';
-import { ItemType } from '../typings/itemType';
-import { DoubleBorders } from './DoubleBorders';
+import roguelikeitems from '../../assets/images/roguelikeitems.png';
+import rpgicons from '../../assets/images/rpgicons.png';
+import { ItemType } from '../../constants/items';
+import { DoubleBorders } from '../Shared/DoubleBorders';
+import { Sprite } from '../Shared/Sprite';
 
 const Wrapper = styled.div`
   height: 100%;

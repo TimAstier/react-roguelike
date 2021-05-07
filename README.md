@@ -44,7 +44,7 @@ $ yarn install
 # Start the app
 $ yarn start
 
-# Opens a browser tab at http://localhost:3000/
+# Open a browser tab at http://localhost:3000/
 ```
 
 ## Deployments:

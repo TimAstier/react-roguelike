@@ -1,6 +1,7 @@
 import roguelikeitems from '../assets/images/roguelikeitems.png';
-import { ItemType } from '../typings/itemType';
 import { Position } from '../typings/position';
+
+export type ItemType = 'Sword' | 'Ruby' | 'Key' | 'SmallGold' | 'BigGold';
 
 interface Item {
   type: ItemType;

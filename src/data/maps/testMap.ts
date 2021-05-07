@@ -1,4 +1,4 @@
-import { TileType } from '../../typings/tileType';
+import { TileType } from '../../constants/tiles';
 
 // prettier-ignore
 

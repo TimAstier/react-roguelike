@@ -1,19 +1,18 @@
-import FontFaceObserver from 'fontfaceobserver';
 import React from 'react';
 import styled from 'styled-components';
 
-import { ANIMATION_SPEED, PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
-import { generateLevel } from '../pcg/generateLevel';
-import { GameAction, GameState } from '../reducers/game';
-import { gameActions } from '../reducers/game';
-import { MoveDirection } from '../typings/moveDirection';
-import { DoubleBorders } from './DoubleBorders';
+import { useAreFontLoaded } from '../../hooks/useAreFontsLoaded';
+import { useGameKeys } from '../../hooks/useGameKeys';
+import { generateLevel } from '../../pcg/generateLevel';
+import { GameAction, GameState } from '../../reducers/game';
+import { gameActions } from '../../reducers/game';
+import { Canvas } from '../Canvas';
+import { DoubleBorders } from '../Shared/DoubleBorders';
+import { Viewport } from '../Shared/Viewport';
 import { EventLogs } from './EventLogs';
-import { GameCanvas } from './GameCanvas';
 import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
 import { PlayerStats } from './PlayerStats';
-import { Viewport } from './Viewport';
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,24 +24,6 @@ const SideWrapper = styled.div`
   color: white;
 `;
 
-const GAME_KEYS = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Escape', 'i'];
-
-const mapKeyCodeToDirection = (key: string): MoveDirection | undefined => {
-  if (!GAME_KEYS.includes(key)) {
-    return undefined;
-  }
-  switch (key) {
-    case 'ArrowLeft':
-      return 'Left';
-    case 'ArrowRight':
-      return 'Right';
-    case 'ArrowUp':
-      return 'Up';
-    case 'ArrowDown':
-      return 'Down';
-  }
-};
-
 interface Props {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
@@ -51,8 +32,8 @@ interface Props {
 }
 
 export const Game: React.FC<Props> = (props) => {
-  const lastMoveDate = React.useRef(Date.now());
-  const [areFontsLoaded, setAreFontsLoaded] = React.useState(false);
+  const areFontsLoaded = useAreFontLoaded();
+  useGameKeys(props.dispatch);
 
   React.useEffect(() => {
     if (props.state.currentMap === null) {
@@ -61,44 +42,6 @@ export const Game: React.FC<Props> = (props) => {
       props.dispatch(gameActions.setCurrentMap(level.gameMap));
     }
     props.dispatch(gameActions.initVisibility());
-  }, []);
-
-  React.useEffect(() => {
-    const font = new FontFaceObserver('UglyTerminal');
-
-    Promise.all([font.load()]).then(function () {
-      setAreFontsLoaded(true);
-    });
-  }, []);
-
-  React.useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      const key: string = event.key;
-
-      // Prevent reacting to other keys
-      if (!GAME_KEYS.includes(key)) {
-        return;
-      }
-
-      event.preventDefault();
-
-      // Prevent moving again before animation is finished
-      if (Date.now() - lastMoveDate.current < ANIMATION_SPEED + PAUSE_TIME_BETWEEN_MOVES) {
-        return;
-      }
-
-      // Perform the move
-      lastMoveDate.current = Date.now();
-      const direction = mapKeyCodeToDirection(key);
-      if (direction) {
-        props.dispatch(gameActions.movePlayer(direction));
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
   }, []);
 
   if (!areFontsLoaded) {
@@ -110,12 +53,7 @@ export const Game: React.FC<Props> = (props) => {
       <EventLogs eventLogs={props.state.eventLogs} />
       <Wrapper>
         <SideWrapper
-          style={{
-            marginRight: '15px',
-            paddingRight: 5,
-            paddingLeft: 5,
-            boxSizing: 'border-box',
-          }}
+          style={{ marginRight: '15px', paddingRight: 5, paddingLeft: 5, boxSizing: 'border-box' }}
         >
           <PlayerStats
             characterName={props.state.characterName}
@@ -131,7 +69,7 @@ export const Game: React.FC<Props> = (props) => {
           <DoubleBorders>
             <Viewport>
               {props.state.currentMap && (
-                <GameCanvas
+                <Canvas
                   playerPosition={props.state.playerPosition}
                   gameMap={props.state.currentMap}
                   moveDirection={props.state.moveDirection}

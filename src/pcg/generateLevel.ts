@@ -3,11 +3,11 @@
 // Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
 
 import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
+import { TileType } from '../constants/tiles';
 import { Area } from '../typings/area';
 import { CellData } from '../typings/cell';
 import { Level } from '../typings/level';
 import { Position } from '../typings/position';
-import { TileType } from '../typings/tileType';
 import { findCellsInArea } from '../utils/findCellsInArea';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
