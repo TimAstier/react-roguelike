@@ -35,12 +35,15 @@
 - [ ] Hunger clock with impact on visibility
 - [ ] Pillar tile to climb and increase visibility
 - [ ] Creatures
+- [ ] Improve generateLevel's corridors
+- [ ] Add items in generateLevel
+- [ ] Add monsters in generateLevel
+- [ ] Add downward staircases tile and in generateLevel
+- [ ] Seed map with RNG
 - [ ] Attacks
 - [ ] Creatures' AI
-- [ ] Seed map with RNG
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?
-- [ ] Improve generateLevel
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
 - [ ] NPCs
 - [ ] Player death
