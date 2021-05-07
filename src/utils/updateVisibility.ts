@@ -20,6 +20,10 @@ export const updateVisibility = (position: Position, gameMap: CellData[][]): Cel
 
   // Visibility
   surroundingPositions.forEach((p) => {
+    if (!newGameMap[p[1]] || !newGameMap[p[1]][p[0]]) {
+      // This can happen if the map is smaller than the surroundingPositions array
+      return;
+    }
     const visibility = getVisibility({
       position: p,
       playerPosition: position,

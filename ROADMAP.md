@@ -39,6 +39,7 @@
 - [ ] Add items in generateLevel
 - [ ] Add monsters in generateLevel
 - [ ] Add downward staircases tile and in generateLevel
+- [ ] Add project to this PR: https://github.com/konvajs/konva/issues/256
 - [ ] Seed map with RNG
 - [ ] Attacks
 - [ ] Creatures' AI
