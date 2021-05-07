@@ -106,6 +106,9 @@ See [ROADMAP](ROADMAP.md).
 - [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
 - [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
 - [user-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
+- [konva.js](https://konvajs.org/) - HTML5 2d canvas js library
+- [react-konva](https://konvajs.org/docs/react/Intro.html) - declarative canvas components for React
+- [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
 
 ## Credits
 
