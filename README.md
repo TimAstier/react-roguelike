@@ -1,5 +1,5 @@
 <div align="center">
-<h1>React RPG game</h1>
+<h1>React Roguelike</h1>
 
 <p>A roguelike game built with React and TypeScript.</p>
 <p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
@@ -9,22 +9,36 @@
 
 ## Description
 
-This is a hobby project to see how React can be used to create a game.
+This is a hobby project to see how React can be used to create a roguelike game.
 
-_Inspired by [the Danger Crew](https://thedangercrew.com/), [react-rpg](https://github.com/ASteinheiser/react-rpg.com), [rogue](https://playclassic.games/games/role-playing-dos-games-online/play-rogue-online/play/), Brogue, [HeadlessPanic](https://marcelmarki.com/headless-panic/index.html)_
+## Built with
+
+- [react](https://reactjs.org/) - a JavaScript library for building user interfaces
+- [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
+- [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
+- [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
+- [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- [user-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
+- [konva.js](https://konvajs.org/) - HTML5 2d canvas js library
+- [react-konva](https://konvajs.org/docs/react/Intro.html) - declarative canvas components for React
+- [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
 
 ## Contributing
 
 You are welcome to contribute to this project :) See [CONTRIBUTING](./CONTRIBUTING.md).
 
+## Roadmap
+
+See [ROADMAP](ROADMAP.md).
+
 ## Installation
 
 ```sh
 # Clone the repository
-$ git clone https://github.com/TimAstier/react-rpg-game
+$ git clone https://github.com/TimAstier/react-roguelike
 
 # Install dependencies
-$ cd react-rpg-game
+$ cd react-roguelike
 $ yarn install
 
 # Start the app
@@ -43,15 +57,10 @@ https://react-rpg-game-development.herokuapp.com
 Merging commits to `master` will auto-deploy to:  
 https://react-redux-rpg.herokuapp.com
 
-## Roadmap
-
-See [ROADMAP](ROADMAP.md).
-
-## References
+## Research links
 
 - [Red Blob Games](https://www.redblobgames.com/) - interactive visual explanations of math and algorithms
   - [Line drawing on a grid](https://www.redblobgames.com/grids/line-drawing.html)
-- [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/#imports) - react hook and audio-related tips and resources
 - [RoguelikeDevResources](https://github.com/marukrap/RoguelikeDevResources)
 - [Herbert Wolverson - Procedural Map Generation Techniques](https://www.youtube.com/watch?v=TlLIOgWYVpI)
 - [Brian Walker - Procedural level design in Brogue and beyond](https://www.youtube.com/watch?v=Uo9-IcHhq_w)
@@ -60,6 +69,13 @@ See [ROADMAP](ROADMAP.md).
   - [Level generation in Brogue wiki](https://brogue.fandom.com/wiki/Level_Generation)
 - [Rogueliike dev FAQ](https://www.reddit.com/r/roguelikedev/wiki/faq_friday)
 - [Brogue terrain features](https://brogue.fandom.com/wiki/Terrain_Features)
+
+### Dijkstra Maps
+
+- http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps
+- http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized
+- https://www.redblobgames.com/pathfinding/tower-defense/
+- [A\* and Dijkstra](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
 
 ## Resources
 
@@ -76,39 +92,6 @@ See [ROADMAP](ROADMAP.md).
 - [Upgrade from Ravenmore icons](https://opengameart.org/content/golden-items-rip-upgrade-pack)
 - [Additions to Ravenmore icons](https://opengameart.org/node/83169)
 - [Craftpix.next](https://craftpix.net/)
-
-## Research
-
-- Dijkstra Maps
-- http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps
-- http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized
-- https://www.redblobgames.com/pathfinding/tower-defense/
-- [A\* and Dijkstra](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
-
-## Canvas research
-
-- [roguelike-tutorial](https://github.com/maetl/roguelike-tutorial) - uses canvas
-  - https://github.com/maetl/roguelike-tutorial/commit/fb25399646de4a948d3c4434e513a4cee7501d12
-- [Tutorial about making games with canvas](https://www.youtube.com/watch?v=VLpjfr7mgT0&list=PL9ZqDLjDY8PnEdPILwGwhi63r7eWot2TP&ab_channel=JavaScriptTeacherJavaScriptTeacher)
-- [Canvas rpg tutorial](https://blog.calebnance.com/phaser/simple-canvas-start.html)
-- [w3school game dev/canvas tutorial](https://www.w3schools.com/graphics/game_intro.asp)
-- [Example of canvas in react](https://github.com/spcbrn/game_r/blob/master/src/components/GameCanvas.js)
-
-- [React and canvas hook](https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258)
-- [Konva](https://konvajs.org/docs/overview.html)
-- [react-konva](https://konvajs.org/docs/react/Intro.html)
-
-## Built with
-
-- [react](https://reactjs.org/) - a JavaScript library for building user interfaces
-- [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
-- [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
-- [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
-- [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
-- [user-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
-- [konva.js](https://konvajs.org/) - HTML5 2d canvas js library
-- [react-konva](https://konvajs.org/docs/react/Intro.html) - declarative canvas components for React
-- [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
 
 ## Credits
 
