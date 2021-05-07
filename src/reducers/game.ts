@@ -11,7 +11,6 @@ import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
 import { CellContent, CellData } from '../typings/cell';
-import { GameMode } from '../typings/gameMode';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
@@ -39,8 +38,7 @@ export type GameAction =
   | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
   | { type: '@@GAME/INIT_VISIBILITY' }
   | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
-  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' }
-  | { type: '@@GAME/UPDATE_GAME_MODE'; gameMode: GameMode };
+  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
