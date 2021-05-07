@@ -11,7 +11,6 @@ import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
 import { CellContent, CellData } from '../typings/cell';
-import { GameMode } from '../typings/gameMode';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
@@ -39,8 +38,7 @@ export type GameAction =
   | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
   | { type: '@@GAME/INIT_VISIBILITY' }
   | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
-  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' }
-  | { type: '@@GAME/UPDATE_GAME_MODE'; gameMode: GameMode };
+  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -91,8 +89,6 @@ export interface GameState {
   currentMap: CellData[][] | null;
   moveDirection: MoveDirection;
   playerPosition: Position;
-  playerPreviousPosition: Position;
-  shouldPlayerAnimate: boolean;
   characterName: string;
   hp: number;
   maxHp: number;
@@ -107,8 +103,6 @@ export const INITIAL_STATE: GameState = {
   currentMap: null,
   moveDirection: 'Right',
   playerPosition: [0, 0],
-  playerPreviousPosition: [0, 0],
-  shouldPlayerAnimate: false,
   characterName: 'Kerhebos',
   hp: INITIAL_MAX_HP,
   maxHp: INITIAL_MAX_HP,
@@ -172,15 +166,12 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       draft.currentMap = updateVisibility(position, draft.currentMap);
 
       // Update player position
-      draft.playerPreviousPosition = draft.playerPosition;
       draft.playerPosition = position;
-      draft.shouldPlayerAnimate = true;
     }
   };
 
   const moveAndStayAtSamePosition = (tileNameInSentence: string | undefined) => {
     draft.interactionText = `You hit ${tileNameInSentence || ''}.`;
-    draft.shouldPlayerAnimate = false;
   };
 
   switch (moveDirection) {
@@ -267,11 +258,11 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   let location = '';
 
   if (visibility === 'dark' && revealed === true) {
-    verb = 'remember seing';
+    verb = 'remember seeing';
   }
 
   if (visibility === 'dim' && revealed) {
-    verb = 'remember seing';
+    verb = 'remember seeing';
   }
 
   if (visibility === 'dim') {
@@ -286,7 +277,7 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
     object = getTile(tileType)?.nameInSentence;
   }
 
-  if (verb === 'remember seing') {
+  if (verb === 'remember seeing') {
     location = ' here';
   }
 
@@ -301,8 +292,7 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/SET_CURRENT_MAP':
       return void (draft.currentMap = action.currentMap);
     case '@@GAME/INIT_PLAYER_SPAWN':
-      draft.playerPosition = action.playerSpawn;
-      return void (draft.playerPreviousPosition = action.playerSpawn);
+      return void (draft.playerPosition = action.playerSpawn);
     case '@@GAME/UPDATE_CELL':
       return reduceUpdateCell(draft, action.payload);
     case '@@GAME/INIT_VISIBILITY':
