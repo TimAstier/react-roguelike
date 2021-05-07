@@ -80,22 +80,12 @@ export const Game: React.FC<Props> = (props) => {
         return;
       }
 
-      // if (key === 'i') {
-      //   return props.dispatch(gameActions.updateGameMode('inspect'));
-      // }
-
-      // if (key === 'Escape') {
-      //   return props.dispatch(gameActions.updateGameMode('move'));
-      // }
-
       event.preventDefault();
 
       // Prevent moving again before animation is finished
       if (Date.now() - lastMoveDate.current < ANIMATION_SPEED + PAUSE_TIME_BETWEEN_MOVES) {
         return;
       }
-
-      // props.dispatch(gameActions.updateGameMode('move'));
 
       // Perform the move
       lastMoveDate.current = Date.now();
@@ -111,14 +101,12 @@ export const Game: React.FC<Props> = (props) => {
     };
   }, []);
 
-  const cursor = props.state.gameMode === 'move' ? 'default' : 'help';
-
   if (!areFontsLoaded) {
     return null;
   }
 
   return (
-    <div style={{ userSelect: 'none', cursor }}>
+    <div style={{ userSelect: 'none' }}>
       <EventLogs eventLogs={props.state.eventLogs} />
       <Wrapper>
         <SideWrapper
@@ -162,19 +150,6 @@ export const Game: React.FC<Props> = (props) => {
           }}
         >
           <Inventory inventory={props.state.inventory} />
-          {/* <div>
-            <DoubleBorders>
-              <p
-                style={{ cursor: 'pointer' }}
-                onClick={() => props.dispatch(gameActions.updateGameMode('inspect'))}
-              >
-                <span style={{ color: 'gold' }}>I</span>
-                <span style={{ color: props.state.gameMode === 'inspect' ? 'gold' : 'white' }}>
-                  nspect
-                </span>
-              </p>
-            </DoubleBorders>
-          </div> */}
         </SideWrapper>
       </Wrapper>
       <InteractionText interactionText={props.state.interactionText} />

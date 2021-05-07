@@ -76,11 +76,6 @@ const hoverAwayFromCell = (): GameAction => ({
   type: '@@GAME/HOVER_AWAY_FROM_CELL',
 });
 
-// const updateGameMode = (gameMode: GameMode): GameAction => ({
-//   type: '@@GAME/UPDATE_GAME_MODE',
-//   gameMode,
-// });
-
 export const gameActions = {
   movePlayer,
   setCurrentMap,
@@ -89,7 +84,6 @@ export const gameActions = {
   initVisibility,
   hoverCell,
   hoverAwayFromCell,
-  // updateGameMode,
 };
 
 // INITIAL_STATE
@@ -108,7 +102,6 @@ export interface GameState {
   inventory: ItemType[];
   interactionText: string;
   eventLogs: string[];
-  gameMode: GameMode;
 }
 
 export const INITIAL_STATE: GameState = {
@@ -125,7 +118,6 @@ export const INITIAL_STATE: GameState = {
   inventory: [],
   interactionText: 'You enter the dungeon.',
   eventLogs: [],
-  gameMode: 'move',
 };
 
 // REDUCER
@@ -318,11 +310,5 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
       return reduceHoverCell(draft, action.payload);
     case '@@GAME/HOVER_AWAY_FROM_CELL':
       return void (draft.interactionText = '');
-    // case '@@GAME/UPDATE_GAME_MODE':
-    //   if (action.gameMode === 'move' || action.gameMode === draft.gameMode) {
-    //     draft.interactionText = '';
-    //     return void (draft.gameMode = 'move');
-    //   }
-    //   return void (draft.gameMode = action.gameMode);
   }
 };
