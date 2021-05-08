@@ -2,7 +2,7 @@
 <h1>React Roguelike</h1>
 
 <p>A roguelike game built with React and TypeScript.</p>
-<p><a href="https://react-redux-rpg.herokuapp.com/">https://react-roguelike.herokuapp.com</a><p/>
+<p><a href="https://react-roguelike.herokuapp.com/">https://react-roguelike.herokuapp.com</a><p/>
 </div>
 
 [![CircleCI](https://circleci.com/gh/TimAstier/react-roguelike.svg?style=svg)](https://circleci.com/gh/TimAstier/react-roguelike) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
