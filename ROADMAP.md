@@ -3,7 +3,6 @@
 - [x] Create basic grid
 - [x] Move with arrow keys
 - [x] Smooth move animation
-- [x] Add Redux to the project
 - [x] Add Prettier
 - [x] Live demo with auto-deploy when merge into master
 - [x] Debounce keypress handler
@@ -13,11 +12,44 @@
 - [x] Add CONRIBUTING file and @all-contributors bot
 - [x] Fixed viewport and moving background
 - [x] Walls
-- [ ] Remove redux
-- [ ] Fog of war
+- [x] Fog of war
+- [x] Hide cells that are hidden behind walls in fogOfWar
+- [x] Add sound manager
+- [x] Inventory component
+- [x] "Interaction text" component
+- [x] "Events text" component
+- [x] Remember visibility of explored cells
+- [x] Reveal adjacent walls
+- [x] Toolbar (to see available tiles)
+- [x] Add tiles to map in /pcg
+- [x] Load game from map in /pcg
+- [x] Add Cell logic to render tiles or content depending on visibility and revealed
+- [x] Add HP state and design
+- [x] Describe tiles via hover on cell in InteractionText.
+- [x] Player stats
+- [x] Fix interaction text showing when mouse hovers as consequence of player movement
+- [x] Doors
+- [x] Keyboard shortcuts
+- [x] Interaction text when hitting walls
+- [x] Only see "something" when an item is in dim light.
+- [ ] Hunger clock with impact on visibility
+- [ ] Pillar tile to climb and increase visibility
+- [ ] Creatures
+- [ ] Improve generateLevel's corridors
+- [ ] Add items in generateLevel
+- [ ] Add monsters in generateLevel
+- [ ] Add downward staircases tile and in generateLevel
+- [ ] Add project to this PR: https://github.com/konvajs/konva/issues/256
+- [ ] Seed map with RNG
+- [ ] Attacks
+- [ ] Creatures' AI
+- [ ] Fix can see through diagonal walls
+- [ ] Why can see more on the left side at the end of corridors?
+- [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
 - [ ] NPCs
-- [ ] PlayerProfile component
-- [ ] AdventureLogs component
-- [ ] Enter other maps or rooms
-- [ ] Monsters and attacks
-- [ ] Add sound manager (use Howler)
+- [ ] Player death
+- [ ] Active conditions
+- [ ] Rest
+- [ ] Environment: grass, water, plants...
+- [ ] Throw items
+- [ ] Use requestAnimationFrame for player movement. See for example [this code](https://github.com/KilroggD/rpg-react-redux/blob/master/src/tile-view/GameLoop.js) and [explanations](https://levelup.gitconnected.com/rpg-game-with-react-redux-html5-part-1-build-a-tile-map-9144fd867830), or [this code](https://github.com/ASteinheiser/react-rpg.com/blob/edd9d6f2af131822f97b3b49eb91696ec5e3f497/src/features/player/index.js).

@@ -1,36 +1,55 @@
 <div align="center">
-<h1>React RPG game</h1>
+<h1>React Roguelike</h1>
 
-<p>A RPG game built with TypeScript, React and Redux.</p>
-<p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
+<p>A roguelike game built with React and TypeScript.</p>
+<p><a href="https://react-redux-rpg.herokuapp.com/">https://react-roguelike.herokuapp.com</a><p/>
 </div>
 
-[![CircleCI](https://circleci.com/gh/TimAstier/react-rpg-game.svg?style=svg)](https://circleci.com/gh/TimAstier/react-rpg-game) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![CircleCI](https://circleci.com/gh/TimAstier/react-roguelike.svg?style=svg)](https://circleci.com/gh/TimAstier/react-roguelike) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
-## Description
+<img width="1440" alt="Screenshot 2021-05-08 at 10 29 27" src="https://user-images.githubusercontent.com/8555097/117532703-1c2ec500-afe9-11eb-94df-67ff6689188e.png">
 
-This is a hobby project to see how React can be used to create a game.
+## How to play
 
-_Inspired by [the Danger Crew](https://thedangercrew.com/) and [react-rpg](https://github.com/ASteinheiser/react-rpg.com)._
+React Roguelike is under development. In the latest version you can:
+
+1. Generate and edit edit a map on https://react-roguelike.herokuapp.com/pcg.
+2. Click "Play" and move around the map.
+
+## Built with
+
+- [react](https://reactjs.org/) - a JavaScript library for building user interfaces
+- [typescript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- [konva.js](https://konvajs.org/) - HTML5 2d canvas js library
+- [react-konva](https://konvajs.org/docs/react/Intro.html) - declarative canvas components for React
+- [use-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
+- [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
+- [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
+- [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
+- [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
 
 ## Contributing
 
 You are welcome to contribute to this project :) See [CONTRIBUTING](./CONTRIBUTING.md).
 
+## Roadmap
+
+See [ROADMAP](ROADMAP.md).
+
 ## Installation
 
 ```sh
 # Clone the repository
-$ git clone https://github.com/TimAstier/react-rpg-game
+$ git clone https://github.com/TimAstier/react-roguelike
 
 # Install dependencies
-$ cd react-rpg-game
+$ cd react-roguelike
 $ yarn install
 
 # Start the app
 $ yarn start
 
-# Opens a browser tab at http://localhost:3000/
+# Open a browser tab at http://localhost:3000/
 ```
 
 ## Deployments:
@@ -43,16 +62,12 @@ https://react-rpg-game-development.herokuapp.com
 Merging commits to `master` will auto-deploy to:  
 https://react-redux-rpg.herokuapp.com
 
-## Roadmap
+## Credits
 
-See [ROADMAP](ROADMAP.md).
-
-## Built with
-
-- [react](https://reactjs.org/) - a JavaScript library for building user interfaces
-- [redux](https://redux.js.org/) - a predictable state container for JavaScript apps
-- [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
-- [TypeScript](https://www.typescriptlang.org/) - a typed superset of JavaScript that compiles to plain JavaScript
+- Music from Pixelsphere.org / The Cynic Project from [opengameart](https://opengameart.org/content/crystal-cave-song18)
+- Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution [license](http://creativecommons.org/licenses/by/3.0/)
+- [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter)
+- Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 
 ## License
 

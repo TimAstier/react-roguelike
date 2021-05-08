@@ -1,7 +1,12 @@
-export type CellContent = 0 | 'Player';
-export type CellTile = ' ' | 'X';
+import { ItemType } from '../constants/items';
+import { TileType } from '../constants/tiles';
+import { Visibility } from './visibility';
+
+export type CellContent = 0 | 'Player' | ItemType;
 
 export interface CellData {
   content: CellContent;
-  tile: CellTile;
+  tile: TileType;
+  revealed: boolean;
+  visibility: Visibility;
 }

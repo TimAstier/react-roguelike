@@ -3,40 +3,12 @@ body,
 #root {
   height: 100%;
   overflow: hidden;
+  margin: 0;
 }
 
-@keyframes moveLeft {
-  0% {
-    transform: translate3d(45px, 0, 0) rotate(-90deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(-90deg);
-  }
+@font-face {
+  font-family: 'UglyTerminal';
+  src: local('UglyTerminal'), url(./assets/fonts/ugly-terminal-8.ttf) format('truetype');
 }
 
-@keyframes moveRight {
-  0% {
-    transform: translate3d(-45px, 0, 0) rotate(90deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(90deg);
-  }
-}
-
-@keyframes moveUp {
-  0% {
-    transform: translate3d(0, 45px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes moveDown {
-  0% {
-    transform: translate3d(0, -45px, 0) rotate(180deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(180deg);
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
