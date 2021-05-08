@@ -2,14 +2,19 @@
 <h1>React Roguelike</h1>
 
 <p>A roguelike game built with React and TypeScript.</p>
-<p>Demo: <a href="https://react-redux-rpg.herokuapp.com/">https://react-redux-rpg.herokuapp.com</a><p/>
+<p><a href="https://react-redux-rpg.herokuapp.com/">https://react-roguelike.herokuapp.com</a><p/>
 </div>
 
 [![CircleCI](https://circleci.com/gh/TimAstier/react-roguelike.svg?style=svg)](https://circleci.com/gh/TimAstier/react-roguelike) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
-## Description
+<img width="1440" alt="Screenshot 2021-05-08 at 10 29 27" src="https://user-images.githubusercontent.com/8555097/117532703-1c2ec500-afe9-11eb-94df-67ff6689188e.png">
 
-This is a hobby project to see how React can be used to create a roguelike game.
+## How to play
+
+React Roguelike is under development. In the latest version you can:
+
+1. Generate and edit edit a map on https://react-roguelike.herokuapp.com/pcg.
+2. Click "Play" and move around the map.
 
 ## Built with
 
