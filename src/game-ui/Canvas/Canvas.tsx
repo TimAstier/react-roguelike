@@ -101,6 +101,7 @@ const renderPlayer = (moveDirection: MoveDirection, dispatch: React.Dispatch<Gam
         visibility: 'clear',
         revealed: true,
         content: 'Player',
+        burning: false,
       })
     );
 

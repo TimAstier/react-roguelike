@@ -30,6 +30,7 @@ export interface HoverCellPayload {
   visibility: Visibility;
   revealed: boolean;
   content: CellContent;
+  burning: boolean;
 }
 
 export type GameAction =
@@ -242,7 +243,7 @@ const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => 
 };
 
 const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
-  const { tileType, visibility, revealed, content } = payload;
+  const { tileType, visibility, revealed, content, burning } = payload;
 
   if (content === 'Player') {
     draft.interactionText = 'This is you.';
@@ -282,10 +283,10 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   }
 
   if (verb === 'remember seeing') {
-    location = ' here';
+    location = ' over there';
   }
 
-  const interactionText = `You ${verb} ${object}${location}.`;
+  const interactionText = `You ${verb} ${object}${burning ? ' burning' : ''}${location}.`;
   draft.interactionText = interactionText;
 };
 

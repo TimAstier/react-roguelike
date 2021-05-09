@@ -110,6 +110,7 @@ describe('game reducer', () => {
         visibility: 'clear',
         revealed: true,
         content: 'Player',
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
@@ -122,6 +123,7 @@ describe('game reducer', () => {
         visibility: 'clear',
         revealed: true,
         content: 'Sword',
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
@@ -134,6 +136,7 @@ describe('game reducer', () => {
         visibility: 'dim',
         revealed: true,
         content: 'Sword',
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
@@ -146,10 +149,11 @@ describe('game reducer', () => {
         visibility: 'dark',
         revealed: true,
         content: 'Sword',
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
-      expect(newState.interactionText).toEqual('You remember seeing a sword here.');
+      expect(newState.interactionText).toEqual('You remember seeing a sword over there.');
     });
     it('says "You discern something on the ground."', () => {
       const state = INITIAL_STATE;
@@ -158,6 +162,7 @@ describe('game reducer', () => {
         visibility: 'dim',
         revealed: false,
         content: 'Sword',
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
@@ -170,6 +175,7 @@ describe('game reducer', () => {
         visibility: 'clear',
         revealed: true,
         content: 0,
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
@@ -182,6 +188,7 @@ describe('game reducer', () => {
         visibility: 'dim',
         revealed: true,
         content: 0,
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
@@ -194,10 +201,24 @@ describe('game reducer', () => {
         visibility: 'dark',
         revealed: true,
         content: 0,
+        burning: false,
       };
       const action = gameActions.hoverCell(payload);
       const newState = produce(game)(state, action);
-      expect(newState.interactionText).toEqual('You remember seeing a wall here.');
+      expect(newState.interactionText).toEqual('You remember seeing a wall over there.');
+    });
+    it('says "You see some grass burning."', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '"',
+        visibility: 'clear',
+        revealed: true,
+        content: 0,
+        burning: true,
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.interactionText).toEqual('You see some grass burning.');
     });
   });
   describe('hoverAwayFromCell', () => {
