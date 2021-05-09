@@ -29,8 +29,10 @@ export const updateBurningTiles = (map: CellData[][]): CellData[][] => {
             if (nextMap[p[1]][p[0]].burningRounds === 0) {
               const tile = getTile(nextMap[p[1]][p[0]].tile);
               if (tile && tile.flammability > 0) {
-                startedBurningTiles.push(p);
-                nextMap[p[1]][p[0]].burningRounds = NUMBER_OF_ROUNDS_BURNING;
+                if (Math.random() < tile.flammability) {
+                  startedBurningTiles.push(p);
+                  nextMap[p[1]][p[0]].burningRounds = NUMBER_OF_ROUNDS_BURNING + 1;
+                }
               }
             }
           }

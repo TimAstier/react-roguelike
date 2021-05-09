@@ -24,4 +24,4 @@ export const SMALL_GOLD_MODIFIER = 12;
 export const BIG_GOLD_AMOUNT = 100;
 export const BIG_GOLD_MODIFIER = 50;
 
-export const NUMBER_OF_ROUNDS_BURNING = 10;
+export const NUMBER_OF_ROUNDS_BURNING = 30;

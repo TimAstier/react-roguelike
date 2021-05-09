@@ -1,4 +1,5 @@
-import { TileType } from '../../constants/tiles';
+import { NUMBER_OF_ROUNDS_BURNING } from '../../constants/config';
+import { getTile, TileType } from '../../constants/tiles';
 import { createGameMap } from '../../pcg/generateLevel';
 import { updateBurningTiles } from '../updateBurningTiles';
 
@@ -47,9 +48,9 @@ const gameMapD = createGameMap(mapD, [1, 1], 5, 3);
 const gameMapE = createGameMap(mapE, [1, 1], 4, 3);
 const gameMapF = createGameMap(mapF, [1, 1], 3, 4);
 
-describe('updateBurningTiles', () => {
+describe('updateBurningTiles with mocked low Math.random', () => {
   beforeEach(() => {
-    jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+    jest.spyOn(global.Math, 'random').mockReturnValue(0.01);
   });
   afterEach(() => {
     jest.spyOn(global.Math, 'random').mockRestore();
@@ -115,6 +116,30 @@ describe('updateBurningTiles', () => {
     expect(nextMap[3][0].burningRounds).toEqual(0);
     expect(nextMap[0][2].burningRounds).toEqual(0);
   });
-  it('takesFlammability into account to randomly propagates', () => {});
-  // Not decrement tiles that started burning
+  it('burns based on NUMBER_OF_ROUNDS_BURNING', () => {
+    const gameMap = JSON.parse(JSON.stringify(gameMapC));
+    gameMap[1][1] = { ...gameMap[1][1], burningRounds: 3 };
+    const nextMap = updateBurningTiles(gameMap);
+    expect(nextMap[1][2].burningRounds).toEqual(NUMBER_OF_ROUNDS_BURNING);
+  });
+});
+
+describe('updateBurningTiles with high low Math.random', () => {
+  beforeEach(() => {
+    jest.spyOn(global.Math, 'random').mockReturnValue(0.99);
+  });
+  afterEach(() => {
+    jest.spyOn(global.Math, 'random').mockRestore();
+  });
+  it('does not propagate when Math.random is grater than flammablility', () => {
+    const grassTile = getTile('"');
+    if (grassTile) {
+      const flammability = grassTile.flammability;
+      expect(flammability).toBeLessThan(Math.random());
+    }
+    const gameMap = JSON.parse(JSON.stringify(gameMapC));
+    gameMap[1][1] = { ...gameMap[1][1], burningRounds: 3 };
+    const nextMap = updateBurningTiles(gameMap);
+    expect(nextMap[1][2].burningRounds).toEqual(0);
+  });
 });

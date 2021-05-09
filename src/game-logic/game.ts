@@ -262,7 +262,7 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   let verb = 'see';
   let location = '';
 
-  if (visibility === 'dark' && revealed === true) {
+  if (visibility === 'dark' && revealed) {
     verb = 'remember seeing';
   }
 
@@ -286,7 +286,9 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
     location = ' over there';
   }
 
-  const interactionText = `You ${verb} ${object}${burning ? ' burning' : ''}${location}.`;
+  const interactionText = `You ${verb} ${object}${
+    burning && visibility !== 'dark' ? ' burning' : ''
+  }${location}.`;
   draft.interactionText = interactionText;
 };
 

@@ -220,6 +220,19 @@ describe('game reducer', () => {
       const newState = produce(game)(state, action);
       expect(newState.interactionText).toEqual('You see some grass burning.');
     });
+    it('does not say "burning" for tiles you remember', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '"',
+        visibility: 'dark',
+        revealed: true,
+        content: 0,
+        burning: true,
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.interactionText).toEqual('You remember seeing some grass over there.');
+    });
   });
   describe('hoverAwayFromCell', () => {
     it('empties the interactionText', () => {
