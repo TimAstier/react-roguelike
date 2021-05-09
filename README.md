@@ -57,10 +57,10 @@ $ yarn start
 Review apps will be deployed when opening a PR on the development branch.
 
 Merging commits to `development` will auto-deploy to:  
-https://react-rpg-game-development.herokuapp.com
+https://react-roguelike-development.herokuapp.com
 
 Merging commits to `master` will auto-deploy to:  
-https://react-redux-rpg.herokuapp.com
+https://react-roguelike.herokuapp.com
 
 ## Credits
 
