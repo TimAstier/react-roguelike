@@ -13,6 +13,7 @@ import { GameAction, gameActions, HoverCellPayload } from '../../game-logic/game
 import { CellContent } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { Visibility } from '../../typings/visibility';
+import { Flame } from './Flame';
 
 export interface CellProps {
   content: CellContent;
@@ -22,6 +23,7 @@ export interface CellProps {
   dispatch: React.Dispatch<GameAction>;
   position: Position;
   itemsImage: HTMLImageElement | undefined;
+  flameImage: HTMLImageElement | undefined;
   burning: boolean;
 }
 
@@ -33,11 +35,15 @@ export const CanvasCell: React.FC<CellProps> = ({
   dispatch,
   position,
   itemsImage,
+  flameImage,
   burning,
 }) => {
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
-
   const tile = getTile(tileType);
+
+  const renderFlame = () => (
+    <Flame flameImage={flameImage} position={position} opacity={visibility === 'dim' ? 0.3 : 1} />
+  );
 
   const getFontColor = () => {
     if (burning && visibility !== 'dark') {
@@ -97,12 +103,11 @@ export const CanvasCell: React.FC<CellProps> = ({
 
   const renderTile = () => {
     if (visibility !== 'dark' || revealed) {
-      const text = burning && visibility !== 'dark' ? '^' : tileType;
       return (
         <Text
           x={position[0] * CELL_WIDTH_IN_PIXELS + 7}
           y={position[1] * CELL_WIDTH_IN_PIXELS + 7}
-          text={text}
+          text={tileType}
           fontFamily="UglyTerminal"
           fontSize={12}
           fill={getFontColor()}
@@ -112,6 +117,10 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   const renderContentOrTile = () => {
+    if (visibility !== 'dark' && burning) {
+      return renderFlame();
+    }
+
     if (content !== 0 && content !== 'Player') {
       return <Item />;
     }
@@ -121,13 +130,6 @@ export const CanvasCell: React.FC<CellProps> = ({
   const getBackgroundColor = () => {
     if (!revealed && visibility === 'dark') {
       return NON_REVEALED_BACKGROUND_COLOR;
-    }
-    if (burning) {
-      if (visibility === 'clear') {
-        return '#DB3B1B';
-      } else if (visibility === 'dim') {
-        return '#c62909';
-      }
     }
     if (visibility === 'clear') {
       return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
