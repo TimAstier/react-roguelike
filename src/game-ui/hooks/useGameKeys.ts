@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { PAUSE_TIME_BETWEEN_MOVES } from '../constants/config';
-import { gameActions } from '../reducers/game';
-import { GameAction } from '../reducers/game';
-import { MoveDirection } from '../typings/moveDirection';
+import { PAUSE_TIME_BETWEEN_MOVES } from '../../constants/config';
+import { GameAction, gameActions } from '../../game-logic/game';
+import { MoveDirection } from '../../typings/moveDirection';
 
 const GAME_KEYS = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
 

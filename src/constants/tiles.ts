@@ -90,7 +90,7 @@ export const TILES: Tile[] = [
     clearBackgroundColor: '#131226',
     dimBackgroundColor: '#020211',
     clearFontColor: 'grey',
-    dimFontColor: 'greey',
+    dimFontColor: '#808080',
     canWalkThrough: true,
     flammability: 0,
   },

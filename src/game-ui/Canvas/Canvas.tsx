@@ -10,7 +10,7 @@ import {
   VIEWPORT_HEIGHT_IN_PIXELS,
   VIEWPORT_WIDTH_IN_PIXELS,
 } from '../../constants/config';
-import { GameAction, gameActions } from '../../reducers/game';
+import { GameAction, gameActions } from '../../game-logic/game';
 import { CellData } from '../../typings/cell';
 import { MoveDirection } from '../../typings/moveDirection';
 import { Position } from '../../typings/position';

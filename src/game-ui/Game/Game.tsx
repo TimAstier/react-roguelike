@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useAreFontLoaded } from '../../hooks/useAreFontsLoaded';
-import { useGameKeys } from '../../hooks/useGameKeys';
+import { GameAction, gameActions, GameState } from '../../game-logic/game';
 import { generateLevel } from '../../pcg/generateLevel';
-import { GameAction, GameState } from '../../reducers/game';
-import { gameActions } from '../../reducers/game';
 import { Canvas } from '../Canvas';
+import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
+import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Viewport } from '../Shared/Viewport';
 import { EventLogs } from './EventLogs';

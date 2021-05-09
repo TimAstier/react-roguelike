@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 import { NUMBER_OF_ROUNDS_BURNING } from '../../constants/config';
 import { TileType } from '../../constants/tiles';
+import { gameActions } from '../../game-logic/game';
+import { GameAction, GameState } from '../../game-logic/game';
 // import seedrandom from 'seedrandom';
 import { generateLevel } from '../../pcg/generateLevel';
-import { gameActions } from '../../reducers/game';
-import { GameAction, GameState } from '../../reducers/game';
 import { CellContent, CellData } from '../../typings/cell';
 import { Effect } from '../../typings/effect';
 import { Position } from '../../typings/position';

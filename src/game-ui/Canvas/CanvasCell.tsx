@@ -9,7 +9,7 @@ import {
   NON_REVEALED_BACKGROUND_COLOR,
   TileType,
 } from '../../constants/tiles';
-import { GameAction, gameActions, HoverCellPayload } from '../../reducers/game';
+import { GameAction, gameActions, HoverCellPayload } from '../../game-logic/game';
 import { CellContent } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { Visibility } from '../../typings/visibility';
@@ -40,6 +40,9 @@ export const CanvasCell: React.FC<CellProps> = ({
   const tile = getTile(tileType);
 
   const getFontColor = () => {
+    if (burning && visibility !== 'dark') {
+      return 'white';
+    }
     if (visibility === 'clear') {
       return tile?.clearFontColor || DEFAULT_FONT_COLOR;
     }
@@ -94,14 +97,15 @@ export const CanvasCell: React.FC<CellProps> = ({
 
   const renderTile = () => {
     if (visibility !== 'dark' || revealed) {
+      const text = burning && visibility !== 'dark' ? '^' : tileType;
       return (
         <Text
           x={position[0] * CELL_WIDTH_IN_PIXELS + 7}
           y={position[1] * CELL_WIDTH_IN_PIXELS + 7}
-          text={burning ? '^' : tileType}
+          text={text}
           fontFamily="UglyTerminal"
           fontSize={12}
-          fill={burning ? 'red' : getFontColor()}
+          fill={getFontColor()}
         />
       );
     }
@@ -118,16 +122,17 @@ export const CanvasCell: React.FC<CellProps> = ({
     if (!revealed && visibility === 'dark') {
       return NON_REVEALED_BACKGROUND_COLOR;
     }
-    if (visibility === 'clear') {
-      if (burning) {
-        return 'orange';
+    if (burning) {
+      if (visibility === 'clear') {
+        return '#DB3B1B';
+      } else if (visibility === 'dim') {
+        return '#c62909';
       }
+    }
+    if (visibility === 'clear') {
       return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
     if (visibility === 'dim' || revealed) {
-      if (burning) {
-        return 'orange';
-      }
       return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
     return NON_REVEALED_BACKGROUND_COLOR;
