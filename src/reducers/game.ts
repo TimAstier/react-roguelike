@@ -15,6 +15,7 @@ import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
+import { updateBurningTiles } from '../utils/updateBurningTiles';
 import { updateVisibility } from '../utils/updateVisibility';
 
 // ACTIONS
@@ -164,6 +165,9 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
 
       // Update visibility
       draft.currentMap = updateVisibility(position, draft.currentMap);
+
+      // Update burning tiles
+      draft.currentMap = updateBurningTiles(draft.currentMap);
 
       // Update player position
       draft.playerPosition = position;

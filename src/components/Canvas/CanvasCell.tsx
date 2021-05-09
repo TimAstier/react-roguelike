@@ -22,6 +22,7 @@ export interface CellProps {
   dispatch: React.Dispatch<GameAction>;
   position: Position;
   itemsImage: HTMLImageElement | undefined;
+  burning: boolean;
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -32,6 +33,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   dispatch,
   position,
   itemsImage,
+  burning,
 }) => {
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
 
@@ -96,10 +98,10 @@ export const CanvasCell: React.FC<CellProps> = ({
         <Text
           x={position[0] * CELL_WIDTH_IN_PIXELS + 7}
           y={position[1] * CELL_WIDTH_IN_PIXELS + 7}
-          text={tileType}
+          text={burning ? '^' : tileType}
           fontFamily="UglyTerminal"
           fontSize={12}
-          fill={getFontColor()}
+          fill={burning ? 'red' : getFontColor()}
         />
       );
     }
@@ -117,9 +119,15 @@ export const CanvasCell: React.FC<CellProps> = ({
       return NON_REVEALED_BACKGROUND_COLOR;
     }
     if (visibility === 'clear') {
+      if (burning) {
+        return 'orange';
+      }
       return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
     if (visibility === 'dim' || revealed) {
+      if (burning) {
+        return 'orange';
+      }
       return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
     }
     return NON_REVEALED_BACKGROUND_COLOR;

@@ -12,7 +12,7 @@ import { game, gameActions, GameState, HoverCellPayload, INITIAL_STATE } from '.
 
 // prettier-ignore
 
-export const mapA: TileType[][] = [
+const mapA: TileType[][] = [
   ['.', '.', '.'],
   ['.', '.', '.'],
   ['.', '.', '.'],
@@ -211,7 +211,13 @@ describe('game reducer', () => {
   describe('loot items', () => {
     it('adds ruby to inventory', () => {
       const currentMap = gameMapA.map((arr) => arr.slice());
-      currentMap[1][1] = { content: 'Ruby', tile: '.', revealed: true, visibility: 'clear' };
+      currentMap[1][1] = {
+        content: 'Ruby',
+        tile: '.',
+        revealed: true,
+        visibility: 'clear',
+        burningRounds: 0,
+      };
       const state: GameState = { ...INITIAL_STATE, currentMap, playerPosition: [0, 1] };
       const action = gameActions.movePlayer('Right');
       const newStateA = produce(game)(state, action);
@@ -224,7 +230,13 @@ describe('game reducer', () => {
     });
     it('loots SmallGold', () => {
       const currentMap = gameMapA.map((arr) => arr.slice());
-      currentMap[1][1] = { content: 'SmallGold', tile: '.', revealed: true, visibility: 'clear' };
+      currentMap[1][1] = {
+        content: 'SmallGold',
+        tile: '.',
+        revealed: true,
+        visibility: 'clear',
+        burningRounds: 0,
+      };
       const state: GameState = { ...INITIAL_STATE, currentMap, playerPosition: [0, 1] };
       const action = gameActions.movePlayer('Right');
       const newStateA = produce(game)(state, action);
@@ -239,7 +251,13 @@ describe('game reducer', () => {
     });
     it('loots BigGold', () => {
       const currentMap = gameMapA.map((arr) => arr.slice());
-      currentMap[1][1] = { content: 'BigGold', tile: '.', revealed: true, visibility: 'clear' };
+      currentMap[1][1] = {
+        content: 'BigGold',
+        tile: '.',
+        revealed: true,
+        visibility: 'clear',
+        burningRounds: 0,
+      };
       const state: GameState = { ...INITIAL_STATE, currentMap, playerPosition: [0, 1] };
       const action = gameActions.movePlayer('Right');
       const newStateA = produce(game)(state, action);

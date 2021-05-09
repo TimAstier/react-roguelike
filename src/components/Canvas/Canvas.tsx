@@ -62,6 +62,7 @@ const renderCells = (
               position={[posX, posY]}
               itemsImage={itemsImage}
               dispatch={dispatch}
+              burning={cellData.burningRounds > 0}
             />
           );
         });

@@ -9,4 +9,5 @@ export interface CellData {
   tile: TileType;
   revealed: boolean;
   visibility: Visibility;
+  burningRounds: number;
 }

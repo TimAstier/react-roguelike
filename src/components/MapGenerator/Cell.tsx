@@ -36,9 +36,16 @@ export interface CellProps {
   tileType: TileType;
   cellWidth: number;
   handleClick: () => void;
+  burning: boolean;
 }
 
-export const Cell: React.FC<CellProps> = ({ content, tileType, cellWidth, handleClick }) => {
+export const Cell: React.FC<CellProps> = ({
+  burning,
+  content,
+  tileType,
+  cellWidth,
+  handleClick,
+}) => {
   const tile = getTile(tileType);
 
   const renderPlayer = () => {
@@ -59,6 +66,10 @@ export const Cell: React.FC<CellProps> = ({ content, tileType, cellWidth, handle
   const renderTile = () => tileType;
 
   const renderContentOrTile = () => {
+    if (burning) {
+      return '^';
+    }
+
     if (content === 'Player') {
       return renderPlayer();
     }
