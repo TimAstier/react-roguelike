@@ -81,7 +81,7 @@ export const TILES: Tile[] = [
     clearFontColor: '#548419',
     dimFontColor: '#245702',
     canWalkThrough: true,
-    flammability: 0.25,
+    flammability: 0.55,
   },
   {
     type: "'",
