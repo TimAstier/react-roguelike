@@ -1,3 +1,4 @@
+import { CONDITIONS } from '../constants/conditions';
 import {
   BIG_GOLD_AMOUNT,
   BIG_GOLD_MODIFIER,
@@ -10,6 +11,7 @@ import {
 import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
+import { ActiveConditions } from '../typings/activeConditions';
 import { CellContent, CellData } from '../typings/cell';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -99,6 +101,7 @@ export interface GameState {
   inventory: ItemType[];
   interactionText: string;
   eventLogs: string[];
+  playerConditions: ActiveConditions;
 }
 
 export const INITIAL_STATE: GameState = {
@@ -113,6 +116,7 @@ export const INITIAL_STATE: GameState = {
   inventory: [],
   interactionText: 'You enter the dungeon.',
   eventLogs: [],
+  playerConditions: {},
 };
 
 // REDUCER
@@ -131,6 +135,23 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
   draft.moveDirection = moveDirection;
 
   const moveToNewPosition = (position: Position) => {
+    // Resolve playerConditions
+
+    if (draft.playerConditions.burning) {
+      if (draft.playerConditions.burning.activeRounds === 1) {
+        draft.eventLogs.push('You are no longer on fire');
+        delete draft.playerConditions.burning;
+      } else {
+        const fireDamage = Math.ceil(draft.maxHp / 10);
+        draft.hp = Math.max(draft.hp - fireDamage, 0);
+        draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
+        if (draft.hp === 0) {
+          draft.eventLogs.push(`You burnt to death.`);
+        }
+        draft.playerConditions.burning.activeRounds--;
+      }
+    }
+
     if (draft.currentMap) {
       // Empty previous location
       draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
@@ -172,6 +193,14 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
 
       // Update player position
       draft.playerPosition = position;
+
+      // Check conditions
+      if (draft.currentMap[position[1]][position[0]].burningRounds > 0) {
+        if (!draft.playerConditions.burning) {
+          draft.eventLogs.push('You start burning!');
+        }
+        draft.playerConditions.burning = { activeRounds: CONDITIONS.burning.duration };
+      }
     }
   };
 

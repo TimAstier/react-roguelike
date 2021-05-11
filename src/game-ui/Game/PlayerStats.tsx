@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 import roguelikeitems from '../../assets/images/roguelikeitems.png';
 import rpgicons from '../../assets/images/rpgicons.png';
+import { CONDITIONS } from '../../constants/conditions';
 import { ItemType } from '../../constants/items';
+import { ActiveConditions } from '../../typings/activeConditions';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Sprite } from '../Shared/Sprite';
 
@@ -72,23 +74,29 @@ interface Props {
   maxHp: number;
   gold: number;
   equipedItems: ItemType[];
+  playerConditions: ActiveConditions;
 }
 
 export const PlayerStats: React.FC<Props> = (props) => {
+  const burningPercentage =
+    props.playerConditions.burning === undefined
+      ? 0
+      : (props.playerConditions.burning?.activeRounds / CONDITIONS.burning.duration) * 100;
+
   return (
     <Wrapper>
       <div>
         <DoubleBorders>
-          <div style={{ paddingLeft: 20, paddingRight: 20 }}>
-            <p>
+          <div style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 17, paddingBottom: 17 }}>
+            <div>
               <div style={{ display: 'flex' }}>
                 <span>
                   <Sprite imageSrc={rpgicons} position={[0, 2]} pixelDimensions={16} />
                 </span>
                 <span style={{ marginLeft: 20 }}>{props.characterName}</span>
               </div>
-            </p>
-            <p>
+            </div>
+            <div style={{ marginTop: 13 }}>
               <div style={{ display: 'flex' }}>
                 <span>
                   <Sprite imageSrc={rpgicons} position={[0, 0]} pixelDimensions={16} />
@@ -97,15 +105,30 @@ export const PlayerStats: React.FC<Props> = (props) => {
                   {props.hp}/{props.maxHp}
                 </span>
               </div>
-            </p>
-            <p>
+            </div>
+            <div style={{ marginTop: 13 }}>
               <div style={{ display: 'flex' }}>
                 <span>
                   <Sprite imageSrc={rpgicons} position={[1, 0]} pixelDimensions={16} />
                 </span>
                 <span style={{ marginLeft: 20 }}>{props.gold}</span>
               </div>
-            </p>
+            </div>
+            {props.playerConditions.burning && (
+              <div
+                style={{
+                  marginTop: 13,
+                  backgroundColor: 'orange',
+                  width: `${burningPercentage}%`,
+                  height: 25,
+                  display: 'flex',
+                  alignItems: 'center',
+                  paddingLeft: 10,
+                }}
+              >
+                BURNING
+              </div>
+            )}
           </div>
         </DoubleBorders>
       </div>
@@ -149,7 +172,7 @@ export const PlayerStats: React.FC<Props> = (props) => {
               FULL SCR.
             </div>
             <div
-              style={{ cursor: 'pointer', marginTop: 10 }}
+              style={{ cursor: 'pointer', marginTop: 13 }}
               onClick={() => props.setWithBackgroundMusic(!props.withBackgroundMusic)}
             >
               {props.withBackgroundMusic ? 'BGM: ON' : 'BGM: OFF'}

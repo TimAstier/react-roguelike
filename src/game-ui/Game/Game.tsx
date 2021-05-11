@@ -62,6 +62,7 @@ export const Game: React.FC<Props> = (props) => {
             equipedItems={props.state.equipedItems}
             withBackgroundMusic={props.withBackgroundMusic}
             setWithBackgroundMusic={props.setWithBackgroundMusic}
+            playerConditions={props.state.playerConditions}
           />
         </SideWrapper>
         <div>

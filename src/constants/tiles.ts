@@ -16,6 +16,8 @@ export interface Tile {
   // opacity: number;
 }
 
+// TODO: Refactor using same pattern as in Conditions
+
 export const TILES: Tile[] = [
   {
     type: ' ',
