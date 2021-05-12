@@ -68,6 +68,7 @@ https://react-roguelike.herokuapp.com
 - Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution [license](http://creativecommons.org/licenses/by/3.0/)
 - [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter)
 - Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
+- Flames [art](https://opengameart.org/content/lpc-flames) from Sharm
 
 ## License
 

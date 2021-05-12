@@ -1,6 +1,8 @@
+import { CONDITIONS } from '../constants/conditions';
 import {
   BIG_GOLD_AMOUNT,
   BIG_GOLD_MODIFIER,
+  BURNING_DAMAGE_PERCENTAGE,
   GRID_HEIGHT,
   GRID_WIDTH,
   INITIAL_MAX_HP,
@@ -10,11 +12,14 @@ import {
 import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
+import { ActiveConditions } from '../typings/activeConditions';
 import { CellContent, CellData } from '../typings/cell';
+import { GameStatus } from '../typings/gameStatus';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
+import { updateBurningTiles } from '../utils/updateBurningTiles';
 import { updateVisibility } from '../utils/updateVisibility';
 
 // ACTIONS
@@ -29,6 +34,7 @@ export interface HoverCellPayload {
   visibility: Visibility;
   revealed: boolean;
   content: CellContent;
+  burning: boolean;
 }
 
 export type GameAction =
@@ -87,6 +93,7 @@ export const gameActions = {
 
 export interface GameState {
   currentMap: CellData[][] | null;
+  gameStatus: GameStatus;
   moveDirection: MoveDirection;
   playerPosition: Position;
   characterName: string;
@@ -97,10 +104,12 @@ export interface GameState {
   inventory: ItemType[];
   interactionText: string;
   eventLogs: string[];
+  playerConditions: ActiveConditions;
 }
 
 export const INITIAL_STATE: GameState = {
   currentMap: null,
+  gameStatus: 'playing',
   moveDirection: 'Right',
   playerPosition: [0, 0],
   characterName: 'Kerhebos',
@@ -111,6 +120,7 @@ export const INITIAL_STATE: GameState = {
   inventory: [],
   interactionText: 'You enter the dungeon.',
   eventLogs: [],
+  playerConditions: {},
 };
 
 // REDUCER
@@ -129,6 +139,28 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
   draft.moveDirection = moveDirection;
 
   const moveToNewPosition = (position: Position) => {
+    // Resolve playerConditions
+
+    if (draft.playerConditions.burning) {
+      if (draft.playerConditions.burning.activeRounds === 1) {
+        draft.eventLogs.push('You are no longer on fire');
+        delete draft.playerConditions.burning;
+      } else {
+        const damagePercentage = getRandomIntInclusive(
+          Math.min(0, BURNING_DAMAGE_PERCENTAGE - 5),
+          BURNING_DAMAGE_PERCENTAGE + 2
+        );
+        const fireDamage = Math.ceil(draft.maxHp * (damagePercentage / 100));
+        draft.hp = Math.max(draft.hp - fireDamage, 0);
+        draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
+        if (draft.hp === 0) {
+          draft.eventLogs.push('You burnt to death...');
+          draft.gameStatus = 'gameover';
+        }
+        draft.playerConditions.burning.activeRounds--;
+      }
+    }
+
     if (draft.currentMap) {
       // Empty previous location
       draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
@@ -165,8 +197,19 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       // Update visibility
       draft.currentMap = updateVisibility(position, draft.currentMap);
 
+      // Update burning tiles
+      draft.currentMap = updateBurningTiles(draft.currentMap);
+
       // Update player position
       draft.playerPosition = position;
+
+      // Check conditions
+      if (draft.currentMap[position[1]][position[0]].burningRounds > 0) {
+        if (!draft.playerConditions.burning) {
+          draft.eventLogs.push('You start burning!');
+        }
+        draft.playerConditions.burning = { activeRounds: CONDITIONS.burning.duration };
+      }
     }
   };
 
@@ -238,7 +281,7 @@ const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => 
 };
 
 const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
-  const { tileType, visibility, revealed, content } = payload;
+  const { tileType, visibility, revealed, content, burning } = payload;
 
   if (content === 'Player') {
     draft.interactionText = 'This is you.';
@@ -257,7 +300,7 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   let verb = 'see';
   let location = '';
 
-  if (visibility === 'dark' && revealed === true) {
+  if (visibility === 'dark' && revealed) {
     verb = 'remember seeing';
   }
 
@@ -278,10 +321,12 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   }
 
   if (verb === 'remember seeing') {
-    location = ' here';
+    location = ' over there';
   }
 
-  const interactionText = `You ${verb} ${object}${location}.`;
+  const interactionText = `You ${verb} ${object}${
+    burning && visibility !== 'dark' ? ' burning' : ''
+  }${location}.`;
   draft.interactionText = interactionText;
 };
 

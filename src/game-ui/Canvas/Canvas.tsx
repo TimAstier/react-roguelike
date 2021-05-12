@@ -2,6 +2,7 @@ import React from 'react';
 import { Group, Layer, Rect, Stage } from 'react-konva';
 import useImage from 'use-image';
 
+import flame from '../../assets/images/flames.png';
 import roguelikeitems from '../../assets/images/roguelikeitems.png';
 import {
   CELL_WIDTH_IN_PIXELS,
@@ -10,7 +11,7 @@ import {
   VIEWPORT_HEIGHT_IN_PIXELS,
   VIEWPORT_WIDTH_IN_PIXELS,
 } from '../../constants/config';
-import { GameAction, gameActions } from '../../reducers/game';
+import { GameAction, gameActions } from '../../game-logic/game';
 import { CellData } from '../../typings/cell';
 import { MoveDirection } from '../../typings/moveDirection';
 import { Position } from '../../typings/position';
@@ -31,6 +32,7 @@ const getOffsetY = (playerPositionY: number) => {
 const renderCells = (
   gameMap: CellData[][],
   itemsImage: HTMLImageElement | undefined,
+  flameImage: HTMLImageElement | undefined,
   playerPosition: Position,
   dispatch: React.Dispatch<GameAction>
 ) => {
@@ -61,7 +63,9 @@ const renderCells = (
               tileType={cellData.tile}
               position={[posX, posY]}
               itemsImage={itemsImage}
+              flameImage={flameImage}
               dispatch={dispatch}
+              burning={cellData.burningRounds > 0}
             />
           );
         });
@@ -100,6 +104,7 @@ const renderPlayer = (moveDirection: MoveDirection, dispatch: React.Dispatch<Gam
         visibility: 'clear',
         revealed: true,
         content: 'Player',
+        burning: false,
       })
     );
 
@@ -132,8 +137,11 @@ interface Props {
   dispatch: React.Dispatch<GameAction>;
 }
 
-export const Canvas: React.FC<Props> = (props) => {
+// We use React.memo() here to avoid re-rendering the canvas on game-state updates that are not related to the canvas
+// Without this, things like Sprites will flicker when hovering over the canvas with events
+export const Canvas: React.FC<Props> = React.memo((props) => {
   const [itemsImage] = useImage(roguelikeitems);
+  const [flameImage] = useImage(flame);
 
   const offsetX = getOffsetX(props.playerPosition[0]);
   const offsetY = getOffsetY(props.playerPosition[1]);
@@ -142,10 +150,12 @@ export const Canvas: React.FC<Props> = (props) => {
     <Stage width={VIEWPORT_WIDTH_IN_PIXELS} height={VIEWPORT_HEIGHT_IN_PIXELS}>
       <Layer>
         <Group offsetX={offsetX} offsetY={offsetY}>
-          {renderCells(props.gameMap, itemsImage, props.playerPosition, props.dispatch)}
+          {renderCells(props.gameMap, itemsImage, flameImage, props.playerPosition, props.dispatch)}
         </Group>
         {renderPlayer(props.moveDirection, props.dispatch)}
       </Layer>
     </Stage>
   );
-};
+});
+
+Canvas.displayName = 'Canvas';

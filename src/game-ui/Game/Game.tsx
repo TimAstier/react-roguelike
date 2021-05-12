@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useAreFontLoaded } from '../../hooks/useAreFontsLoaded';
-import { useGameKeys } from '../../hooks/useGameKeys';
+import { GameAction, gameActions, GameState } from '../../game-logic/game';
 import { generateLevel } from '../../pcg/generateLevel';
-import { GameAction, GameState } from '../../reducers/game';
-import { gameActions } from '../../reducers/game';
 import { Canvas } from '../Canvas';
+import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
+import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Viewport } from '../Shared/Viewport';
 import { EventLogs } from './EventLogs';
+import { GameOver } from './GameOver';
 import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
 import { PlayerStats } from './PlayerStats';
@@ -33,7 +33,7 @@ interface Props {
 
 export const Game: React.FC<Props> = (props) => {
   const areFontsLoaded = useAreFontLoaded();
-  useGameKeys(props.dispatch);
+  useGameKeys(props.dispatch, props.state.gameStatus);
 
   React.useEffect(() => {
     if (props.state.currentMap === null) {
@@ -63,12 +63,13 @@ export const Game: React.FC<Props> = (props) => {
             equipedItems={props.state.equipedItems}
             withBackgroundMusic={props.withBackgroundMusic}
             setWithBackgroundMusic={props.setWithBackgroundMusic}
+            playerConditions={props.state.playerConditions}
           />
         </SideWrapper>
         <div>
           <DoubleBorders>
             <Viewport>
-              {props.state.currentMap && (
+              {props.state.currentMap && props.state.gameStatus === 'playing' && (
                 <Canvas
                   playerPosition={props.state.playerPosition}
                   gameMap={props.state.currentMap}
@@ -76,6 +77,7 @@ export const Game: React.FC<Props> = (props) => {
                   dispatch={props.dispatch}
                 />
               )}
+              {props.state.gameStatus === 'gameover' && <GameOver />}
             </Viewport>
           </DoubleBorders>
         </div>

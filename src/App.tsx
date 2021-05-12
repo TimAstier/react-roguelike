@@ -8,11 +8,11 @@ import { useImmerReducer } from 'use-immer';
 import useSound from 'use-sound';
 
 import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
-import { Game } from './components/Game';
-import { MapGenerator } from './components/MapGenerator';
-import { useDetectUserInput } from './hooks/useDetectUserInput';
-import { game } from './reducers';
-import { INITIAL_STATE } from './reducers/game';
+import { game } from './game-logic';
+import { INITIAL_STATE } from './game-logic/game';
+import { Game } from './game-ui/Game';
+import { useDetectUserInput } from './game-ui/hooks/useDetectUserInput';
+import { MapGenerator } from './game-ui/MapGenerator';
 
 const Wrapper = styled.div`
   display: flex;

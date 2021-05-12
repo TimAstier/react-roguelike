@@ -1,6 +1,24 @@
 # Changelog
 
-## [0.1.1] - 2021-08-21
+## [0.1.2] - 2021-XX-XX - **Fire update**
+
+### Game
+
+- New tile - Grass
+- New tile - Ashes
+- Some tiles can be set on fire (Grass, WoodenDoor)
+- Tiles on fire burn and eventually become Ashes
+- Fire propagates to adjacent flammable tiles
+- New condition - Burning
+- Player starts burning when moving on a burning tile
+- Player loses health each turn when burning
+- GAMEOVER screen shows when Player's HP reaches 0
+
+### MapEditor
+
+- Set tiles on fire
+
+## [0.1.1] - 2021-05-08 - **First live release**
 
 ### Game
 

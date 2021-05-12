@@ -6,6 +6,8 @@ import { getVisibility } from '../utils/getVisibility';
 
 export const updateVisibility = (position: Position, gameMap: CellData[][]): CellData[][] => {
   const newGameMap = gameMap;
+  const mapHeight = newGameMap.length;
+  const mapWidth = newGameMap[0].length;
   // TODO: Only set to 'dim' to cells that just went out of visibility
   // Then we should be able to remove "Set dark revealed cells to dim"
   // First reset all cells to dark
@@ -16,7 +18,8 @@ export const updateVisibility = (position: Position, gameMap: CellData[][]): Cel
   });
 
   // Get surroundingPositions
-  const surroundingPositions = getSurroundingPositions(position, MAX_VISIBILITY);
+  const options = { position, radius: MAX_VISIBILITY, mapWidth, mapHeight };
+  const surroundingPositions = getSurroundingPositions(options);
 
   // Visibility
   surroundingPositions.forEach((p) => {

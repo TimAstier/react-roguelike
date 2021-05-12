@@ -1,4 +1,4 @@
-import { maps } from '../../data/maps';
+import { maps } from '../../data';
 import { createGameMap } from '../../pcg/generateLevel';
 import { Position } from '../../typings/position';
 import { getVisibility } from '../getVisibility';

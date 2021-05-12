@@ -39,6 +39,7 @@ const Map: React.FC<Props> = ({ gameMap, handleCellClick }) => {
             tileType={cellData.tile}
             cellWidth={CELL_WIDTH_MAP_GENERATOR}
             handleClick={() => handleCellClick([posX, posY], cellData)}
+            burning={cellData.burningRounds > 0}
           />
         );
       });

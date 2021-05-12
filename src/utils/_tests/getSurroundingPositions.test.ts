@@ -1,13 +1,16 @@
-import { GRID_HEIGHT, GRID_WIDTH } from '../../constants/config';
 import { Position } from '../../typings/position';
 import { getSurroundingPositions } from '../getSurroundingPositions';
+
+const mapWidth = 25;
+const mapHeight = 25;
 
 describe('getSurroundingPositions', () => {
   it('works for r = 0', () => {
     const radius = 0;
     const position: Position = [10, 10];
     const expectedPositions = [[10, 10]];
-    expect(getSurroundingPositions(position, radius)).toEqual(expectedPositions);
+    const options = { position, radius, mapWidth, mapHeight };
+    expect(getSurroundingPositions(options)).toEqual(expectedPositions);
   });
   it('works for r = 1', () => {
     const radius = 1;
@@ -19,7 +22,8 @@ describe('getSurroundingPositions', () => {
       [11, 10],
       [10, 11],
     ];
-    expect(getSurroundingPositions(position, radius)).toEqual(expectedPositions);
+    const options = { position, radius, mapWidth, mapHeight };
+    expect(getSurroundingPositions(options)).toEqual(expectedPositions);
   });
   it('works for r = 1 close in top-left corner of grid', () => {
     const radius = 1;
@@ -29,17 +33,19 @@ describe('getSurroundingPositions', () => {
       [1, 0],
       [0, 1],
     ];
-    expect(getSurroundingPositions(position, radius)).toEqual(expectedPositions);
+    const options = { position, radius, mapWidth, mapHeight };
+    expect(getSurroundingPositions(options)).toEqual(expectedPositions);
   });
 
   it('works for r = 1 close in bottom-right corner of grid', () => {
     const radius = 1;
-    const position: Position = [GRID_WIDTH - 1, GRID_HEIGHT - 1];
+    const position: Position = [mapWidth - 1, mapHeight - 1];
     const expectedPositions = [
-      [GRID_WIDTH - 1, GRID_HEIGHT - 2],
-      [GRID_WIDTH - 2, GRID_HEIGHT - 1],
-      [GRID_WIDTH - 1, GRID_HEIGHT - 1],
+      [mapWidth - 1, mapHeight - 2],
+      [mapWidth - 2, mapHeight - 1],
+      [mapWidth - 1, mapHeight - 1],
     ];
-    expect(getSurroundingPositions(position, radius)).toEqual(expectedPositions);
+    const options = { position, radius, mapWidth, mapHeight };
+    expect(getSurroundingPositions(options)).toEqual(expectedPositions);
   });
 });

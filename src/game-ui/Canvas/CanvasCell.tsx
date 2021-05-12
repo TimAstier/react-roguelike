@@ -9,10 +9,11 @@ import {
   NON_REVEALED_BACKGROUND_COLOR,
   TileType,
 } from '../../constants/tiles';
-import { GameAction, gameActions, HoverCellPayload } from '../../reducers/game';
+import { GameAction, gameActions, HoverCellPayload } from '../../game-logic/game';
 import { CellContent } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { Visibility } from '../../typings/visibility';
+import { Flame } from './Flame';
 
 export interface CellProps {
   content: CellContent;
@@ -22,6 +23,8 @@ export interface CellProps {
   dispatch: React.Dispatch<GameAction>;
   position: Position;
   itemsImage: HTMLImageElement | undefined;
+  flameImage: HTMLImageElement | undefined;
+  burning: boolean;
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -32,12 +35,20 @@ export const CanvasCell: React.FC<CellProps> = ({
   dispatch,
   position,
   itemsImage,
+  flameImage,
+  burning,
 }) => {
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
-
   const tile = getTile(tileType);
 
+  const renderFlame = () => (
+    <Flame flameImage={flameImage} position={position} opacity={visibility === 'dim' ? 0.3 : 1} />
+  );
+
   const getFontColor = () => {
+    if (burning && visibility !== 'dark') {
+      return 'white';
+    }
     if (visibility === 'clear') {
       return tile?.clearFontColor || DEFAULT_FONT_COLOR;
     }
@@ -106,6 +117,10 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   const renderContentOrTile = () => {
+    if (visibility !== 'dark' && burning) {
+      return renderFlame();
+    }
+
     if (content !== 0 && content !== 'Player') {
       return <Item />;
     }
@@ -135,7 +150,7 @@ export const CanvasCell: React.FC<CellProps> = ({
 
   return (
     <Group
-      onMouseEnter={() => handleMouseEnter({ tileType, visibility, revealed, content })}
+      onMouseEnter={() => handleMouseEnter({ tileType, visibility, revealed, content, burning })}
       onMouseLeave={() => handleMouseLeave()}
     >
       <Rect

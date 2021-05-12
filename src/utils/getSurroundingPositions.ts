@@ -1,10 +1,17 @@
 // Based on https://www.redblobgames.com/grids/circle-drawing/
 
-import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
 import { Position } from '../typings/position';
 import { isInsideCircle } from '../utils/isInsideCircle';
 
-export const getSurroundingPositions = (position: Position, radius: number): Position[] => {
+export interface GetSurroundingPositionsOptions {
+  position: Position;
+  radius: number;
+  mapWidth: number;
+  mapHeight: number;
+}
+
+export const getSurroundingPositions = (options: GetSurroundingPositionsOptions): Position[] => {
+  const { position, radius, mapWidth, mapHeight } = options;
   const positions: Position[] = [];
 
   const top = Math.floor(position[1] - radius);
@@ -16,7 +23,7 @@ export const getSurroundingPositions = (position: Position, radius: number): Pos
   for (let y = top; y <= bottom; y++) {
     for (let x = left; x <= right; x++) {
       if (isInsideCircle({ center: position, position: [x, y], radius })) {
-        if (x >= 0 && y >= 0 && x < GRID_WIDTH && y < GRID_HEIGHT) {
+        if (x >= 0 && y >= 0 && x < mapWidth && y < mapHeight) {
           positions.push([x, y]);
         }
       }
