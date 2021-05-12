@@ -1,8 +1,10 @@
 import React from 'react';
+import seedrandom from 'seedrandom';
 import styled from 'styled-components';
 
 import { GameAction, gameActions, GameState } from '../../game-logic/game';
 import { generateLevel } from '../../pcg/generateLevel';
+import { getRandomString } from '../../utils/getRandomString';
 import { Canvas } from '../Canvas';
 import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
@@ -37,8 +39,11 @@ export const Game: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     if (props.state.currentMap === null) {
-      const level = generateLevel();
+      const seed = getRandomString();
+      const rng = seedrandom(seed);
+      const level = generateLevel(rng);
       props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
+      props.dispatch(gameActions.setSeed(seed));
       props.dispatch(gameActions.setCurrentMap(level.gameMap));
     }
     props.dispatch(gameActions.initVisibility());

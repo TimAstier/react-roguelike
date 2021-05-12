@@ -1,5 +1,3 @@
-// import seedrandom from 'seedrandom';
-
 // Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
 
 import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
@@ -46,12 +44,12 @@ const placeRectangleOnMap = (map: TileType[][], area: Area): TileType[][] => {
   return newMap;
 };
 
-const getLeavesArray = () => {
+const getLeavesArray = (rng: () => number) => {
   // TODO: Split in a random position (not always in the middle)
   // See: http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation
   let leaves: Area[] = [fullMap];
   const leavesArray: Area[][] = [];
-  let toggle = Math.random() > 0.5 ? true : false;
+  let toggle = rng() > 0.5 ? true : false;
 
   for (let i = 0; i <= NUMBER_0F_SPLITS; i++) {
     const split = toggle ? horizontalSplitArea : verticalSplitArea;
@@ -63,15 +61,15 @@ const getLeavesArray = () => {
   return leavesArray;
 };
 
-const connectLeaves = (leafA: Area, leafB: Area, map: TileType[][]) => {
+const connectLeaves = (leafA: Area, leafB: Area, map: TileType[][], rng: () => number) => {
   const newMap = map;
 
   // Find one empty cell in boths areas
   const candidatesA = findCellsInArea({ area: leafA, map, cellTile: '.' });
-  const positionA = candidatesA[Math.floor(Math.random() * candidatesA.length)];
+  const positionA = candidatesA[Math.floor(rng() * candidatesA.length)];
 
   const candidatesB = findCellsInArea({ area: leafB, map, cellTile: '.' });
-  const positionB = candidatesB[Math.floor(Math.random() * candidatesB.length)];
+  const positionB = candidatesB[Math.floor(rng() * candidatesB.length)];
 
   // Get walking path between the two positions
   const positions = walkGrid(positionA, positionB);
@@ -86,6 +84,7 @@ interface ConnectAdjacentLeavesOptions {
   map: TileType[][];
   index: number;
   leavesDepth: number;
+  rng: () => number;
 }
 
 const connectAdjacentLeaves = ({
@@ -93,15 +92,21 @@ const connectAdjacentLeaves = ({
   map,
   index,
   leavesDepth,
+  rng,
 }: ConnectAdjacentLeavesOptions) => {
   return connectLeaves(
     leavesArray[leavesDepth][leavesArray[leavesDepth].length - (index - 1)],
     leavesArray[leavesDepth][leavesArray[leavesDepth].length - index],
-    map
+    map,
+    rng
   );
 };
 
-const connectAllLeaves = (leavesArray: Area[][], map: TileType[][]): TileType[][] => {
+const connectAllLeaves = (
+  leavesArray: Area[][],
+  map: TileType[][],
+  rng: () => number
+): TileType[][] => {
   let newMap = map;
   for (let i = 0; i <= NUMBER_0F_SPLITS; i++) {
     for (let j = 1; j <= 2 ** (NUMBER_0F_SPLITS - i); j++) {
@@ -110,6 +115,7 @@ const connectAllLeaves = (leavesArray: Area[][], map: TileType[][]): TileType[][
         map: newMap,
         index: j * 2,
         leavesDepth: NUMBER_0F_SPLITS - i,
+        rng,
       };
       newMap = connectAdjacentLeaves(options);
       if (i === NUMBER_0F_SPLITS) {
@@ -123,18 +129,15 @@ const connectAllLeaves = (leavesArray: Area[][], map: TileType[][]): TileType[][
   return newMap;
 };
 
-const generateMap = (): TileType[][] => {
-  // TODO: Use seed as param
-  // const rng = seedrandom(String(seed));
-
+const generateMap = (rng: () => number): TileType[][] => {
   // Get an empty map
   const emptyMap = createEmptyMap(GRID_WIDTH, GRID_HEIGHT);
 
   // Cut empty map into leaves using Binary Space Partitioning (BSP) Trees
-  const leavesArray = getLeavesArray();
+  const leavesArray = getLeavesArray(rng);
 
   // Get random rooms from each leaf
-  const rooms = leavesArray[NUMBER_0F_SPLITS].map((leaf) => getRandomAreaWithinArea(leaf));
+  const rooms = leavesArray[NUMBER_0F_SPLITS].map((leaf) => getRandomAreaWithinArea(leaf, rng));
 
   // Place rooms on the map
   let resultMap = emptyMap;
@@ -143,7 +146,7 @@ const generateMap = (): TileType[][] => {
   });
 
   // Connect rooms
-  resultMap = connectAllLeaves(leavesArray, resultMap);
+  resultMap = connectAllLeaves(leavesArray, resultMap, rng);
 
   return resultMap;
 };
@@ -173,12 +176,12 @@ export const createGameMap = (
   return gameMap;
 };
 
-export const generateLevel = (): Level => {
-  const map = generateMap();
+export const generateLevel = (rng: () => number): Level => {
+  const map = generateMap(rng);
 
   // Find playerSpawn
   const candidatesSpawn = findCellsInArea({ area: fullMap, map, cellTile: '.' });
-  const spawn = candidatesSpawn[Math.floor(Math.random() * candidatesSpawn.length)];
+  const spawn = candidatesSpawn[Math.floor(rng() * candidatesSpawn.length)];
 
   // Place playerSpawn on map
   map[spawn[1]][spawn[0]] = '@';

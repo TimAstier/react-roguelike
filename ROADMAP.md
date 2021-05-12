@@ -8,7 +8,7 @@
 
 ## Map generation
 
-- [ ] Seed map with RNG
+- [x] Seed map with RNG
 - [ ] Add downward staircases tile and in generateLevel
 - [ ] Improve generateLevel's corridors
 - [ ] Add items in generateLevel

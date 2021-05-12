@@ -40,6 +40,7 @@ export interface HoverCellPayload {
 export type GameAction =
   | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
   | { type: '@@GAME/SET_CURRENT_MAP'; currentMap: CellData[][] }
+  | { type: '@@GAME/SET_SEED'; seed: string }
   | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position }
   | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
   | { type: '@@GAME/INIT_VISIBILITY' }
@@ -54,6 +55,11 @@ const movePlayer = (direction: MoveDirection): GameAction => ({
 const setCurrentMap = (currentMap: CellData[][]): GameAction => ({
   type: '@@GAME/SET_CURRENT_MAP',
   currentMap,
+});
+
+const setSeed = (seed: string): GameAction => ({
+  type: '@@GAME/SET_SEED',
+  seed,
 });
 
 const initPlayerSpawn = (playerSpawn: Position): GameAction => ({
@@ -82,6 +88,7 @@ const hoverAwayFromCell = (): GameAction => ({
 export const gameActions = {
   movePlayer,
   setCurrentMap,
+  setSeed,
   initPlayerSpawn,
   updateCell,
   initVisibility,
@@ -93,6 +100,7 @@ export const gameActions = {
 
 export interface GameState {
   currentMap: CellData[][] | null;
+  seed: string;
   gameStatus: GameStatus;
   moveDirection: MoveDirection;
   playerPosition: Position;
@@ -109,6 +117,7 @@ export interface GameState {
 
 export const INITIAL_STATE: GameState = {
   currentMap: null,
+  seed: '',
   gameStatus: 'playing',
   moveDirection: 'Right',
   playerPosition: [0, 0],
@@ -336,6 +345,8 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
       return reduceMovePlayer(draft, action.direction);
     case '@@GAME/SET_CURRENT_MAP':
       return void (draft.currentMap = action.currentMap);
+    case '@@GAME/SET_SEED':
+      return void (draft.seed = action.seed);
     case '@@GAME/INIT_PLAYER_SPAWN':
       return void (draft.playerPosition = action.playerSpawn);
     case '@@GAME/UPDATE_CELL':

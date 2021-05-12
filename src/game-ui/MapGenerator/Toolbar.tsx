@@ -52,12 +52,15 @@ interface Props {
   handleSelectedContent: (content: CellContent) => void;
   selectedEffect: Effect | null;
   handleSelectedEffect: (effect: Effect) => void;
+  seed: string;
+  setSeed: React.Dispatch<React.SetStateAction<string>>;
+  load: () => void;
 }
 
 export const Toolbar: React.FC<Props> = (props) => {
   return (
     <Wrapper>
-      <div style={{ height: '90%', overflowY: 'scroll' }}>
+      <div style={{ height: '80%', overflowY: 'scroll' }}>
         <p>Tiles</p>
         {TILES.map((tile) => {
           return (
@@ -99,9 +102,17 @@ export const Toolbar: React.FC<Props> = (props) => {
           <Label>Burn</Label>
         </CellWrapper>
       </div>
-      <div style={{ height: '10%' }}>
+      <div style={{ height: '20%' }}>
         <p>----</p>
         <Link to="/">PLAY</Link>
+        <input
+          style={{ marginTop: 15 }}
+          value={props.seed}
+          onChange={(event) => props.setSeed(event.target.value)}
+        />
+        <button style={{ marginTop: 15 }} onClick={props.load}>
+          Load from seed
+        </button>
       </div>
     </Wrapper>
   );
