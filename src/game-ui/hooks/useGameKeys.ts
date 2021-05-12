@@ -2,6 +2,7 @@ import React from 'react';
 
 import { PAUSE_TIME_BETWEEN_MOVES } from '../../constants/config';
 import { GameAction, gameActions } from '../../game-logic/game';
+import { GameStatus } from '../../typings/gameStatus';
 import { MoveDirection } from '../../typings/moveDirection';
 
 const GAME_KEYS = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
@@ -22,7 +23,7 @@ const mapKeyCodeToDirection = (key: string): MoveDirection | undefined => {
   }
 };
 
-export const useGameKeys = (dispatch: React.Dispatch<GameAction>): void => {
+export const useGameKeys = (dispatch: React.Dispatch<GameAction>, gameStatus: GameStatus): void => {
   const lastMoveDate = React.useRef(Date.now());
 
   React.useEffect(() => {
@@ -41,6 +42,10 @@ export const useGameKeys = (dispatch: React.Dispatch<GameAction>): void => {
         return;
       }
 
+      if (gameStatus === 'gameover') {
+        return;
+      }
+
       // Perform the move
       lastMoveDate.current = Date.now();
       const direction = mapKeyCodeToDirection(key);
@@ -53,5 +58,5 @@ export const useGameKeys = (dispatch: React.Dispatch<GameAction>): void => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [gameStatus]);
 };

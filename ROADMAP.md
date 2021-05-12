@@ -1,10 +1,5 @@
 # ROADMAP
 
-## Fire
-
-- [ ] Active conditions (fire)
-- [ ] Player death
-
 ## Creatures
 
 - [ ] Creatures
@@ -28,6 +23,7 @@
 - [ ] Add scroll animation on move
 - [ ] Add reveal animation on spawn
 - [ ] Add blur on shadows?
+- [ ] Add colors in eventLogs
 
 ## Debug mode
 
@@ -56,6 +52,7 @@
 
 - [ ] Hunger clock with impact on visibility
 - [ ] Pillar tile to climb and increase visibility
+- [ ] Burning entities can set flammable tiles on fire
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)

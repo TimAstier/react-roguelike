@@ -9,6 +9,10 @@
 - Some tiles can be set on fire (Grass, WoodenDoor)
 - Tiles on fire burn and eventually become Ashes
 - Fire propagates to adjacent flammable tiles
+- New condition - Burning
+- Player starts burning when moving on a burning tile
+- Player loses health each turn when burning
+- GAMEOVER screen shows when Player's HP reaches 0
 
 ### MapEditor
 

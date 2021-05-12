@@ -9,6 +9,7 @@ import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Viewport } from '../Shared/Viewport';
 import { EventLogs } from './EventLogs';
+import { GameOver } from './GameOver';
 import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
 import { PlayerStats } from './PlayerStats';
@@ -32,7 +33,7 @@ interface Props {
 
 export const Game: React.FC<Props> = (props) => {
   const areFontsLoaded = useAreFontLoaded();
-  useGameKeys(props.dispatch);
+  useGameKeys(props.dispatch, props.state.gameStatus);
 
   React.useEffect(() => {
     if (props.state.currentMap === null) {
@@ -68,7 +69,7 @@ export const Game: React.FC<Props> = (props) => {
         <div>
           <DoubleBorders>
             <Viewport>
-              {props.state.currentMap && (
+              {props.state.currentMap && props.state.gameStatus === 'playing' && (
                 <Canvas
                   playerPosition={props.state.playerPosition}
                   gameMap={props.state.currentMap}
@@ -76,6 +77,7 @@ export const Game: React.FC<Props> = (props) => {
                   dispatch={props.dispatch}
                 />
               )}
+              {props.state.gameStatus === 'gameover' && <GameOver />}
             </Viewport>
           </DoubleBorders>
         </div>

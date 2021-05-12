@@ -13,6 +13,7 @@ import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
 import { ActiveConditions } from '../typings/activeConditions';
 import { CellContent, CellData } from '../typings/cell';
+import { GameStatus } from '../typings/gameStatus';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
@@ -91,6 +92,7 @@ export const gameActions = {
 
 export interface GameState {
   currentMap: CellData[][] | null;
+  gameStatus: GameStatus;
   moveDirection: MoveDirection;
   playerPosition: Position;
   characterName: string;
@@ -106,6 +108,7 @@ export interface GameState {
 
 export const INITIAL_STATE: GameState = {
   currentMap: null,
+  gameStatus: 'playing',
   moveDirection: 'Right',
   playerPosition: [0, 0],
   characterName: 'Kerhebos',
@@ -146,7 +149,8 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
         draft.hp = Math.max(draft.hp - fireDamage, 0);
         draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
         if (draft.hp === 0) {
-          draft.eventLogs.push(`You burnt to death.`);
+          draft.eventLogs.push('You burnt to death...');
+          draft.gameStatus = 'gameover';
         }
         draft.playerConditions.burning.activeRounds--;
       }
