@@ -2,6 +2,7 @@ import { CONDITIONS } from '../constants/conditions';
 import {
   BIG_GOLD_AMOUNT,
   BIG_GOLD_MODIFIER,
+  BURNING_DAMAGE_PERCENTAGE,
   GRID_HEIGHT,
   GRID_WIDTH,
   INITIAL_MAX_HP,
@@ -145,7 +146,11 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
         draft.eventLogs.push('You are no longer on fire');
         delete draft.playerConditions.burning;
       } else {
-        const fireDamage = Math.ceil(draft.maxHp / 10);
+        const damagePercentage = getRandomIntInclusive(
+          Math.min(0, BURNING_DAMAGE_PERCENTAGE - 5),
+          BURNING_DAMAGE_PERCENTAGE + 2
+        );
+        const fireDamage = Math.ceil(draft.maxHp * (damagePercentage / 100));
         draft.hp = Math.max(draft.hp - fireDamage, 0);
         draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
         if (draft.hp === 0) {
