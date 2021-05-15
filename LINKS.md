@@ -19,6 +19,7 @@
 - http://www.roguebasin.com/index.php?title=Dijkstra_Maps_Visualized
 - https://www.redblobgames.com/pathfinding/tower-defense/
 - [A\* and Dijkstra](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
+- [Applications of Dijkstra Maps in Roguelikes](https://www.youtube.com/watch?v=2ExLEY32RgM&ab_channel=InternationalRoguelikeDeveloperConference)
 
 ## Resources
 

@@ -8,6 +8,7 @@ export interface GetSurroundingPositionsOptions {
   radius: number;
   mapWidth: number;
   mapHeight: number;
+  includeSource?: boolean;
 }
 
 export const getSurroundingPositions = (options: GetSurroundingPositionsOptions): Position[] => {

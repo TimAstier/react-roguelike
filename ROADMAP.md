@@ -11,11 +11,19 @@
 - [x] Seed map with RNG
 - [ ] Add downward staircases tile and in generateLevel
 - [ ] Improve generateLevel's corridors
-- [ ] Add items in generateLevel
-- [ ] Add monsters in generateLevel
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
+- [ ] Add items in generateLevel
 - [ ] Predefined dungeon entry, with flames
+- [ ] Add monsters in generateLevel
+
+## Dijkstra Maps - getDijkstraMap(target, passible, impassible)
+
+- [ ] One goal
+- [ ] Multiple goals
+- [ ] Multiple priority levels
+- [ ] Mouse pathfinding
+- [ ] Pack behavior by adding costs around tiles occupied by an ally
 
 ## Improve game display
 
