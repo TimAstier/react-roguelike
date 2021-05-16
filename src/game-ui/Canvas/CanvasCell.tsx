@@ -10,7 +10,7 @@ import {
   TileType,
 } from '../../constants/tiles';
 import { GameAction, gameActions, HoverCellPayload } from '../../game-logic/game';
-import { CellContent } from '../../typings/cell';
+import { CellContent, CreatureData } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { Visibility } from '../../typings/visibility';
 import { Flame } from './Flame';
@@ -25,6 +25,7 @@ export interface CellProps {
   itemsImage: HTMLImageElement | undefined;
   flameImage: HTMLImageElement | undefined;
   burning: boolean;
+  creature?: CreatureData;
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -37,6 +38,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   itemsImage,
   flameImage,
   burning,
+  creature,
 }) => {
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
   const tile = getTile(tileType);
@@ -59,6 +61,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   const Item = () => {
+    // TODO DRY with Creature
     if (content !== 0 && content !== 'Player') {
       if (visibility === 'dark' && !revealed) {
         return null;
@@ -101,6 +104,46 @@ export const CanvasCell: React.FC<CellProps> = ({
     return null;
   };
 
+  const Creature = () => {
+    // TODO DRY with Item
+    // Unlike items, we don't "remember" creatures
+    if (creature) {
+      if (visibility === 'dark') {
+        return null;
+      }
+      if (visibility === 'dim') {
+        return (
+          <Circle
+            x={position[0] * CELL_WIDTH_IN_PIXELS + CELL_WIDTH_IN_PIXELS / 2}
+            y={position[1] * CELL_WIDTH_IN_PIXELS + CELL_WIDTH_IN_PIXELS / 2}
+            radius={5}
+            fill={'orange'}
+            opacity={0.3}
+          />
+        );
+      }
+
+      let opacity = 0;
+      if (visibility === 'clear') {
+        opacity = 1;
+      } else if (visibility === 'dim') {
+        opacity = 0.3;
+      }
+      return (
+        <Text
+          x={position[0] * CELL_WIDTH_IN_PIXELS + 7}
+          y={position[1] * CELL_WIDTH_IN_PIXELS + 7}
+          opacity={opacity}
+          text={creature?.type.substr(0, 1)}
+          fontFamily="UglyTerminal"
+          fontSize={12}
+          fill={'orange'}
+        />
+      );
+    }
+    return null;
+  };
+
   const renderTile = () => {
     if (visibility !== 'dark' || revealed) {
       return (
@@ -119,6 +162,10 @@ export const CanvasCell: React.FC<CellProps> = ({
   const renderContentOrTile = () => {
     if (visibility !== 'dark' && burning) {
       return renderFlame();
+    }
+
+    if (creature) {
+      return <Creature />;
     }
 
     if (content !== 0 && content !== 'Player') {

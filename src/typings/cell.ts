@@ -5,7 +5,7 @@ import { Visibility } from './visibility';
 
 export type CellContent = 0 | 'Player' | ItemType;
 
-interface CreatureData {
+export interface CreatureData {
   id: string;
   type: CreatureType;
 }

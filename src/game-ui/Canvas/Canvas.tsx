@@ -66,6 +66,7 @@ const renderCells = (
               flameImage={flameImage}
               dispatch={dispatch}
               burning={cellData.burningRounds > 0}
+              creature={cellData.creature}
             />
           );
         });
