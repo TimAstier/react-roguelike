@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { CreatureType } from '../../constants/creatures';
+import { CREATURES, CreatureType } from '../../constants/creatures';
 import { getItem } from '../../constants/items';
 import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../../constants/tiles';
 import { TileType } from '../../constants/tiles';
@@ -67,7 +67,8 @@ export const Cell: React.FC<CellProps> = ({
   };
 
   const renderCreature = (type: CreatureType) => {
-    return type.substr(0, 1);
+    const { imageSrc, spritePosition } = CREATURES[type];
+    return <Sprite imageSrc={imageSrc} position={spritePosition} pixelDimensions={16} />;
   };
 
   const renderTile = () => tileType;
@@ -91,12 +92,19 @@ export const Cell: React.FC<CellProps> = ({
     return renderTile();
   };
 
+  const getColor = () => {
+    if (creature) {
+      return 'orange';
+    }
+    return tile?.clearFontColor || DEFAULT_FONT_COLOR;
+  };
+
   return (
     <Wrapper
       onClick={handleClick}
       backgroundColor={tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR}
       cellWidth={cellWidth}
-      color={tile?.clearFontColor || DEFAULT_FONT_COLOR}
+      color={getColor()}
     >
       {renderContentOrTile()}
     </Wrapper>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Circle, Group, Image, Rect, Text } from 'react-konva';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
+import { CREATURES } from '../../constants/creatures';
 import { getItem } from '../../constants/items';
 import {
   DEFAULT_FONT_COLOR,
@@ -24,6 +25,7 @@ export interface CellProps {
   position: Position;
   itemsImage: HTMLImageElement | undefined;
   flameImage: HTMLImageElement | undefined;
+  creaturesImage: HTMLImageElement | undefined;
   burning: boolean;
   creature?: CreatureData;
 }
@@ -39,6 +41,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   flameImage,
   burning,
   creature,
+  creaturesImage,
 }) => {
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
   const tile = getTile(tileType);
@@ -129,15 +132,21 @@ export const CanvasCell: React.FC<CellProps> = ({
       } else if (visibility === 'dim') {
         opacity = 0.3;
       }
+      const spritePosition = CREATURES[creature.type].spritePosition;
       return (
-        <Text
-          x={position[0] * CELL_WIDTH_IN_PIXELS + 7}
-          y={position[1] * CELL_WIDTH_IN_PIXELS + 7}
+        <Image
+          x={position[0] * CELL_WIDTH_IN_PIXELS + 1}
+          y={position[1] * CELL_WIDTH_IN_PIXELS + 1}
+          image={creaturesImage}
+          width={CELL_WIDTH_IN_PIXELS - 2}
+          height={CELL_WIDTH_IN_PIXELS - 2}
           opacity={opacity}
-          text={creature?.type.substr(0, 1)}
-          fontFamily="UglyTerminal"
-          fontSize={12}
-          fill={'orange'}
+          crop={{
+            x: spritePosition[0] * 16,
+            y: spritePosition[1] * 16,
+            width: 16,
+            height: 16,
+          }}
         />
       );
     }
@@ -160,12 +169,12 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   const renderContentOrTile = () => {
-    if (visibility !== 'dark' && burning) {
-      return renderFlame();
-    }
-
     if (visibility !== 'dark' && creature) {
       return <Creature />;
+    }
+
+    if (visibility !== 'dark' && burning) {
+      return renderFlame();
     }
 
     if (content !== 0 && content !== 'Player') {
