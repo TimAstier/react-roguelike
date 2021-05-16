@@ -87,11 +87,19 @@ export const MapGenerator: React.FC<Props> = (props) => {
     }
 
     if (selectedContent) {
-      updatedCellData.content = selectedContent;
+      if (updatedCellData.content) {
+        updatedCellData.content = 0;
+      } else {
+        updatedCellData.content = selectedContent;
+      }
     }
 
     if (selectedCreature) {
-      updatedCellData.creature = { id: 'temp_id', type: selectedCreature };
+      if (updatedCellData.creature) {
+        delete updatedCellData.creature;
+      } else {
+        updatedCellData.creature = { id: 'temp_id', type: selectedCreature };
+      }
     }
 
     if (selectedEffect) {
