@@ -233,6 +233,34 @@ describe('game reducer', () => {
       const newState = produce(game)(state, action);
       expect(newState.interactionText).toEqual('You remember seeing some grass over there.');
     });
+    it('says "You see something standing in the shadows."', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '.',
+        visibility: 'dim',
+        revealed: false,
+        content: 0,
+        burning: false,
+        creature: { id: '1', type: 'goblin' },
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.interactionText).toEqual('You see something standing in the shadows.');
+    });
+    it('says "You see a goblin!"', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '.',
+        visibility: 'clear',
+        revealed: false,
+        content: 0,
+        burning: false,
+        creature: { id: '1', type: 'goblin' },
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.interactionText).toEqual('You see a goblin!');
+    });
   });
   describe('hoverAwayFromCell', () => {
     it('empties the interactionText', () => {

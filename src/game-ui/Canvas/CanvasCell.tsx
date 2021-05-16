@@ -164,7 +164,7 @@ export const CanvasCell: React.FC<CellProps> = ({
       return renderFlame();
     }
 
-    if (creature) {
+    if (visibility !== 'dark' && creature) {
       return <Creature />;
     }
 
@@ -197,7 +197,9 @@ export const CanvasCell: React.FC<CellProps> = ({
 
   return (
     <Group
-      onMouseEnter={() => handleMouseEnter({ tileType, visibility, revealed, content, burning })}
+      onMouseEnter={() =>
+        handleMouseEnter({ tileType, visibility, revealed, content, burning, creature })
+      }
       onMouseLeave={() => handleMouseLeave()}
     >
       <Rect

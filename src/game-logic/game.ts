@@ -14,7 +14,7 @@ import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
 import { ActiveConditions } from '../typings/activeConditions';
-import { CellContent, CellData } from '../typings/cell';
+import { CellContent, CellData, CreatureData } from '../typings/cell';
 import { GameStatus } from '../typings/gameStatus';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -37,6 +37,7 @@ export interface HoverCellPayload {
   revealed: boolean;
   content: CellContent;
   burning: boolean;
+  creature?: CreatureData;
 }
 
 export type GameAction =
@@ -300,7 +301,7 @@ const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => 
 };
 
 const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
-  const { tileType, visibility, revealed, content, burning } = payload;
+  const { tileType, visibility, revealed, content, burning, creature } = payload;
 
   if (content === 'Player') {
     draft.interactionText = 'This is you.';
@@ -309,6 +310,17 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
 
   if (revealed === false && visibility === 'dark') {
     return;
+  }
+
+  if (creature && visibility !== 'dark') {
+    if (visibility === 'dim') {
+      draft.interactionText = 'You see something standing in the shadows.';
+      return;
+    }
+    if (visibility === 'clear') {
+      draft.interactionText = `You see a ${creature.type}!`;
+      return;
+    }
   }
 
   if (visibility === 'dim' && !revealed && content !== 0) {

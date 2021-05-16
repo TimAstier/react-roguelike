@@ -2,10 +2,14 @@
 
 ## Creatures
 
-- [ ] Creatures
+- [x] Creatures definitions
+- [x] Display creatures on the map
+- [x] Info on hover
+- [ ] Display creature stat blocks
+- [ ] Creature status (idle, hostile)
+- [ ] Creature movements
+- [ ] Creature attacks
 - [ ] Creatures can burn (like player)
-- [ ] Creatures' AI
-- [ ] Attacks
 
 ## Map generation
 
