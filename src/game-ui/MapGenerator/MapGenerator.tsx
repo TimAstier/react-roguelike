@@ -3,6 +3,7 @@ import seedrandom from 'seedrandom';
 import styled from 'styled-components';
 
 import { NUMBER_OF_ROUNDS_BURNING } from '../../constants/config';
+import { CreatureType } from '../../constants/creatures';
 import { TileType } from '../../constants/tiles';
 import { gameActions } from '../../game-logic/game';
 import { GameAction, GameState } from '../../game-logic/game';
@@ -30,6 +31,7 @@ interface Props {
 export const MapGenerator: React.FC<Props> = (props) => {
   const [selectedTile, setSelectedTile] = React.useState<TileType | null>(null);
   const [selectedContent, setSelectedContent] = React.useState<CellContent | null>(null);
+  const [selectedCreature, setSelectedCreature] = React.useState<CreatureType | null>(null);
   const [selectedEffect, setSelectedEffect] = React.useState<Effect | null>(null);
   const [currentSeed, setCurrentSeed] = React.useState('');
 
@@ -54,6 +56,7 @@ export const MapGenerator: React.FC<Props> = (props) => {
   const resetSelected = () => {
     setSelectedTile(null);
     setSelectedContent(null);
+    setSelectedCreature(null);
     setSelectedEffect(null);
   };
 
@@ -65,6 +68,11 @@ export const MapGenerator: React.FC<Props> = (props) => {
   const handleSelectedContent = (content: CellContent) => {
     resetSelected();
     setSelectedContent(content);
+  };
+
+  const handleSelectedCreature = (creatureType: CreatureType) => {
+    resetSelected();
+    setSelectedCreature(creatureType);
   };
 
   const handleSelectedEffect = (effect: Effect) => {
@@ -80,6 +88,10 @@ export const MapGenerator: React.FC<Props> = (props) => {
 
     if (selectedContent) {
       updatedCellData.content = selectedContent;
+    }
+
+    if (selectedCreature) {
+      updatedCellData.creature = { id: 'temp_id', type: selectedCreature };
     }
 
     if (selectedEffect) {
@@ -100,6 +112,8 @@ export const MapGenerator: React.FC<Props> = (props) => {
         handleSelectedTile={handleSelectedTile}
         selectedContent={selectedContent}
         handleSelectedContent={handleSelectedContent}
+        selectedCreature={selectedCreature}
+        handleSelectedCreature={handleSelectedCreature}
         selectedEffect={selectedEffect}
         handleSelectedEffect={handleSelectedEffect}
         seed={currentSeed}

@@ -3,6 +3,7 @@
 ## Creatures
 
 - [ ] Creatures
+- [ ] Creatures can burn (like player)
 - [ ] Creatures' AI
 - [ ] Attacks
 

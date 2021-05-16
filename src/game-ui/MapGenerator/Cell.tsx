@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { CreatureType } from '../../constants/creatures';
 import { getItem } from '../../constants/items';
 import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../../constants/tiles';
 import { TileType } from '../../constants/tiles';
@@ -31,6 +32,7 @@ const Wrapper = styled.div<StylingProps>`
 `;
 
 export interface CellProps {
+  creature?: CreatureType;
   content: CellContent;
   moveDirection: MoveDirection;
   tileType: TileType;
@@ -45,6 +47,7 @@ export const Cell: React.FC<CellProps> = ({
   tileType,
   cellWidth,
   handleClick,
+  creature,
 }) => {
   const tile = getTile(tileType);
 
@@ -63,6 +66,10 @@ export const Cell: React.FC<CellProps> = ({
     }
   };
 
+  const renderCreature = (type: CreatureType) => {
+    return type.substr(0, 1);
+  };
+
   const renderTile = () => tileType;
 
   const renderContentOrTile = () => {
@@ -73,6 +80,11 @@ export const Cell: React.FC<CellProps> = ({
     if (content === 'Player') {
       return renderPlayer();
     }
+
+    if (creature) {
+      return renderCreature(creature);
+    }
+
     if (content !== 0) {
       return renderItem();
     }

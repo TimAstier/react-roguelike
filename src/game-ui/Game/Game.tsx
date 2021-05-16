@@ -47,6 +47,7 @@ export const Game: React.FC<Props> = (props) => {
       props.dispatch(gameActions.setCurrentMap(level.gameMap));
     }
     props.dispatch(gameActions.initVisibility());
+    props.dispatch(gameActions.initCreatures());
   }, []);
 
   if (!areFontsLoaded) {

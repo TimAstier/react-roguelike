@@ -9,6 +9,7 @@ import {
   SMALL_GOLD_AMOUNT,
   SMALL_GOLD_MODIFIER,
 } from '../constants/config';
+import { CreatureEntity, CREATURES } from '../constants/creatures';
 import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
@@ -19,6 +20,7 @@ import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
+import { getRandomString } from '../utils/getRandomString';
 import { updateBurningTiles } from '../utils/updateBurningTiles';
 import { updateVisibility } from '../utils/updateVisibility';
 
@@ -44,6 +46,7 @@ export type GameAction =
   | { type: '@@GAME/INIT_PLAYER_SPAWN'; playerSpawn: Position }
   | { type: '@@GAME/UPDATE_CELL'; payload: UpdateCellPayload }
   | { type: '@@GAME/INIT_VISIBILITY' }
+  | { type: '@@GAME/INIT_CREATURES' }
   | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
   | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
 
@@ -76,6 +79,10 @@ const initVisibility = (): GameAction => ({
   type: '@@GAME/INIT_VISIBILITY',
 });
 
+const initCreatures = (): GameAction => ({
+  type: '@@GAME/INIT_CREATURES',
+});
+
 const hoverCell = (payload: HoverCellPayload): GameAction => ({
   type: '@@GAME/HOVER_CELL',
   payload,
@@ -92,6 +99,7 @@ export const gameActions = {
   initPlayerSpawn,
   updateCell,
   initVisibility,
+  initCreatures,
   hoverCell,
   hoverAwayFromCell,
 };
@@ -113,6 +121,7 @@ export interface GameState {
   interactionText: string;
   eventLogs: string[];
   playerConditions: ActiveConditions;
+  creatures: { [id: string]: CreatureEntity };
 }
 
 export const INITIAL_STATE: GameState = {
@@ -130,6 +139,7 @@ export const INITIAL_STATE: GameState = {
   interactionText: 'You enter the dungeon.',
   eventLogs: [],
   playerConditions: {},
+  creatures: {},
 };
 
 // REDUCER
@@ -339,6 +349,31 @@ const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
   draft.interactionText = interactionText;
 };
 
+const reduceInitCreatures = (draft = INITIAL_STATE) => {
+  const currentMap = draft.currentMap;
+  if (currentMap !== null) {
+    currentMap.forEach((row, j) =>
+      row.forEach((cellData, i) => {
+        const creatureData = cellData.creature;
+        if (creatureData) {
+          const id = getRandomString(); // TODO: Use UUID
+          const template = CREATURES[creatureData.type];
+          const creature: CreatureEntity = {
+            id,
+            type: creatureData.type,
+            position: [i, j],
+            hp: template.maxHp,
+            maxHp: template.maxHp,
+            conditions: {},
+          };
+          draft.creatures[id] = creature;
+          currentMap[j][i].creature = { id, type: creatureData.type };
+        }
+      })
+    );
+  }
+};
+
 export const game = (draft = INITIAL_STATE, action: GameAction): GameState | void => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
@@ -356,6 +391,8 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
         return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
       }
       break;
+    case '@@GAME/INIT_CREATURES':
+      return reduceInitCreatures(draft);
     case '@@GAME/HOVER_CELL':
       return reduceHoverCell(draft, action.payload);
     case '@@GAME/HOVER_AWAY_FROM_CELL':

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
+import { CREATURES, CreatureType } from '../../constants/creatures';
 import { ITEMS } from '../../constants/items';
 import { TILES, TileType } from '../../constants/tiles';
 import { CellContent } from '../../typings/cell';
@@ -50,6 +51,8 @@ interface Props {
   handleSelectedTile: (tile: TileType) => void;
   selectedContent: CellContent | null;
   handleSelectedContent: (content: CellContent) => void;
+  selectedCreature: CreatureType | null;
+  handleSelectedCreature: (content: CreatureType) => void;
   selectedEffect: Effect | null;
   handleSelectedEffect: (effect: Effect) => void;
   seed: string;
@@ -91,6 +94,20 @@ export const Toolbar: React.FC<Props> = (props) => {
             >
               <Cell {...defaultCellProps} tileType={'.'} content={item.type} />
               <Label>{item.type}</Label>
+            </CellWrapper>
+          );
+        })}
+        <p>Creatures</p>
+        {Object.keys(CREATURES).map((creature) => {
+          const type = creature as CreatureType;
+          return (
+            <CellWrapper
+              key={type}
+              selected={props.selectedCreature === type}
+              onClick={() => props.handleSelectedCreature(type)}
+            >
+              <Cell {...defaultCellProps} tileType={'.'} creature={type} />
+              <Label>{type}</Label>
             </CellWrapper>
           );
         })}
