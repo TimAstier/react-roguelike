@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.2] - 2021-XX-XX - **Fire update**
+## 🎲 [0.1.3] - 2021-XX-XX - **Improved map generation**
+
+### MapEditor
+
+- Possibility to seed the rng with a seed string
+
+## 🔥 [0.1.2] - 2021-05-12 - **Fire update**
 
 ### Game
 
@@ -11,14 +17,14 @@
 - Fire propagates to adjacent flammable tiles
 - New condition - Burning
 - Player starts burning when moving on a burning tile
-- Player loses health each turn when burning
+- Player loses a random % of health each turn when burning
 - GAMEOVER screen shows when Player's HP reaches 0
 
 ### MapEditor
 
 - Set tiles on fire
 
-## [0.1.1] - 2021-05-08 - **First live release**
+## 🚀 [0.1.1] - 2021-05-08 - **First live release**
 
 ### Game
 

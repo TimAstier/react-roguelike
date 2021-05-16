@@ -33,6 +33,7 @@ const Map: React.FC<Props> = ({ gameMap, handleCellClick }) => {
         const position = `${posX}-${posY}`;
         return (
           <Cell
+            creature={cellData.creature?.type}
             key={position}
             content={cellData.content}
             moveDirection={'Up'}

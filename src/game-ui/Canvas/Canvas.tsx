@@ -3,6 +3,7 @@ import { Group, Layer, Rect, Stage } from 'react-konva';
 import useImage from 'use-image';
 
 import flame from '../../assets/images/flames.png';
+import roguelikecreatures from '../../assets/images/roguelikecreatures.png';
 import roguelikeitems from '../../assets/images/roguelikeitems.png';
 import {
   CELL_WIDTH_IN_PIXELS,
@@ -33,6 +34,7 @@ const renderCells = (
   gameMap: CellData[][],
   itemsImage: HTMLImageElement | undefined,
   flameImage: HTMLImageElement | undefined,
+  creaturesImage: HTMLImageElement | undefined,
   playerPosition: Position,
   dispatch: React.Dispatch<GameAction>
 ) => {
@@ -62,10 +64,12 @@ const renderCells = (
               content={cellData.content}
               tileType={cellData.tile}
               position={[posX, posY]}
+              creaturesImage={creaturesImage}
               itemsImage={itemsImage}
               flameImage={flameImage}
               dispatch={dispatch}
               burning={cellData.burningRounds > 0}
+              creature={cellData.creature}
             />
           );
         });
@@ -141,6 +145,7 @@ interface Props {
 // Without this, things like Sprites will flicker when hovering over the canvas with events
 export const Canvas: React.FC<Props> = React.memo((props) => {
   const [itemsImage] = useImage(roguelikeitems);
+  const [creaturesImage] = useImage(roguelikecreatures);
   const [flameImage] = useImage(flame);
 
   const offsetX = getOffsetX(props.playerPosition[0]);
@@ -150,7 +155,14 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
     <Stage width={VIEWPORT_WIDTH_IN_PIXELS} height={VIEWPORT_HEIGHT_IN_PIXELS}>
       <Layer>
         <Group offsetX={offsetX} offsetY={offsetY}>
-          {renderCells(props.gameMap, itemsImage, flameImage, props.playerPosition, props.dispatch)}
+          {renderCells(
+            props.gameMap,
+            itemsImage,
+            flameImage,
+            creaturesImage,
+            props.playerPosition,
+            props.dispatch
+          )}
         </Group>
         {renderPlayer(props.moveDirection, props.dispatch)}
       </Layer>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { CREATURES, CreatureType } from '../../constants/creatures';
 import { getItem } from '../../constants/items';
 import { DEFAULT_FONT_COLOR, getTile, NON_REVEALED_BACKGROUND_COLOR } from '../../constants/tiles';
 import { TileType } from '../../constants/tiles';
@@ -31,6 +32,7 @@ const Wrapper = styled.div<StylingProps>`
 `;
 
 export interface CellProps {
+  creature?: CreatureType;
   content: CellContent;
   moveDirection: MoveDirection;
   tileType: TileType;
@@ -45,6 +47,7 @@ export const Cell: React.FC<CellProps> = ({
   tileType,
   cellWidth,
   handleClick,
+  creature,
 }) => {
   const tile = getTile(tileType);
 
@@ -63,6 +66,11 @@ export const Cell: React.FC<CellProps> = ({
     }
   };
 
+  const renderCreature = (type: CreatureType) => {
+    const { imageSrc, spritePosition } = CREATURES[type];
+    return <Sprite imageSrc={imageSrc} position={spritePosition} pixelDimensions={16} />;
+  };
+
   const renderTile = () => tileType;
 
   const renderContentOrTile = () => {
@@ -73,10 +81,22 @@ export const Cell: React.FC<CellProps> = ({
     if (content === 'Player') {
       return renderPlayer();
     }
+
+    if (creature) {
+      return renderCreature(creature);
+    }
+
     if (content !== 0) {
       return renderItem();
     }
     return renderTile();
+  };
+
+  const getColor = () => {
+    if (creature) {
+      return 'orange';
+    }
+    return tile?.clearFontColor || DEFAULT_FONT_COLOR;
   };
 
   return (
@@ -84,7 +104,7 @@ export const Cell: React.FC<CellProps> = ({
       onClick={handleClick}
       backgroundColor={tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR}
       cellWidth={cellWidth}
-      color={tile?.clearFontColor || DEFAULT_FONT_COLOR}
+      color={getColor()}
     >
       {renderContentOrTile()}
     </Wrapper>
