@@ -3,7 +3,7 @@ import { Position } from '../../typings/position';
 import { getDijkstraMap } from '../getDijkstraMap';
 
 describe('getDijkstraMap', () => {
-  it.only('works on basic map', () => {
+  it('works on basic map', () => {
     const map: TileType[][] = [
       ['#', '#', '#', '.', '.'],
       ['.', '.', '.', '.', '#'],
@@ -20,7 +20,7 @@ describe('getDijkstraMap', () => {
     const dijkstraMap = getDijkstraMap(map, target);
     expect(dijkstraMap).toEqual(expectedResult);
   });
-  it.only('works on 25x21 maps', () => {
+  it('works on 25x21 maps', () => {
     const map: TileType[][] = [
       [
         '#',
@@ -1163,7 +1163,7 @@ describe('getDijkstraMap', () => {
     const dijkstraMap = getDijkstraMap(map, target);
     expect(dijkstraMap).toEqual(expectedResult);
   });
-  it.only('works on 30x30 maps', () => {
+  it('works on 30x30 maps', () => {
     const map: TileType[][] = [
       [
         '#',
