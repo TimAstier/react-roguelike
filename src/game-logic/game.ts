@@ -1,13 +1,9 @@
 import { CONDITIONS } from '../constants/conditions';
 import {
-  BIG_GOLD_AMOUNT,
-  BIG_GOLD_MODIFIER,
   BURNING_DAMAGE_PERCENTAGE,
   GRID_HEIGHT,
   GRID_WIDTH,
   INITIAL_MAX_HP,
-  SMALL_GOLD_AMOUNT,
-  SMALL_GOLD_MODIFIER,
 } from '../constants/config';
 import { CreatureEntity, CREATURES, CreatureType } from '../constants/creatures';
 import { getItem } from '../constants/items';
@@ -21,8 +17,9 @@ import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
 import { getRandomString } from '../utils/getRandomString';
-import { updateBurningTiles } from '../utils/updateBurningTiles';
-import { updateVisibility } from '../utils/updateVisibility';
+import { lootItem } from './lootItem';
+import { updateBurningTiles } from './updateBurningTiles';
+import { updateVisibility } from './updateVisibility';
 
 // ACTIONS
 
@@ -145,21 +142,7 @@ export const INITIAL_STATE: GameState = {
 
 // REDUCER
 
-const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) => {
-  let nextTileX: number;
-  let nextTileY: number;
-  let nextTileType: TileType;
-  let nextTile: Tile | undefined;
-  let creature;
-
-  if (draft.currentMap === null) {
-    return;
-  }
-
-  draft.interactionText = '';
-  draft.moveDirection = moveDirection;
-
-  // Resolve playerConditions
+const resolveConditions = (draft: GameState) => {
   if (draft.playerConditions.burning) {
     if (draft.playerConditions.burning.activeRounds === 1) {
       draft.eventLogs.push('You are no longer on fire');
@@ -179,6 +162,36 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       draft.playerConditions.burning.activeRounds--;
     }
   }
+};
+
+const checkCreaturesDeath = (draft: GameState) => {
+  for (const [key, value] of Object.entries(draft.creatures)) {
+    if (value.hp <= 0) {
+      draft.eventLogs.push(`The ${value.type} dies!`);
+      delete draft.creatures[key];
+      if (draft.currentMap) {
+        delete draft.currentMap[value.position[1]][value.position[0]].creature;
+      }
+    }
+  }
+};
+
+const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) => {
+  let nextTileX: number;
+  let nextTileY: number;
+  let nextTileType: TileType;
+  let nextTile: Tile | undefined;
+  let creature;
+
+  if (draft.currentMap === null) {
+    return;
+  }
+
+  draft.interactionText = '';
+  draft.moveDirection = moveDirection;
+
+  // Resolve playerConditions
+  resolveConditions(draft);
 
   const moveToNewPosition = (position: Position) => {
     if (draft.currentMap) {
@@ -186,30 +199,7 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
 
       // Loot item
-      const content = draft.currentMap[position[1]][position[0]].content;
-      if (content && content !== 'Player') {
-        const item = getItem(content);
-        if (item) {
-          if (item.type === 'SmallGold') {
-            const amount = getRandomIntInclusive(
-              SMALL_GOLD_AMOUNT - SMALL_GOLD_MODIFIER,
-              SMALL_GOLD_AMOUNT + SMALL_GOLD_MODIFIER
-            );
-            draft.gold = draft.gold + amount;
-            draft.eventLogs.push(`You found ${amount} gold.`);
-          } else if (item.type === 'BigGold') {
-            const amount = getRandomIntInclusive(
-              BIG_GOLD_AMOUNT - BIG_GOLD_MODIFIER,
-              BIG_GOLD_AMOUNT + BIG_GOLD_MODIFIER
-            );
-            draft.gold = draft.gold + amount;
-            draft.eventLogs.push(`You found ${amount} gold!`);
-          } else {
-            draft.inventory.push(content);
-            draft.eventLogs.push(`You found ${item.nameInSentence}.`);
-          }
-        }
-      }
+      lootItem(draft, position);
 
       // Move player
       draft.currentMap[position[1]][position[0]].content = 'Player';
@@ -231,6 +221,7 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
     draft.eventLogs.push(`You hit the ${type} for 5 damage!`);
   };
 
+  //  TODO: DRY this
   switch (moveDirection) {
     case 'Left':
       nextTileX =
@@ -315,7 +306,7 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
   // Update burning tiles
   draft.currentMap = updateBurningTiles(draft.currentMap);
 
-  // Check conditions
+  // Resolve starting and ending conditions
   if (draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].burningRounds > 0) {
     if (!draft.playerConditions.burning) {
       draft.eventLogs.push('You start burning!');
@@ -324,13 +315,7 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
   }
 
   // Check for dead creatures
-  for (const [key, value] of Object.entries(draft.creatures)) {
-    if (value.hp <= 0) {
-      draft.eventLogs.push(`The ${value.type} dies!`);
-      delete draft.creatures[key];
-      delete draft.currentMap[value.position[1]][value.position[0]].creature;
-    }
-  }
+  checkCreaturesDeath(draft);
 };
 
 const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => {

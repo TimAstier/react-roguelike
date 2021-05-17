@@ -2,7 +2,10 @@ import { NUMBER_OF_ROUNDS_BURNING } from '../constants/config';
 import { getTile } from '../constants/tiles';
 import { CellData } from '../typings/cell';
 import { Position } from '../typings/position';
-import { getSurroundingPositions, GetSurroundingPositionsOptions } from './getSurroundingPositions';
+import {
+  getSurroundingPositions,
+  GetSurroundingPositionsOptions,
+} from '../utils/getSurroundingPositions';
 
 export const updateBurningTiles = (map: CellData[][]): CellData[][] => {
   const startedBurningTiles: Position[] = [];
