@@ -2,6 +2,7 @@
 // 5x4 ~ 0.24ms
 // 25x21 ~ 1.21ms
 // 30x30 ~ 2.21ms
+// 60x38 ~ 6.96ms (can go up to about 16 sometimes)
 
 // Some ideas to optimize this function even further:
 // https://www.reddit.com/r/roguelikedev/comments/nck6ur/sharing_saturday_362/gyfk38l/?utm_source=reddit&utm_medium=web2x&context=3
