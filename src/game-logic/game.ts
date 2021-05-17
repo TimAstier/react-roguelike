@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import { CONDITIONS } from '../constants/conditions';
 import {
   BURNING_DAMAGE_PERCENTAGE,
@@ -16,7 +18,6 @@ import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { Visibility } from '../typings/visibility';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
-import { getRandomString } from '../utils/getRandomString';
 import { lootItem } from './lootItem';
 import { updateBurningTiles } from './updateBurningTiles';
 import { updateVisibility } from './updateVisibility';
@@ -394,7 +395,7 @@ const reduceInitCreatures = (draft = INITIAL_STATE) => {
       row.forEach((cellData, i) => {
         const creatureData = cellData.creature;
         if (creatureData) {
-          const id = getRandomString(); // TODO: Use UUID
+          const id = uuid();
           const template = CREATURES[creatureData.type];
           const creature: CreatureEntity = {
             id,
