@@ -5,12 +5,13 @@
 - [x] Creatures definitions
 - [x] Display creatures on the map
 - [x] Info on hover
-- [ ] Attack a creature
+- [x] Attack a creature
 - [ ] Display creature stat blocks
 - [ ] Creature status (idle, hostile)
 - [ ] Creature movements
 - [ ] Creature attacks
 - [ ] Creatures can burn (like player)
+- [ ] Math for attacks damage
 
 ## Map generation
 

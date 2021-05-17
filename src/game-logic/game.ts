@@ -9,7 +9,7 @@ import {
   SMALL_GOLD_AMOUNT,
   SMALL_GOLD_MODIFIER,
 } from '../constants/config';
-import { CreatureEntity, CREATURES } from '../constants/creatures';
+import { CreatureEntity, CREATURES, CreatureType } from '../constants/creatures';
 import { getItem } from '../constants/items';
 import { ItemType } from '../constants/items';
 import { getTile, Tile, TileType } from '../constants/tiles';
@@ -150,6 +150,7 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
   let nextTileY: number;
   let nextTileType: TileType;
   let nextTile: Tile | undefined;
+  let creature;
 
   if (draft.currentMap === null) {
     return;
@@ -158,29 +159,28 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
   draft.interactionText = '';
   draft.moveDirection = moveDirection;
 
-  const moveToNewPosition = (position: Position) => {
-    // Resolve playerConditions
-
-    if (draft.playerConditions.burning) {
-      if (draft.playerConditions.burning.activeRounds === 1) {
-        draft.eventLogs.push('You are no longer on fire');
-        delete draft.playerConditions.burning;
-      } else {
-        const damagePercentage = getRandomIntInclusive(
-          Math.min(0, BURNING_DAMAGE_PERCENTAGE - 5),
-          BURNING_DAMAGE_PERCENTAGE + 2
-        );
-        const fireDamage = Math.ceil(draft.maxHp * (damagePercentage / 100));
-        draft.hp = Math.max(draft.hp - fireDamage, 0);
-        draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
-        if (draft.hp === 0) {
-          draft.eventLogs.push('You burnt to death...');
-          draft.gameStatus = 'gameover';
-        }
-        draft.playerConditions.burning.activeRounds--;
+  // Resolve playerConditions
+  if (draft.playerConditions.burning) {
+    if (draft.playerConditions.burning.activeRounds === 1) {
+      draft.eventLogs.push('You are no longer on fire');
+      delete draft.playerConditions.burning;
+    } else {
+      const damagePercentage = getRandomIntInclusive(
+        Math.min(0, BURNING_DAMAGE_PERCENTAGE - 5),
+        BURNING_DAMAGE_PERCENTAGE + 2
+      );
+      const fireDamage = Math.ceil(draft.maxHp * (damagePercentage / 100));
+      draft.hp = Math.max(draft.hp - fireDamage, 0);
+      draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
+      if (draft.hp === 0) {
+        draft.eventLogs.push('You burnt to death...');
+        draft.gameStatus = 'gameover';
       }
+      draft.playerConditions.burning.activeRounds--;
     }
+  }
 
+  const moveToNewPosition = (position: Position) => {
     if (draft.currentMap) {
       // Empty previous location
       draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
@@ -214,27 +214,21 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       // Move player
       draft.currentMap[position[1]][position[0]].content = 'Player';
 
-      // Update visibility
-      draft.currentMap = updateVisibility(position, draft.currentMap);
-
-      // Update burning tiles
-      draft.currentMap = updateBurningTiles(draft.currentMap);
-
       // Update player position
       draft.playerPosition = position;
 
-      // Check conditions
-      if (draft.currentMap[position[1]][position[0]].burningRounds > 0) {
-        if (!draft.playerConditions.burning) {
-          draft.eventLogs.push('You start burning!');
-        }
-        draft.playerConditions.burning = { activeRounds: CONDITIONS.burning.duration };
-      }
+      // Update visibility
+      draft.currentMap = updateVisibility(position, draft.currentMap);
     }
   };
 
   const moveAndStayAtSamePosition = (tileNameInSentence: string | undefined) => {
     draft.interactionText = `You hit ${tileNameInSentence || ''}.`;
+  };
+
+  const attackCreature = (id: string, type: CreatureType) => {
+    draft.creatures[id].hp = draft.creatures[id].hp - 5;
+    draft.eventLogs.push(`You hit the ${type} for 5 damage!`);
   };
 
   switch (moveDirection) {
@@ -245,11 +239,17 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
       nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[0] > 0 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
+      creature = draft.currentMap[nextTileY][nextTileX].creature;
+      if (creature) {
+        attackCreature(creature.id, creature.type);
+        break;
       }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
-
+      if (draft.playerPosition[0] > 0 && nextTile?.canWalkThrough === true) {
+        moveToNewPosition([nextTileX, nextTileY]);
+        break;
+      }
+      moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      break;
     case 'Right':
       nextTileX =
         draft.playerPosition[0] < GRID_WIDTH
@@ -259,10 +259,17 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
       nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[0] < GRID_WIDTH - 1 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
+      creature = draft.currentMap[nextTileY][nextTileX].creature;
+      if (creature) {
+        attackCreature(creature.id, creature.type);
+        break;
       }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      if (draft.playerPosition[0] < GRID_WIDTH - 1 && nextTile?.canWalkThrough === true) {
+        moveToNewPosition([nextTileX, nextTileY]);
+        break;
+      }
+      moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      break;
 
     case 'Up':
       nextTileX = draft.playerPosition[0];
@@ -271,10 +278,17 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
       nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[1] > 0 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
+      creature = draft.currentMap[nextTileY][nextTileX].creature;
+      if (creature) {
+        attackCreature(creature.id, creature.type);
+        break;
       }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      if (draft.playerPosition[1] > 0 && nextTile?.canWalkThrough === true) {
+        moveToNewPosition([nextTileX, nextTileY]);
+        break;
+      }
+      moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      break;
 
     case 'Down':
       nextTileX = draft.playerPosition[0];
@@ -285,10 +299,37 @@ const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) =
       nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
       nextTile = getTile(nextTileType);
 
-      if (draft.playerPosition[1] < GRID_HEIGHT - 1 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
+      creature = draft.currentMap[nextTileY][nextTileX].creature;
+      if (creature) {
+        attackCreature(creature.id, creature.type);
+        break;
       }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      if (draft.playerPosition[1] < GRID_HEIGHT - 1 && nextTile?.canWalkThrough === true) {
+        moveToNewPosition([nextTileX, nextTileY]);
+        break;
+      }
+      moveAndStayAtSamePosition(nextTile?.nameInSentence);
+      break;
+  }
+
+  // Update burning tiles
+  draft.currentMap = updateBurningTiles(draft.currentMap);
+
+  // Check conditions
+  if (draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].burningRounds > 0) {
+    if (!draft.playerConditions.burning) {
+      draft.eventLogs.push('You start burning!');
+    }
+    draft.playerConditions.burning = { activeRounds: CONDITIONS.burning.duration };
+  }
+
+  // Check for dead creatures
+  for (const [key, value] of Object.entries(draft.creatures)) {
+    if (value.hp <= 0) {
+      draft.eventLogs.push(`The ${value.type} dies!`);
+      delete draft.creatures[key];
+      delete draft.currentMap[value.position[1]][value.position[0]].creature;
+    }
   }
 };
 
