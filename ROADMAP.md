@@ -33,7 +33,7 @@
 
 ## Dijkstra Maps - getDijkstraMap(target, passible, impassible)
 
-- [ ] One goal
+- [x] One goal
 - [ ] Multiple goals
 - [ ] Multiple priority levels
 - [ ] Mouse pathfinding
