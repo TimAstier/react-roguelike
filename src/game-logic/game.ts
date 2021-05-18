@@ -6,6 +6,7 @@ import { CellData } from '../typings/cell';
 import { GameStatus } from '../typings/gameStatus';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
+import { getDijkstraMap } from '../utils/getDijkstraMap';
 import { HoverCellPayload, reduceHoverCell } from './reduceHoverCell';
 import { reduceInitCreatures } from './reduceInitCreatures';
 import { reduceMovePlayer } from './reduceMovePlayer';
@@ -83,10 +84,12 @@ export const gameActions = {
 
 export interface GameState {
   currentMap: CellData[][];
+  dijkstraMap: string[][];
   seed: string;
   gameStatus: GameStatus;
   moveDirection: MoveDirection;
   playerPosition: Position;
+  playerPreviousPosition: Position;
   characterName: string;
   hp: number;
   maxHp: number;
@@ -101,10 +104,12 @@ export interface GameState {
 
 export const INITIAL_STATE: GameState = {
   currentMap: [],
+  dijkstraMap: [],
   seed: '',
   gameStatus: 'playing',
   moveDirection: 'Right',
   playerPosition: [0, 0],
+  playerPreviousPosition: [0, 0],
   characterName: 'Kerhebos',
   hp: INITIAL_MAX_HP,
   maxHp: INITIAL_MAX_HP,
@@ -128,6 +133,11 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/SET_SEED':
       return void (draft.seed = action.seed);
     case '@@GAME/INIT_PLAYER_SPAWN':
+      draft.dijkstraMap = getDijkstraMap(
+        draft.currentMap.map((row) => row.map((cellData) => cellData.tile)),
+        action.playerSpawn
+      );
+      draft.playerPreviousPosition = action.playerSpawn;
       return void (draft.playerPosition = action.playerSpawn);
     case '@@GAME/UPDATE_CELL':
       return reduceUpdateCell(draft, action.payload);

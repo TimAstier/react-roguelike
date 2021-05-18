@@ -42,9 +42,9 @@ export const Game: React.FC<Props> = (props) => {
       const seed = getRandomString();
       const rng = seedrandom(seed);
       const level = generateLevel(rng);
-      props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
       props.dispatch(gameActions.setSeed(seed));
       props.dispatch(gameActions.setCurrentMap(level.gameMap));
+      props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
     }
     props.dispatch(gameActions.initVisibility());
     props.dispatch(gameActions.initCreatures());

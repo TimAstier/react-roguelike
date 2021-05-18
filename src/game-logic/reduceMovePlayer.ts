@@ -3,9 +3,11 @@ import { CreatureType } from '../constants/creatures';
 import { getTile, Tile } from '../constants/tiles';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
+import { getDijkstraMap } from '../utils/getDijkstraMap';
 import { checkCreaturesDeath } from './checkCreaturesDeath';
 import { GameState } from './game';
 import { lootItem } from './lootItem';
+import { performCreaturesActions } from './performCreaturesActions';
 import { resolveConditions } from './resolveConditions';
 import { resolveStartingAndEndingConditions } from './resolveStartingAndEndingConditions';
 import { updateBurningTiles } from './updateBurningTiles';
@@ -65,6 +67,10 @@ const moveToNewPosition = (draft: GameState, position: Position) => {
   draft.currentMap[position[1]][position[0]].content = 'Player';
   draft.playerPosition = position;
   draft.currentMap = updateVisibility(position, draft.currentMap);
+  draft.dijkstraMap = getDijkstraMap(
+    draft.currentMap.map((row) => row.map((cellData) => cellData.tile)),
+    position
+  );
 };
 
 const moveAndStayAtSamePosition = (draft: GameState, tileNameInSentence: string | undefined) => {
@@ -79,6 +85,7 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
   draft.interactionText = '';
   draft.moveDirection = moveDirection;
+  draft.playerPreviousPosition = draft.playerPosition;
 
   resolveConditions(draft);
 
@@ -98,4 +105,5 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
   draft.currentMap = updateBurningTiles(draft.currentMap);
   resolveStartingAndEndingConditions(draft);
   checkCreaturesDeath(draft);
+  performCreaturesActions(draft);
 };

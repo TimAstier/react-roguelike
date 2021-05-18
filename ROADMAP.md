@@ -6,12 +6,16 @@
 - [x] Display creatures on the map
 - [x] Info on hover
 - [x] Attack a creature
-- [ ] Display creature stat blocks
+- [x] Creature attacks
+- [x] Creature movements
 - [ ] Creature status (idle, hostile)
-- [ ] Creature movements
-- [ ] Creature attacks
 - [ ] Creatures can burn (like player)
 - [ ] Math for attacks damage
+- [ ] Display creature stat blocks
+- [ ] Attack initiative
+- [ ] Create 3 types of creatures with unique traits
+- [ ] Reset interactionText on death
+- [ ] Display death messaged on gameover screen
 
 ## Map generation
 
@@ -73,4 +77,3 @@
 - [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
 - [ ] NPCs
 - [ ] Rest
-- [ ] Use requestAnimationFrame for player movement. See for example [this code](https://github.com/KilroggD/rpg-react-redux/blob/master/src/tile-view/GameLoop.js) and [explanations](https://levelup.gitconnected.com/rpg-game-with-react-redux-html5-part-1-build-a-tile-map-9144fd867830), or [this code](https://github.com/ASteinheiser/react-rpg.com/blob/edd9d6f2af131822f97b3b49eb91696ec5e3f497/src/features/player/index.js).

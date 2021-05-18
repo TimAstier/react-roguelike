@@ -9,8 +9,5 @@ export interface UpdateCellPayload {
 
 export const reduceUpdateCell = (draft: GameState, payload: UpdateCellPayload): void => {
   const { position, cellData } = payload;
-
-  if (draft.currentMap !== null) {
-    draft.currentMap[position[1]][position[0]] = cellData;
-  }
+  draft.currentMap[position[1]][position[0]] = cellData;
 };

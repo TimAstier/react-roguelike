@@ -4,26 +4,23 @@ import { CreatureEntity, CREATURES } from '../constants/creatures';
 import { GameState } from './game';
 
 export const reduceInitCreatures = (draft: GameState): void => {
-  const currentMap = draft.currentMap;
-  if (currentMap !== null) {
-    currentMap.forEach((row, j) =>
-      row.forEach((cellData, i) => {
-        const creatureData = cellData.creature;
-        if (creatureData) {
-          const id = uuid();
-          const template = CREATURES[creatureData.type];
-          const creature: CreatureEntity = {
-            id,
-            type: creatureData.type,
-            position: [i, j],
-            hp: template.maxHp,
-            maxHp: template.maxHp,
-            conditions: {},
-          };
-          draft.creatures[id] = creature;
-          currentMap[j][i].creature = { id, type: creatureData.type };
-        }
-      })
-    );
-  }
+  draft.currentMap.forEach((row, j) =>
+    row.forEach((cellData, i) => {
+      const creatureData = cellData.creature;
+      if (creatureData) {
+        const id = uuid();
+        const template = CREATURES[creatureData.type];
+        const creature: CreatureEntity = {
+          id,
+          type: creatureData.type,
+          position: [i, j],
+          hp: template.maxHp,
+          maxHp: template.maxHp,
+          conditions: {},
+        };
+        draft.creatures[id] = creature;
+        draft.currentMap[j][i].creature = { id, type: creatureData.type };
+      }
+    })
+  );
 };
