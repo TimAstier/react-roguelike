@@ -87,6 +87,8 @@ export interface GameState {
   dijkstraMap: string[][];
   seed: string;
   gameStatus: GameStatus;
+  depth: number;
+  deathText: string;
   moveDirection: MoveDirection;
   playerPosition: Position;
   playerPreviousPosition: Position;
@@ -107,6 +109,8 @@ export const INITIAL_STATE: GameState = {
   dijkstraMap: [],
   seed: '',
   gameStatus: 'playing',
+  depth: 1,
+  deathText: '',
   moveDirection: 'Right',
   playerPosition: [0, 0],
   playerPreviousPosition: [0, 0],

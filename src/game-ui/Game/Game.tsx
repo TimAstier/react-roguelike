@@ -83,7 +83,9 @@ export const Game: React.FC<Props> = (props) => {
                   dispatch={props.dispatch}
                 />
               )}
-              {props.state.gameStatus === 'gameover' && <GameOver />}
+              {props.state.gameStatus === 'gameover' && (
+                <GameOver deathText={props.state.deathText} />
+              )}
             </Viewport>
           </DoubleBorders>
         </div>

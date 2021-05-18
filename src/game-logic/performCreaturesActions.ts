@@ -15,6 +15,7 @@ export const performCreaturesActions = (draft: GameState): void => {
       draft.eventLogs.push(`The ${value.type} hits you for 3 damage!`);
       if (draft.hp === 0) {
         draft.eventLogs.push('You died.');
+        draft.deathText = `Killed by a ${value.type} on depth ${draft.depth}.`;
         draft.gameStatus = 'gameover';
       }
     } else {
@@ -41,6 +42,8 @@ export const performCreaturesActions = (draft: GameState): void => {
       const nextPosition = shuffledElmptyAdjacentPositions[nextPositionIndex];
 
       // Perform the move
+      // BUG: Returns TypeError: Cannot read property '1' of undefined sometimes
+      // Most likely related to the bug were monsters move into walls.
       draft.currentMap[nextPosition[1]][nextPosition[0]].creature = {
         id: value.id,
         type: value.type,

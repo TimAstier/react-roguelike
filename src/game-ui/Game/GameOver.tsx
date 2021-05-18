@@ -6,10 +6,20 @@ const Wrapper = styled.div`
   height: 100%;
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-export const GameOver: React.FC = () => {
-  return <Wrapper>GAME OVER</Wrapper>;
+interface Props {
+  deathText: string;
+}
+
+export const GameOver: React.FC<Props> = ({ deathText }) => {
+  return (
+    <Wrapper>
+      <div style={{ marginBottom: 35 }}>GAME OVER</div>
+      <div>{deathText}</div>
+    </Wrapper>
+  );
 };

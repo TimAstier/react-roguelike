@@ -9,8 +9,7 @@
 - [x] Creature attacks
 - [x] Creature movements
 - [x] Fix creatures moving on same tile
-- [ ] Fix creatures can move through walls when packed?
-- [ ] Fix creatures moving away when bumping into each other
+- [x] Display death message on gameover screen
 - [ ] Creature status (idle, hostile)
 - [ ] Creatures can burn (like player)
 - [ ] Math for attacks damage
@@ -18,7 +17,8 @@
 - [ ] Attack initiative
 - [ ] Create 3 types of creatures with unique traits
 - [ ] Reset interactionText on death
-- [ ] Display death messaged on gameover screen
+- [ ] Fix creatures can move through walls when packed?
+- [ ] Fix creatures moving away when bumping into each other
 
 ## Map generation
 
@@ -46,6 +46,7 @@
 - [ ] Add reveal animation on spawn
 - [ ] Add blur on shadows?
 - [ ] Add colors in eventLogs
+- [ ] Scroll through eventLogs (and reset on next one)
 
 ## Debug mode
 

@@ -17,6 +17,7 @@ export const resolveConditions = (draft: GameState): void => {
       draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
       if (draft.hp === 0) {
         draft.eventLogs.push('You burnt to death...');
+        draft.deathText = `Burnt to death on depth ${draft.depth}.`;
         draft.gameStatus = 'gameover';
       }
       draft.playerConditions.burning.activeRounds--;
