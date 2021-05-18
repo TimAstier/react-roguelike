@@ -5,13 +5,9 @@ export const performCreaturesActions = (draft: GameState): void => {
   const mapWidth = draft.currentMap[0].length;
   const mapHeight = draft.currentMap.length;
   for (const [, value] of Object.entries(draft.creatures)) {
-    const shuffledAdjacentPositions = getAdjacentPositions(
-      value.position,
-      mapWidth,
-      mapHeight
-    ).sort(() => Math.random() - 0.5);
+    const adjacentPositions = getAdjacentPositions(value.position, mapWidth, mapHeight);
     if (
-      shuffledAdjacentPositions
+      adjacentPositions
         .map((p) => JSON.stringify(p))
         .includes(JSON.stringify(draft.playerPreviousPosition))
     ) {
@@ -23,18 +19,26 @@ export const performCreaturesActions = (draft: GameState): void => {
       }
     } else {
       // TODO: Check if creature has aggro
-      const distances = shuffledAdjacentPositions.map((p) => {
+      const shuffledAdjacentPositions = adjacentPositions.sort(() => Math.random() - 0.5);
+
+      // Remove options already occupied by a creature
+      const shuffledElmptyAdjacentPositions = shuffledAdjacentPositions.filter((position) => {
+        return !draft.currentMap[position[1]][position[0]].creature;
+      });
+
+      const distances = shuffledElmptyAdjacentPositions.map((p) => {
         return draft.dijkstraMap[p[1]][p[0]] === '#'
           ? Infinity
           : Number(draft.dijkstraMap[p[1]][p[0]]);
       });
-      // TODO: Randomise ties
+
       const nextDistance = Math.min(...distances);
       if (nextDistance === 0) {
+        // Cannot move where the player is
         return;
       }
       const nextPositionIndex = distances.findIndex((d) => d === nextDistance);
-      const nextPosition = shuffledAdjacentPositions[nextPositionIndex];
+      const nextPosition = shuffledElmptyAdjacentPositions[nextPositionIndex];
 
       // Perform the move
       draft.currentMap[nextPosition[1]][nextPosition[0]].creature = {

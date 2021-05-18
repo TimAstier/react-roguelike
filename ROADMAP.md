@@ -8,6 +8,9 @@
 - [x] Attack a creature
 - [x] Creature attacks
 - [x] Creature movements
+- [x] Fix creatures moving on same tile
+- [ ] Fix creatures can move through walls when packed?
+- [ ] Fix creatures moving away when bumping into each other
 - [ ] Creature status (idle, hostile)
 - [ ] Creatures can burn (like player)
 - [ ] Math for attacks damage
