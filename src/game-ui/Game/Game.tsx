@@ -100,7 +100,9 @@ export const Game: React.FC<Props> = (props) => {
           <Inventory inventory={props.state.inventory} />
         </SideWrapper>
       </Wrapper>
-      <InteractionText interactionText={props.state.interactionText} />
+      <InteractionText
+        interactionText={props.state.gameStatus === 'playing' ? props.state.interactionText : ''}
+      />
     </div>
   );
 };

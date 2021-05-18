@@ -16,7 +16,7 @@
 - [ ] Display creature stat blocks
 - [ ] Attack initiative
 - [ ] Create 3 types of creatures with unique traits
-- [ ] Reset interactionText on death
+- [x] Reset interactionText on death
 - [x] Fix creatures can move through walls when packed?
 - [ ] Fix creatures moving away when bumping into each other
 
