@@ -10,7 +10,8 @@ import {
   NON_REVEALED_BACKGROUND_COLOR,
   TileType,
 } from '../../constants/tiles';
-import { GameAction, gameActions, HoverCellPayload } from '../../game-logic/game';
+import { GameAction, gameActions } from '../../game-logic/game';
+import { HoverCellPayload } from '../../game-logic/reduceHoverCell';
 import { CellContent, CreatureData } from '../../typings/cell';
 import { Position } from '../../typings/position';
 import { Visibility } from '../../typings/visibility';

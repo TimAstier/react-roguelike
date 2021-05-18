@@ -19,6 +19,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/seedrandom": "^3.0.0",
     "@types/styled-components": "^5.1.9",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "eslint": "^7.24.0",
@@ -42,6 +43,7 @@
     "use-image": "^1.0.7",
     "use-immer": "^0.5.1",
     "use-sound": "^2.1.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

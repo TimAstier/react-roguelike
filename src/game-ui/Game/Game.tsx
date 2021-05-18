@@ -38,13 +38,13 @@ export const Game: React.FC<Props> = (props) => {
   useGameKeys(props.dispatch, props.state.gameStatus);
 
   React.useEffect(() => {
-    if (props.state.currentMap === null) {
+    if (props.state.currentMap.length === 0) {
       const seed = getRandomString();
       const rng = seedrandom(seed);
       const level = generateLevel(rng);
-      props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
       props.dispatch(gameActions.setSeed(seed));
       props.dispatch(gameActions.setCurrentMap(level.gameMap));
+      props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
     }
     props.dispatch(gameActions.initVisibility());
     props.dispatch(gameActions.initCreatures());
@@ -83,7 +83,9 @@ export const Game: React.FC<Props> = (props) => {
                   dispatch={props.dispatch}
                 />
               )}
-              {props.state.gameStatus === 'gameover' && <GameOver />}
+              {props.state.gameStatus === 'gameover' && (
+                <GameOver deathText={props.state.deathText} />
+              )}
             </Viewport>
           </DoubleBorders>
         </div>

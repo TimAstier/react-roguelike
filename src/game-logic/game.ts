@@ -1,44 +1,19 @@
-import { CONDITIONS } from '../constants/conditions';
-import {
-  BIG_GOLD_AMOUNT,
-  BIG_GOLD_MODIFIER,
-  BURNING_DAMAGE_PERCENTAGE,
-  GRID_HEIGHT,
-  GRID_WIDTH,
-  INITIAL_MAX_HP,
-  SMALL_GOLD_AMOUNT,
-  SMALL_GOLD_MODIFIER,
-} from '../constants/config';
-import { CreatureEntity, CREATURES } from '../constants/creatures';
-import { getItem } from '../constants/items';
+import { INITIAL_MAX_HP } from '../constants/config';
+import { CreatureEntity } from '../constants/creatures';
 import { ItemType } from '../constants/items';
-import { getTile, Tile, TileType } from '../constants/tiles';
 import { ActiveConditions } from '../typings/activeConditions';
-import { CellContent, CellData, CreatureData } from '../typings/cell';
+import { CellData } from '../typings/cell';
 import { GameStatus } from '../typings/gameStatus';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
-import { Visibility } from '../typings/visibility';
-import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
-import { getRandomString } from '../utils/getRandomString';
-import { updateBurningTiles } from '../utils/updateBurningTiles';
-import { updateVisibility } from '../utils/updateVisibility';
+import { getDijkstraMap } from '../utils/getDijkstraMap';
+import { HoverCellPayload, reduceHoverCell } from './reduceHoverCell';
+import { reduceInitCreatures } from './reduceInitCreatures';
+import { reduceMovePlayer } from './reduceMovePlayer';
+import { reduceUpdateCell, UpdateCellPayload } from './reduceUpdateCell';
+import { updateVisibility } from './updateVisibility';
 
 // ACTIONS
-
-interface UpdateCellPayload {
-  cellData: CellData;
-  position: Position;
-}
-
-export interface HoverCellPayload {
-  tileType: TileType;
-  visibility: Visibility;
-  revealed: boolean;
-  content: CellContent;
-  burning: boolean;
-  creature?: CreatureData;
-}
 
 export type GameAction =
   | { type: '@@GAME/MOVE_PLAYER'; direction: MoveDirection }
@@ -108,11 +83,15 @@ export const gameActions = {
 // INITIAL_STATE
 
 export interface GameState {
-  currentMap: CellData[][] | null;
+  currentMap: CellData[][];
+  dijkstraMap: string[][];
   seed: string;
   gameStatus: GameStatus;
+  depth: number;
+  deathText: string;
   moveDirection: MoveDirection;
   playerPosition: Position;
+  playerPreviousPosition: Position;
   characterName: string;
   hp: number;
   maxHp: number;
@@ -126,11 +105,15 @@ export interface GameState {
 }
 
 export const INITIAL_STATE: GameState = {
-  currentMap: null,
+  currentMap: [],
+  dijkstraMap: [],
   seed: '',
   gameStatus: 'playing',
+  depth: 1,
+  deathText: '',
   moveDirection: 'Right',
   playerPosition: [0, 0],
+  playerPreviousPosition: [0, 0],
   characterName: 'Kerhebos',
   hp: INITIAL_MAX_HP,
   maxHp: INITIAL_MAX_HP,
@@ -145,247 +128,6 @@ export const INITIAL_STATE: GameState = {
 
 // REDUCER
 
-const reduceMovePlayer = (draft = INITIAL_STATE, moveDirection: MoveDirection) => {
-  let nextTileX: number;
-  let nextTileY: number;
-  let nextTileType: TileType;
-  let nextTile: Tile | undefined;
-
-  if (draft.currentMap === null) {
-    return;
-  }
-
-  draft.interactionText = '';
-  draft.moveDirection = moveDirection;
-
-  const moveToNewPosition = (position: Position) => {
-    // Resolve playerConditions
-
-    if (draft.playerConditions.burning) {
-      if (draft.playerConditions.burning.activeRounds === 1) {
-        draft.eventLogs.push('You are no longer on fire');
-        delete draft.playerConditions.burning;
-      } else {
-        const damagePercentage = getRandomIntInclusive(
-          Math.min(0, BURNING_DAMAGE_PERCENTAGE - 5),
-          BURNING_DAMAGE_PERCENTAGE + 2
-        );
-        const fireDamage = Math.ceil(draft.maxHp * (damagePercentage / 100));
-        draft.hp = Math.max(draft.hp - fireDamage, 0);
-        draft.eventLogs.push(`You suffer ${fireDamage} points of fire damage.`);
-        if (draft.hp === 0) {
-          draft.eventLogs.push('You burnt to death...');
-          draft.gameStatus = 'gameover';
-        }
-        draft.playerConditions.burning.activeRounds--;
-      }
-    }
-
-    if (draft.currentMap) {
-      // Empty previous location
-      draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
-
-      // Loot item
-      const content = draft.currentMap[position[1]][position[0]].content;
-      if (content && content !== 'Player') {
-        const item = getItem(content);
-        if (item) {
-          if (item.type === 'SmallGold') {
-            const amount = getRandomIntInclusive(
-              SMALL_GOLD_AMOUNT - SMALL_GOLD_MODIFIER,
-              SMALL_GOLD_AMOUNT + SMALL_GOLD_MODIFIER
-            );
-            draft.gold = draft.gold + amount;
-            draft.eventLogs.push(`You found ${amount} gold.`);
-          } else if (item.type === 'BigGold') {
-            const amount = getRandomIntInclusive(
-              BIG_GOLD_AMOUNT - BIG_GOLD_MODIFIER,
-              BIG_GOLD_AMOUNT + BIG_GOLD_MODIFIER
-            );
-            draft.gold = draft.gold + amount;
-            draft.eventLogs.push(`You found ${amount} gold!`);
-          } else {
-            draft.inventory.push(content);
-            draft.eventLogs.push(`You found ${item.nameInSentence}.`);
-          }
-        }
-      }
-
-      // Move player
-      draft.currentMap[position[1]][position[0]].content = 'Player';
-
-      // Update visibility
-      draft.currentMap = updateVisibility(position, draft.currentMap);
-
-      // Update burning tiles
-      draft.currentMap = updateBurningTiles(draft.currentMap);
-
-      // Update player position
-      draft.playerPosition = position;
-
-      // Check conditions
-      if (draft.currentMap[position[1]][position[0]].burningRounds > 0) {
-        if (!draft.playerConditions.burning) {
-          draft.eventLogs.push('You start burning!');
-        }
-        draft.playerConditions.burning = { activeRounds: CONDITIONS.burning.duration };
-      }
-    }
-  };
-
-  const moveAndStayAtSamePosition = (tileNameInSentence: string | undefined) => {
-    draft.interactionText = `You hit ${tileNameInSentence || ''}.`;
-  };
-
-  switch (moveDirection) {
-    case 'Left':
-      nextTileX =
-        draft.playerPosition[0] > 0 ? draft.playerPosition[0] - 1 : draft.playerPosition[0];
-      nextTileY = draft.playerPosition[1];
-      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
-      nextTile = getTile(nextTileType);
-
-      if (draft.playerPosition[0] > 0 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
-      }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
-
-    case 'Right':
-      nextTileX =
-        draft.playerPosition[0] < GRID_WIDTH
-          ? draft.playerPosition[0] + 1
-          : draft.playerPosition[0];
-      nextTileY = draft.playerPosition[1];
-      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
-      nextTile = getTile(nextTileType);
-
-      if (draft.playerPosition[0] < GRID_WIDTH - 1 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
-      }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
-
-    case 'Up':
-      nextTileX = draft.playerPosition[0];
-      nextTileY =
-        draft.playerPosition[1] > 0 ? draft.playerPosition[1] - 1 : draft.playerPosition[1];
-      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
-      nextTile = getTile(nextTileType);
-
-      if (draft.playerPosition[1] > 0 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
-      }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
-
-    case 'Down':
-      nextTileX = draft.playerPosition[0];
-      nextTileY =
-        draft.playerPosition[1] < GRID_HEIGHT - 1
-          ? draft.playerPosition[1] + 1
-          : draft.playerPosition[1];
-      nextTileType = draft.currentMap[nextTileY][nextTileX].tile;
-      nextTile = getTile(nextTileType);
-
-      if (draft.playerPosition[1] < GRID_HEIGHT - 1 && nextTile?.canWalkThrough === true) {
-        return moveToNewPosition([nextTileX, nextTileY]);
-      }
-      return moveAndStayAtSamePosition(nextTile?.nameInSentence);
-  }
-};
-
-const reduceUpdateCell = (draft = INITIAL_STATE, payload: UpdateCellPayload) => {
-  const { position, cellData } = payload;
-
-  if (draft.currentMap !== null) {
-    draft.currentMap[position[1]][position[0]] = cellData;
-  }
-};
-
-const reduceHoverCell = (draft = INITIAL_STATE, payload: HoverCellPayload) => {
-  const { tileType, visibility, revealed, content, burning, creature } = payload;
-
-  if (content === 'Player') {
-    draft.interactionText = 'This is you.';
-    return;
-  }
-
-  if (revealed === false && visibility === 'dark') {
-    return;
-  }
-
-  if (creature && visibility !== 'dark') {
-    if (visibility === 'dim') {
-      draft.interactionText = 'You see something standing in the shadows.';
-      return;
-    }
-    if (visibility === 'clear') {
-      draft.interactionText = `You see a ${creature.type}!`;
-      return;
-    }
-  }
-
-  if (visibility === 'dim' && !revealed && content !== 0) {
-    draft.interactionText = 'You discern something on the ground.';
-    return;
-  }
-
-  let verb = 'see';
-  let location = '';
-
-  if (visibility === 'dark' && revealed) {
-    verb = 'remember seeing';
-  }
-
-  if (visibility === 'dim' && revealed) {
-    verb = 'remember seeing';
-  }
-
-  if (visibility === 'dim') {
-    verb = 'get a glimpse of';
-  }
-
-  let object;
-
-  if (content !== 0) {
-    object = getItem(content)?.nameInSentence;
-  } else {
-    object = getTile(tileType)?.nameInSentence;
-  }
-
-  if (verb === 'remember seeing') {
-    location = ' over there';
-  }
-
-  const interactionText = `You ${verb} ${object}${
-    burning && visibility !== 'dark' ? ' burning' : ''
-  }${location}.`;
-  draft.interactionText = interactionText;
-};
-
-const reduceInitCreatures = (draft = INITIAL_STATE) => {
-  const currentMap = draft.currentMap;
-  if (currentMap !== null) {
-    currentMap.forEach((row, j) =>
-      row.forEach((cellData, i) => {
-        const creatureData = cellData.creature;
-        if (creatureData) {
-          const id = getRandomString(); // TODO: Use UUID
-          const template = CREATURES[creatureData.type];
-          const creature: CreatureEntity = {
-            id,
-            type: creatureData.type,
-            position: [i, j],
-            hp: template.maxHp,
-            maxHp: template.maxHp,
-            conditions: {},
-          };
-          draft.creatures[id] = creature;
-          currentMap[j][i].creature = { id, type: creatureData.type };
-        }
-      })
-    );
-  }
-};
-
 export const game = (draft = INITIAL_STATE, action: GameAction): GameState | void => {
   switch (action.type) {
     case '@@GAME/MOVE_PLAYER':
@@ -395,14 +137,16 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/SET_SEED':
       return void (draft.seed = action.seed);
     case '@@GAME/INIT_PLAYER_SPAWN':
+      draft.dijkstraMap = getDijkstraMap(
+        draft.currentMap.map((row) => row.map((cellData) => cellData.tile)),
+        action.playerSpawn
+      );
+      draft.playerPreviousPosition = action.playerSpawn;
       return void (draft.playerPosition = action.playerSpawn);
     case '@@GAME/UPDATE_CELL':
       return reduceUpdateCell(draft, action.payload);
     case '@@GAME/INIT_VISIBILITY':
-      if (draft.currentMap !== null) {
-        return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
-      }
-      break;
+      return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
     case '@@GAME/INIT_CREATURES':
       return reduceInitCreatures(draft);
     case '@@GAME/HOVER_CELL':

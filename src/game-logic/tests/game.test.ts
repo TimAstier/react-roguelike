@@ -8,7 +8,8 @@ import {
 } from '../../constants/config';
 import { TileType } from '../../constants/tiles';
 import { createGameMap } from '../../pcg/generateLevel';
-import { game, gameActions, GameState, HoverCellPayload, INITIAL_STATE } from '../game';
+import { game, gameActions, GameState, INITIAL_STATE } from '../game';
+import { HoverCellPayload } from '../reduceHoverCell';
 
 // prettier-ignore
 
@@ -34,6 +35,7 @@ describe('game reducer', () => {
       const state: GameState = { ...INITIAL_STATE, currentMap: gameMapA, playerPosition: [1, 1] };
       const action = gameActions.movePlayer('Right');
       const newState = produce(game)(state, action);
+      expect(newState.playerPreviousPosition).toEqual([1, 1]);
       expect(newState.playerPosition).toEqual([2, 1]);
       expect(newState.moveDirection).toEqual('Right');
     });
@@ -41,6 +43,7 @@ describe('game reducer', () => {
       const state: GameState = { ...INITIAL_STATE, currentMap: gameMapA, playerPosition: [1, 1] };
       const action = gameActions.movePlayer('Left');
       const newState = produce(game)(state, action);
+      expect(newState.playerPreviousPosition).toEqual([1, 1]);
       expect(newState.playerPosition).toEqual([0, 1]);
       expect(newState.moveDirection).toEqual('Left');
     });
@@ -48,6 +51,7 @@ describe('game reducer', () => {
       const state: GameState = { ...INITIAL_STATE, currentMap: gameMapA, playerPosition: [1, 1] };
       const action = gameActions.movePlayer('Up');
       const newState = produce(game)(state, action);
+      expect(newState.playerPreviousPosition).toEqual([1, 1]);
       expect(newState.playerPosition).toEqual([1, 0]);
       expect(newState.moveDirection).toEqual('Up');
     });
@@ -55,6 +59,7 @@ describe('game reducer', () => {
       const state: GameState = { ...INITIAL_STATE, currentMap: gameMapA, playerPosition: [1, 1] };
       const action = gameActions.movePlayer('Down');
       const newState = produce(game)(state, action);
+      expect(newState.playerPreviousPosition).toEqual([1, 1]);
       expect(newState.playerPosition).toEqual([1, 2]);
       expect(newState.moveDirection).toEqual('Down');
     });
@@ -286,9 +291,7 @@ describe('game reducer', () => {
       const newStateB = produce(game)(newStateA, action);
       expect(newStateB.eventLogs).toEqual(['You found a ruby.']);
       expect(newStateB.inventory).toEqual(['Ruby']);
-      if (newStateB.currentMap !== null) {
-        expect(newStateB.currentMap[1][1].content).toEqual(0);
-      }
+      expect(newStateB.currentMap[1][1].content).toEqual(0);
     });
     it('loots SmallGold', () => {
       const currentMap = gameMapA.map((arr) => arr.slice());
@@ -306,9 +309,7 @@ describe('game reducer', () => {
       expect(newStateB.eventLogs[0]).toContain('You found');
       expect(newStateB.eventLogs[0]).toContain('gold.');
       expect(newStateB.inventory).toEqual([]);
-      if (newStateB.currentMap !== null) {
-        expect(newStateB.currentMap[1][1].content).toEqual(0);
-      }
+      expect(newStateB.currentMap[1][1].content).toEqual(0);
       expect(newStateB.gold).toBeGreaterThanOrEqual(SMALL_GOLD_AMOUNT - SMALL_GOLD_MODIFIER);
     });
     it('loots BigGold', () => {
@@ -327,9 +328,7 @@ describe('game reducer', () => {
       expect(newStateB.eventLogs[0]).toContain('You found');
       expect(newStateB.eventLogs[0]).toContain('gold!');
       expect(newStateB.inventory).toEqual([]);
-      if (newStateB.currentMap !== null) {
-        expect(newStateB.currentMap[1][1].content).toEqual(0);
-      }
+      expect(newStateB.currentMap[1][1].content).toEqual(0);
       expect(newStateB.gold).toBeGreaterThanOrEqual(BIG_GOLD_AMOUNT - BIG_GOLD_MODIFIER);
     });
   });
