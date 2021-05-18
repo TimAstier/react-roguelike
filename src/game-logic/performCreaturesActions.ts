@@ -34,16 +34,14 @@ export const performCreaturesActions = (draft: GameState): void => {
       });
 
       const nextDistance = Math.min(...distances);
-      if (nextDistance === 0) {
-        // Cannot move where the player is
+      if (nextDistance === 0 || nextDistance === Infinity) {
+        // Cannot move where the player is or to a non-passable position
         return;
       }
       const nextPositionIndex = distances.findIndex((d) => d === nextDistance);
       const nextPosition = shuffledElmptyAdjacentPositions[nextPositionIndex];
 
       // Perform the move
-      // BUG: Returns TypeError: Cannot read property '1' of undefined sometimes
-      // Most likely related to the bug were monsters move into walls.
       draft.currentMap[nextPosition[1]][nextPosition[0]].creature = {
         id: value.id,
         type: value.type,

@@ -17,7 +17,7 @@
 - [ ] Attack initiative
 - [ ] Create 3 types of creatures with unique traits
 - [ ] Reset interactionText on death
-- [ ] Fix creatures can move through walls when packed?
+- [x] Fix creatures can move through walls when packed?
 - [ ] Fix creatures moving away when bumping into each other
 
 ## Map generation
