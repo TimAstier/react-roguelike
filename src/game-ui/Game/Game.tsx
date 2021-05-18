@@ -38,7 +38,7 @@ export const Game: React.FC<Props> = (props) => {
   useGameKeys(props.dispatch, props.state.gameStatus);
 
   React.useEffect(() => {
-    if (props.state.currentMap === null) {
+    if (props.state.currentMap.length === 0) {
       const seed = getRandomString();
       const rng = seedrandom(seed);
       const level = generateLevel(rng);

@@ -29,22 +29,20 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
   resolveConditions(draft);
 
   const moveToNewPosition = (position: Position) => {
-    if (draft.currentMap) {
-      // Empty previous location
-      draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
+    // Empty previous location
+    draft.currentMap[draft.playerPosition[1]][draft.playerPosition[0]].content = 0;
 
-      // Loot item
-      lootItem(draft, position);
+    // Loot item
+    lootItem(draft, position);
 
-      // Move player
-      draft.currentMap[position[1]][position[0]].content = 'Player';
+    // Move player
+    draft.currentMap[position[1]][position[0]].content = 'Player';
 
-      // Update player position
-      draft.playerPosition = position;
+    // Update player position
+    draft.playerPosition = position;
 
-      // Update visibility
-      draft.currentMap = updateVisibility(position, draft.currentMap);
-    }
+    // Update visibility
+    draft.currentMap = updateVisibility(position, draft.currentMap);
   };
 
   const moveAndStayAtSamePosition = (tileNameInSentence: string | undefined) => {

@@ -49,7 +49,7 @@ export const MapGenerator: React.FC<Props> = (props) => {
     load(seed);
   }, []);
 
-  if (props.state.currentMap === null) {
+  if (props.state.currentMap.length === 0) {
     return <div>loading...</div>;
   }
 

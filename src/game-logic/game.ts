@@ -82,7 +82,7 @@ export const gameActions = {
 // INITIAL_STATE
 
 export interface GameState {
-  currentMap: CellData[][] | null;
+  currentMap: CellData[][];
   seed: string;
   gameStatus: GameStatus;
   moveDirection: MoveDirection;
@@ -100,7 +100,7 @@ export interface GameState {
 }
 
 export const INITIAL_STATE: GameState = {
-  currentMap: null,
+  currentMap: [],
   seed: '',
   gameStatus: 'playing',
   moveDirection: 'Right',
@@ -132,10 +132,7 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/UPDATE_CELL':
       return reduceUpdateCell(draft, action.payload);
     case '@@GAME/INIT_VISIBILITY':
-      if (draft.currentMap !== null) {
-        return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
-      }
-      break;
+      return void (draft.currentMap = updateVisibility(draft.playerPosition, draft.currentMap));
     case '@@GAME/INIT_CREATURES':
       return reduceInitCreatures(draft);
     case '@@GAME/HOVER_CELL':
