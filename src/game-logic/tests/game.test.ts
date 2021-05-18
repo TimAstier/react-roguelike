@@ -8,7 +8,8 @@ import {
 } from '../../constants/config';
 import { TileType } from '../../constants/tiles';
 import { createGameMap } from '../../pcg/generateLevel';
-import { game, gameActions, GameState, HoverCellPayload, INITIAL_STATE } from '../game';
+import { game, gameActions, GameState, INITIAL_STATE } from '../game';
+import { HoverCellPayload } from '../reduceHoverCell';
 
 // prettier-ignore
 
