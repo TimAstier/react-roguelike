@@ -153,7 +153,7 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
 
   return (
     <Stage width={VIEWPORT_WIDTH_IN_PIXELS} height={VIEWPORT_HEIGHT_IN_PIXELS}>
-      <Layer>
+      <Layer imageSmoothingEnabled={false}>
         <Group offsetX={offsetX} offsetY={offsetY}>
           {renderCells(
             props.gameMap,

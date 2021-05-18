@@ -10,8 +10,10 @@
 - [x] Creature movements
 - [x] Fix creatures moving on same tile
 - [x] Display death message on gameover screen
-- [ ] Creature status (idle, hostile)
+- [ ] Tick function
+- [ ] Consider Player just as another creature? Sth like isPlayer = true
 - [ ] Creatures can burn (like player)
+- [ ] Creature status (idle, hostile)
 - [ ] Math for attacks damage
 - [ ] Display creature stat blocks
 - [ ] Attack initiative
@@ -73,6 +75,7 @@
 
 ## Others
 
+- [ ] Remember high scores with local storage
 - [ ] Hunger clock with impact on visibility
 - [ ] Pillar tile to climb and increase visibility
 - [ ] Burning entities can set flammable tiles on fire
