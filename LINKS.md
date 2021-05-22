@@ -5,8 +5,6 @@
 - [Red Blob Games](https://www.redblobgames.com/) - interactive visual explanations of math and algorithms
   - [Line drawing on a grid](https://www.redblobgames.com/grids/line-drawing.html)
 - [RoguelikeDevResources](https://github.com/marukrap/RoguelikeDevResources)
-- [Herbert Wolverson - Procedural Map Generation Techniques](https://www.youtube.com/watch?v=TlLIOgWYVpI)
-- [Brian Walker - Procedural level design in Brogue and beyond](https://www.youtube.com/watch?v=Uo9-IcHhq_w)
 - [ROguelike Toolkit in JavaScript](https://github.com/ondras/rot.js)
 - [Brogue](https://sites.google.com/site/broguegame/)
   - [Level generation in Brogue wiki](https://brogue.fandom.com/wiki/Level_Generation)
@@ -36,3 +34,18 @@
 - [Upgrade from Ravenmore icons](https://opengameart.org/content/golden-items-rip-upgrade-pack)
 - [Additions to Ravenmore icons](https://opengameart.org/node/83169)
 - [Craftpix.next](https://craftpix.net/)
+
+## Map generation
+
+- [Herbert Wolverson - Procedural Map Generation Techniques](https://www.youtube.com/watch?v=TlLIOgWYVpI)
+- [Brian Walker - Procedural level design in Brogue and beyond](https://www.youtube.com/watch?v=Uo9-IcHhq_w)
+- [Dungeon-Building Algorithm](http://www.roguebasin.com/index.php?title=Dungeon-Building_Algorithm)
+- [Zorrbus dungeon generator](http://dungeon.zorbus.net/)
+
+## Animations
+
+- [Konva Tween](https://konvajs.org/docs/tweens/Linear_Easing.html)
+- [Konva Animation](https://konvajs.org/docs/animations/Create_an_Animation.html)
+- [React-konva and React-spring](https://konvajs.org/docs/react/Complex_Animations.html)
+- [Basic usage of Konva.Animation in react](https://github.com/konvajs/react-konva/issues/243)
+- [React-spring](https://react-spring.io/)

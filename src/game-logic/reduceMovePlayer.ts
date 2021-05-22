@@ -82,12 +82,18 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   draft.eventLogs.push(`You hit the ${type} for 5 damage!`);
 };
 
+const tick = (draft: GameState) => {
+  resolveConditions(draft);
+  draft.currentMap = updateBurningTiles(draft.currentMap);
+  resolveStartingAndEndingConditions(draft);
+  checkCreaturesDeath(draft);
+  performCreaturesActions(draft);
+};
+
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
   draft.interactionText = '';
   draft.moveDirection = moveDirection;
   draft.playerPreviousPosition = draft.playerPosition;
-
-  resolveConditions(draft);
 
   const nextPosition = getNextPosition(draft, moveDirection);
   const nextTileType = draft.currentMap[nextPosition[1]][nextPosition[0]].tile;
@@ -102,8 +108,5 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
     moveAndStayAtSamePosition(draft, nextTile?.nameInSentence);
   }
 
-  draft.currentMap = updateBurningTiles(draft.currentMap);
-  resolveStartingAndEndingConditions(draft);
-  checkCreaturesDeath(draft);
-  performCreaturesActions(draft);
+  tick(draft);
 };

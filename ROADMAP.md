@@ -14,6 +14,7 @@
 - [ ] Consider Player just as another creature? Sth like isPlayer = true
 - [ ] Creatures can burn (like player)
 - [ ] Creature status (idle, hostile)
+- [ ] Some sort of effect (sound/animation) on attack?
 - [ ] Math for attacks damage
 - [ ] Display creature stat blocks
 - [ ] Attack initiative
