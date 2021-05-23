@@ -1,6 +1,6 @@
 # Changelog
 
-## 👾 [0.1.3] - 2021-05-23 - **Creatures**
+## 👾 **Creatures** - [0.1.3] - 2021-05-23
 
 ### Game
 
@@ -10,7 +10,7 @@
 - Creatures have different max HP, base attack, base AC, aggro ranges and traits
 - New trait - keen sense - aggro from far away without needing LOS
 - Creatures follow the player when they become hostile
-- Calculate attack damages based on0 dice system
+- Calculate attack damages based on dice system
 - Attacks can miss (based on AC) and crit (if roll 20)
 - GAMEOVER screen shows the cause of death and the depth
 
@@ -19,7 +19,7 @@
 - Possibility to seed the rng with a seed string
 - Possibility to add creatures on the map
 
-## 🔥 [0.1.2] - 2021-05-12 - **Fire update**
+## 🔥 **Fire update** - [0.1.2] - 2021-05-12
 
 ### Game
 
@@ -37,7 +37,7 @@
 
 - Set tiles on fire
 
-## 🚀 [0.1.1] - 2021-05-08 - **First live release**
+## 🚀 **First live release** - [0.1.1] - 2021-05-08
 
 ### Game
 

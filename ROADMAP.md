@@ -27,8 +27,7 @@
 - [ ] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
 - [ ] Display creature stat blocks
 - [ ] Some sort of effect (sound/animation) on attack?
-- [ ] Add scroll animation on move
-- [ ] Add reveal animation on spawn
+- [ ] Add reveal animation on spawn and on gameover
 - [ ] Add blur on shadows?
 - [ ] Improve eventLogs
   - [ ] Add colors in eventLogs
