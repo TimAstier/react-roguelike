@@ -17,6 +17,7 @@ export const reduceInitCreatures = (draft: GameState): void => {
           hp: template.maxHp,
           maxHp: template.maxHp,
           conditions: {},
+          status: 'idle',
         };
         draft.creatures[id] = creature;
         draft.currentMap[j][i].creature = { id, type: creatureData.type };

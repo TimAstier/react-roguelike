@@ -1,5 +1,8 @@
-import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
+import { DiceRoll } from 'rpg-dice-roller';
+
+import { GRID_HEIGHT, GRID_WIDTH, PLAYER_BASE_ATTACK } from '../constants/config';
 import { CreatureType } from '../constants/creatures';
+import { CREATURES } from '../constants/creatures';
 import { getTile, Tile } from '../constants/tiles';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
@@ -78,16 +81,36 @@ const moveAndStayAtSamePosition = (draft: GameState, tileNameInSentence: string 
 };
 
 const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
-  draft.creatures[id].hp = draft.creatures[id].hp - 5;
-  draft.eventLogs.push(`You hit the ${type} for 5 damage!`);
+  // Check if the attack hits
+  const creatureAC = CREATURES[type].baseAC;
+  const hitRoll = new DiceRoll('d20');
+  if (hitRoll.total < creatureAC) {
+    draft.eventLogs.push(`You miss the ${type}.`);
+    return;
+  }
+  // Deal damage
+  const isCriticalHit = hitRoll.total === 20;
+  const dice = isCriticalHit ? `${PLAYER_BASE_ATTACK}*2` : PLAYER_BASE_ATTACK;
+  const damageRoll = new DiceRoll(dice);
+  const damage = damageRoll.total;
+  draft.creatures[id].hp = draft.creatures[id].hp - damage;
+  draft.eventLogs.push(
+    `${isCriticalHit ? '[CRIT] ' : ''}You hit the ${type} for ${damage} damage!`
+  );
+};
+
+const tick = (draft: GameState) => {
+  resolveConditions(draft);
+  draft.currentMap = updateBurningTiles(draft.currentMap);
+  resolveStartingAndEndingConditions(draft);
+  checkCreaturesDeath(draft);
+  performCreaturesActions(draft);
 };
 
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
   draft.interactionText = '';
   draft.moveDirection = moveDirection;
   draft.playerPreviousPosition = draft.playerPosition;
-
-  resolveConditions(draft);
 
   const nextPosition = getNextPosition(draft, moveDirection);
   const nextTileType = draft.currentMap[nextPosition[1]][nextPosition[0]].tile;
@@ -102,8 +125,5 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
     moveAndStayAtSamePosition(draft, nextTile?.nameInSentence);
   }
 
-  draft.currentMap = updateBurningTiles(draft.currentMap);
-  resolveStartingAndEndingConditions(draft);
-  checkCreaturesDeath(draft);
-  performCreaturesActions(draft);
+  tick(draft);
 };
