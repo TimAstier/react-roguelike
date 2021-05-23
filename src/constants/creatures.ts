@@ -41,7 +41,7 @@ export const CREATURES: { [C in CreatureType]: Creature } = {
     spawnNumber: 2,
     traits: [],
   },
-  // Spawns in large and aggro from far away without needing LOS
+  // Spawn in large groups and aggro from far away without needing LOS
   rat: {
     maxHp: 10,
     spritePosition: [0, 1],

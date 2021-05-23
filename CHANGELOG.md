@@ -1,10 +1,23 @@
 # Changelog
 
-## 🎲 [0.1.3] - 2021-XX-XX - **Improved map generation**
+## 👾 [0.1.3] - 2021-05-23 - **Creatures**
+
+### Game
+
+- Add creatures into the game
+- New creature - Goblin - a rather robust standard opponent
+- New creature - Rat - spawn in large groups and have keen sense trait
+- Creatures have different max HP, base attack, base AC, aggro ranges and traits
+- New trait - keen sense - aggro from far away without needing LOS
+- Creatures follow the player when they become hostile
+- Calculate attack damages based on0 dice system
+- Attacks can miss (based on AC) and crit (if roll 20)
+- GAMEOVER screen shows the cause of death and the depth
 
 ### MapEditor
 
 - Possibility to seed the rng with a seed string
+- Possibility to add creatures on the map
 
 ## 🔥 [0.1.2] - 2021-05-12 - **Fire update**
 
