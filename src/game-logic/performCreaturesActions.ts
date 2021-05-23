@@ -1,25 +1,75 @@
+import { DiceRoll } from 'rpg-dice-roller';
+
+import { PLAYER_BASE_AC } from '../constants/config';
+import { CREATURES } from '../constants/creatures';
 import { getAdjacentPositions } from '../utils/getAdjacentPositions';
+import { isInsideCircle } from '../utils/isInsideCircle';
+import { line } from '../utils/line';
 import { GameState } from './game';
 
 export const performCreaturesActions = (draft: GameState): void => {
   const mapWidth = draft.currentMap[0].length;
   const mapHeight = draft.currentMap.length;
-  for (const [, value] of Object.entries(draft.creatures)) {
-    const adjacentPositions = getAdjacentPositions(value.position, mapWidth, mapHeight);
+
+  Object.entries(draft.creatures).forEach(([, entity]) => {
+    const adjacentPositions = getAdjacentPositions(entity.position, mapWidth, mapHeight);
+    const template = CREATURES[entity.type];
     if (
       adjacentPositions
         .map((p) => JSON.stringify(p))
         .includes(JSON.stringify(draft.playerPreviousPosition))
     ) {
-      draft.hp = Math.max(draft.hp - 3, 0);
-      draft.eventLogs.push(`The ${value.type} hits you for 3 damage!`);
+      // Check if the attack hits
+      const hitRoll = new DiceRoll('d20');
+      if (hitRoll.total < PLAYER_BASE_AC) {
+        draft.eventLogs.push(`The ${entity.type} misses you.`);
+        return;
+      }
+      // Deal damage
+      const isCriticalHit = hitRoll.total === 20;
+      const dice = isCriticalHit ? `${template.baseAttack}*2` : template.baseAttack;
+      const damageRoll = new DiceRoll(dice);
+      const damage = damageRoll.total;
+      draft.hp = Math.max(draft.hp - damage, 0);
+      draft.eventLogs.push(
+        `${isCriticalHit ? '[CRIT] ' : ''}The ${entity.type} hits you for ${damage} damage!`
+      );
       if (draft.hp === 0) {
         draft.eventLogs.push('You died.');
-        draft.deathText = `Killed by a ${value.type} on depth ${draft.depth}.`;
+        draft.deathText = `Killed by a ${entity.type} on depth ${draft.depth}.`;
         draft.gameStatus = 'gameover';
       }
     } else {
-      // TODO: Check if creature has aggro
+      // Check if creature is in aggro range
+      const isInAggroRange = isInsideCircle({
+        center: draft.playerPosition,
+        position: entity.position,
+        radius: template.aggroRange,
+      });
+
+      if (!isInAggroRange) {
+        entity.status = 'idle';
+        return;
+      }
+
+      // Check if creature has LOS
+      if (!template.traits.includes('keenSmell')) {
+        const inBetweenOpaqueTiles = line(entity.position, draft.playerPosition).filter(
+          (p) => draft.currentMap[p[1]][p[0]].tile === '#'
+          // Note: What about doors?
+        );
+
+        const numberOfInBetweenOpaqueTiles = inBetweenOpaqueTiles.length;
+        const hasLOS = numberOfInBetweenOpaqueTiles === 0;
+        if (!hasLOS) {
+          if (entity.status === 'idle') {
+            return;
+          }
+        } else {
+          entity.status = 'hostile';
+        }
+      }
+
       const shuffledAdjacentPositions = adjacentPositions.sort(() => Math.random() - 0.5);
 
       // Remove options already occupied by a creature
@@ -43,11 +93,11 @@ export const performCreaturesActions = (draft: GameState): void => {
 
       // Perform the move
       draft.currentMap[nextPosition[1]][nextPosition[0]].creature = {
-        id: value.id,
-        type: value.type,
+        id: entity.id,
+        type: entity.type,
       };
-      delete draft.currentMap[value.position[1]][value.position[0]].creature;
-      value.position = nextPosition;
+      delete draft.currentMap[entity.position[1]][entity.position[0]].creature;
+      entity.position = nextPosition;
     }
-  }
+  });
 };

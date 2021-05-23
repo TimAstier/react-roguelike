@@ -27,6 +27,7 @@ React Roguelike is under development. In the latest version you can:
 - [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
 - [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
 - [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
+- [RPG Dice Roller](https://greenimp.github.io/rpg-dice-roller/) - easy advanced dice rolling
 
 ## Contributing
 

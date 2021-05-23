@@ -26,3 +26,6 @@ export const BIG_GOLD_MODIFIER = 50;
 
 export const NUMBER_OF_ROUNDS_BURNING = 30;
 export const BURNING_DAMAGE_PERCENTAGE = 9;
+
+export const PLAYER_BASE_ATTACK = '3d5+3';
+export const PLAYER_BASE_AC = 13;
