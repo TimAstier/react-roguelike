@@ -10,6 +10,7 @@ import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Viewport } from '../Shared/Viewport';
+import { CreatureBlocks } from './CreatureBlocks';
 import { EquipedItems } from './EquipedItems';
 import { EventLogs } from './EventLogs';
 import { GameOver } from './GameOver';
@@ -68,11 +69,26 @@ export const Game: React.FC<Props> = (props) => {
     return null;
   }
 
+  // TODO: Sort based on distance to player AND the last hit
+  const visibleEntities = Object.fromEntries(
+    Object.entries(props.state.creatures).filter(([, v]) => {
+      const position = v.position;
+      return props.state.currentMap[position[1]][position[0]].visibility === 'clear';
+    })
+  );
+
   return (
     <Wrapper>
       <InnerWrapper>
         <SideWrapper
-          style={{ marginRight: '15px', paddingRight: 5, paddingLeft: 5, boxSizing: 'border-box' }}
+          style={{
+            marginRight: '15px',
+            paddingRight: 5,
+            paddingLeft: 5,
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
         >
           <PlayerStats
             characterName={props.state.characterName}
@@ -83,6 +99,7 @@ export const Game: React.FC<Props> = (props) => {
             setWithBackgroundMusic={props.setWithBackgroundMusic}
             playerConditions={props.state.playerConditions}
           />
+          <CreatureBlocks entities={visibleEntities} />
         </SideWrapper>
         <div>
           <EventLogs eventLogs={props.state.eventLogs} />

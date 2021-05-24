@@ -25,7 +25,13 @@
 ## Improve game display
 
 - [x] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
-- [ ] Display creature stat blocks
+- [x] Display creature blocks
+- [ ] Scroll if too many blocks, with fade style
+- [ ] Sort creature blocks
+- [ ] Hover on creatures highlight creature block
+- [ ] Hover on creature block highlightd creature
+- [ ] Bug: Rat always show idle
+- [ ] Add bars for HP
 - [ ] Some sort of effect (sound/animation) on attack?
 - [ ] Add reveal animation on spawn and on gameover
 - [ ] Add blur on shadows?

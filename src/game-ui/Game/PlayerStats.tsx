@@ -8,10 +8,10 @@ import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Sprite } from '../Shared/Sprite';
 
 const Wrapper = styled.div`
-  height: 100%;
+  /* height: 100%; */
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  /* flex-direction: column;
+  justify-content: space-between; */
 `;
 
 // const toggleFullScreen = () => {
@@ -45,7 +45,7 @@ export const PlayerStats: React.FC<Props> = (props) => {
       <div>
         <DoubleBorders>
           <div style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 17, paddingBottom: 17 }}>
-            <div>
+            <div style={{ width: 164 }}>
               <div style={{ display: 'flex' }}>
                 <span>
                   <Sprite imageSrc={rpgicons} position={[0, 2]} pixelDimensions={16} />
