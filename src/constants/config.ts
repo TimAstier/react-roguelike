@@ -1,7 +1,7 @@
 export const PAUSE_TIME_BETWEEN_MOVES = 75; // ms
 
-export const CELL_WIDTH_IN_PIXELS = 25;
-export const NUMBER_OF_CELLS_IN_VIEWPORT_X = 25; // Has to be odd to center the player
+export const CELL_WIDTH_IN_PIXELS = 29;
+export const NUMBER_OF_CELLS_IN_VIEWPORT_X = 31; // Has to be odd to center the player
 export const NUMBER_OF_CELLS_IN_VIEWPORT_Y = 21; // Has to be odd to center the player
 export const VIEWPORT_WIDTH_IN_PIXELS = NUMBER_OF_CELLS_IN_VIEWPORT_X * CELL_WIDTH_IN_PIXELS + 1;
 export const VIEWPORT_HEIGHT_IN_PIXELS = NUMBER_OF_CELLS_IN_VIEWPORT_Y * CELL_WIDTH_IN_PIXELS + 1;

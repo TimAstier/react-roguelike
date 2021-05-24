@@ -24,12 +24,13 @@
 
 ## Improve game display
 
-- [ ] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
+- [x] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
 - [ ] Display creature stat blocks
 - [ ] Some sort of effect (sound/animation) on attack?
 - [ ] Add reveal animation on spawn and on gameover
 - [ ] Add blur on shadows?
 - [ ] Improve eventLogs
+  - [ ] Display logs from same round on the same row.
   - [ ] Add colors in eventLogs
   - [ ] Make it more obvious which logs are from the previous round
   - [ ] Scroll through eventLogs (and reset on next one)

@@ -1,27 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { VIEWPORT_WIDTH_IN_PIXELS } from '../../constants/config';
-
 const Wrapper = styled.div`
-  height: 120px;
-  width: ${VIEWPORT_WIDTH_IN_PIXELS}px;
+  height: 80px;
   background-color: #131226;
   border-radius: 10px;
   color: white;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   font-family: Ubuntu Mono;
   font-size: 16px;
   padding: 5px 12px 5px 12px;
   font-weight: 400;
-  box-shadow: inset 0px 5px 5px black, inset 0px -5px 5px black;
 `;
 
 const Log = styled.div`
-  height: 22px;
+  height: 23px;
   display: flex;
   align-items: center;
 `;
@@ -30,7 +25,7 @@ interface Props {
   eventLogs: string[];
 }
 
-const NUMBER_OF_LOGS_DISPLAYED = 5;
+const NUMBER_OF_LOGS_DISPLAYED = 3;
 
 export const EventLogs: React.FC<Props> = (props) => {
   return (

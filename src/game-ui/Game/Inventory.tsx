@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   padding-right: 5px;
   padding-left: 5px;
   box-sizing: border-box;
+  margin-top: 10px;
 `;
 
 const Items = styled.div`

@@ -159,10 +159,10 @@ export const CanvasCell: React.FC<CellProps> = ({
       return (
         <Text
           x={position[0] * CELL_WIDTH_IN_PIXELS + 7}
-          y={position[1] * CELL_WIDTH_IN_PIXELS + 7}
+          y={position[1] * CELL_WIDTH_IN_PIXELS + 8}
           text={tileType}
           fontFamily="UglyTerminal"
-          fontSize={12}
+          fontSize={16}
           fill={getFontColor()}
         />
       );

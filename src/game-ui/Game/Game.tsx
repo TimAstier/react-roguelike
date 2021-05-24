@@ -10,6 +10,7 @@ import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Viewport } from '../Shared/Viewport';
+import { EquipedItems } from './EquipedItems';
 import { EventLogs } from './EventLogs';
 import { GameOver } from './GameOver';
 import { InteractionText } from './InteractionText';
@@ -17,7 +18,20 @@ import { Inventory } from './Inventory';
 import { PlayerStats } from './PlayerStats';
 
 const Wrapper = styled.div`
+  height: 789px;
+  user-select: none;
+  width: 100%;
+`;
+
+const InnerWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 1200px;
+  max-width: 1400px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const SideWrapper = styled.div`
@@ -55,9 +69,8 @@ export const Game: React.FC<Props> = (props) => {
   }
 
   return (
-    <div style={{ userSelect: 'none' }}>
-      <EventLogs eventLogs={props.state.eventLogs} />
-      <Wrapper>
+    <Wrapper>
+      <InnerWrapper>
         <SideWrapper
           style={{ marginRight: '15px', paddingRight: 5, paddingLeft: 5, boxSizing: 'border-box' }}
         >
@@ -66,43 +79,48 @@ export const Game: React.FC<Props> = (props) => {
             hp={props.state.hp}
             maxHp={props.state.maxHp}
             gold={props.state.gold}
-            equipedItems={props.state.equipedItems}
             withBackgroundMusic={props.withBackgroundMusic}
             setWithBackgroundMusic={props.setWithBackgroundMusic}
             playerConditions={props.state.playerConditions}
           />
         </SideWrapper>
         <div>
-          <DoubleBorders>
-            <Viewport>
-              {props.state.currentMap && props.state.gameStatus === 'playing' && (
-                <Canvas
-                  playerPosition={props.state.playerPosition}
-                  gameMap={props.state.currentMap}
-                  moveDirection={props.state.moveDirection}
-                  dispatch={props.dispatch}
-                />
-              )}
-              {props.state.gameStatus === 'gameover' && (
-                <GameOver deathText={props.state.deathText} />
-              )}
-            </Viewport>
-          </DoubleBorders>
+          <EventLogs eventLogs={props.state.eventLogs} />
+          <div>
+            <DoubleBorders>
+              <Viewport>
+                {props.state.currentMap && props.state.gameStatus === 'playing' && (
+                  <Canvas
+                    playerPosition={props.state.playerPosition}
+                    gameMap={props.state.currentMap}
+                    moveDirection={props.state.moveDirection}
+                    dispatch={props.dispatch}
+                  />
+                )}
+                {props.state.gameStatus === 'gameover' && (
+                  <GameOver deathText={props.state.deathText} />
+                )}
+              </Viewport>
+            </DoubleBorders>
+          </div>
         </div>
         <SideWrapper
           style={{
             marginLeft: '15px',
             display: 'flex',
-            justifyContent: 'space-between',
             flexDirection: 'column',
+            justifyContent: 'flex-end',
+            height: 627,
+            marginTop: 90,
           }}
         >
+          <EquipedItems equipedItems={props.state.equipedItems} />
           <Inventory inventory={props.state.inventory} />
         </SideWrapper>
-      </Wrapper>
+      </InnerWrapper>
       <InteractionText
         interactionText={props.state.gameStatus === 'playing' ? props.state.interactionText : ''}
       />
-    </div>
+    </Wrapper>
   );
 };
