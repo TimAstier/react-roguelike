@@ -35,6 +35,7 @@ interface Props {
 }
 
 export const PlayerStats: React.FC<Props> = (props) => {
+  const hpPercentage = (props.hp / props.maxHp) * 100;
   const burningPercentage =
     props.playerConditions.burning === undefined
       ? 0
@@ -58,9 +59,27 @@ export const PlayerStats: React.FC<Props> = (props) => {
                 <span>
                   <Sprite imageSrc={rpgicons} position={[0, 0]} pixelDimensions={16} />
                 </span>
-                <span style={{ marginLeft: 20 }}>
-                  {props.hp}/{props.maxHp}
-                </span>
+                <div style={{ width: 125 }}>
+                  <div
+                    style={{
+                      marginLeft: 20,
+                      width: `${hpPercentage}%`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      height: 20,
+                    }}
+                  >
+                    {props.hp}/{props.maxHp}
+                  </div>
+                  <div
+                    style={{
+                      marginLeft: 20,
+                      backgroundColor: '#FF4847',
+                      width: `${hpPercentage}%`,
+                      height: 3,
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <div style={{ marginTop: 13 }}>

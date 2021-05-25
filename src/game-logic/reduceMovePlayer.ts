@@ -94,6 +94,7 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   const damageRoll = new DiceRoll(dice);
   const damage = damageRoll.total;
   draft.creatures[id].hp = draft.creatures[id].hp - damage;
+  draft.hitsLastRound.push({ creatureId: id, damage });
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}You hit the ${type} for ${damage} damage!`
   );
@@ -109,6 +110,7 @@ const tick = (draft: GameState) => {
 
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
   draft.interactionText = '';
+  draft.hitsLastRound = [];
   draft.moveDirection = moveDirection;
   draft.playerPreviousPosition = draft.playerPosition;
 

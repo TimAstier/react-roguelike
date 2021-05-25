@@ -1,18 +1,32 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import rpgicons from '../../assets/images/rpgicons.png';
 import { CreatureEntity, CREATURES } from '../../constants/creatures';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Sprite } from '../Shared/Sprite';
 
+const Wrapper = styled.div`
+  margin-top: 10px;
+  max-height: 576px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    /*Chrome, Safari and Opera */
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+`;
+
 interface BlockProps {
   entity: CreatureEntity;
+  index: number;
 }
 
-const Block: React.FC<BlockProps> = ({ entity }) => {
+const Block: React.FC<BlockProps> = ({ entity, index }) => {
   const { imageSrc, spritePosition } = CREATURES[entity.type];
+  const hpPercentage = (entity.hp / entity.maxHp) * 100;
   return (
-    <div style={{ marginTop: 10 }}>
+    <div style={{ marginTop: index !== 0 ? 10 : undefined }}>
       <DoubleBorders>
         <div
           style={{
@@ -27,17 +41,27 @@ const Block: React.FC<BlockProps> = ({ entity }) => {
               <span>
                 <Sprite imageSrc={imageSrc} position={spritePosition} pixelDimensions={16} />
               </span>
-              <span style={{ marginLeft: 20 }}>{entity.type}</span>
-            </div>
-          </div>
-          <div style={{ marginTop: 13 }}>
-            <div style={{ display: 'flex' }}>
-              <span>
-                <Sprite imageSrc={rpgicons} position={[0, 0]} pixelDimensions={16} />
-              </span>
-              <span style={{ marginLeft: 20 }}>
-                {entity.hp}/{entity.maxHp}
-              </span>
+              <div style={{ width: 125 }}>
+                <div
+                  style={{
+                    marginLeft: 20,
+                    width: `${hpPercentage}%`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    height: 20,
+                  }}
+                >
+                  {entity.hp}/{entity.maxHp}
+                </div>
+                <div
+                  style={{
+                    marginLeft: 20,
+                    backgroundColor: '#FF4847',
+                    width: `${hpPercentage}%`,
+                    height: 3,
+                  }}
+                />
+              </div>
             </div>
           </div>
           <div style={{ marginTop: 13 }}>
@@ -58,10 +82,10 @@ interface Props {
 
 export const CreatureBlocks: React.FC<Props> = (props) => {
   return (
-    <>
-      {Object.entries(props.entities).map(([, entity]) => {
-        return <Block key={entity.id} entity={entity} />;
+    <Wrapper>
+      {Object.entries(props.entities).map(([, entity], index) => {
+        return <Block key={entity.id} entity={entity} index={index} />;
       })}
-    </>
+    </Wrapper>
   );
 };

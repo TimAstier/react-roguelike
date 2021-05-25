@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { GameAction, gameActions, GameState } from '../../game-logic/game';
 import { generateLevel } from '../../pcg/generateLevel';
 import { getRandomString } from '../../utils/getRandomString';
+import { sortCreatures } from '../../utils/sortCreatures';
 import { Canvas } from '../Canvas';
 import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
@@ -69,13 +70,11 @@ export const Game: React.FC<Props> = (props) => {
     return null;
   }
 
-  // TODO: Sort based on distance to player AND the last hit
-  const visibleEntities = Object.fromEntries(
-    Object.entries(props.state.creatures).filter(([, v]) => {
-      const position = v.position;
-      return props.state.currentMap[position[1]][position[0]].visibility === 'clear';
-    })
-  );
+  const visibleEntities = sortCreatures({
+    creatures: props.state.creatures,
+    currentMap: props.state.currentMap,
+    hitsLastRound: props.state.hitsLastRound,
+  });
 
   return (
     <Wrapper>

@@ -20,6 +20,7 @@ const attackPlayer = (draft: GameState, template: Creature) => {
   const dice = isCriticalHit ? `${template.baseAttack}*2` : template.baseAttack;
   const damageRoll = new DiceRoll(dice);
   const damage = damageRoll.total;
+  draft.hitsLastRound.push({ creatureId: 'player', damage });
   draft.hp = Math.max(draft.hp - damage, 0);
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}The ${template.type} hits you for ${damage} damage!`
@@ -74,6 +75,7 @@ const tryMove = (
     return !draft.currentMap[position[1]][position[0]].creature;
   });
 
+  // TODO: return numbers from getDijkstraMap
   const distances = shuffledElmptyAdjacentPositions.map((p) => {
     return draft.dijkstraMap[p[1]][p[0]] === '#' ? Infinity : Number(draft.dijkstraMap[p[1]][p[0]]);
   });
@@ -93,6 +95,7 @@ const tryMove = (
   };
   delete draft.currentMap[entity.position[1]][entity.position[0]].creature;
   entity.position = nextPosition;
+  entity.walkingDistanceToPlayer = nextDistance;
 };
 
 export const performCreaturesActions = (draft: GameState): void => {

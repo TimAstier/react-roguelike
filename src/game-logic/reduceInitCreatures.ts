@@ -18,6 +18,7 @@ export const reduceInitCreatures = (draft: GameState): void => {
           maxHp: template.maxHp,
           conditions: {},
           status: 'idle',
+          walkingDistanceToPlayer: Number(draft.dijkstraMap[j][i]), // TODO: return numbers from getDijkstraMap
         };
         draft.creatures[id] = creature;
         draft.currentMap[j][i].creature = { id, type: creatureData.type };

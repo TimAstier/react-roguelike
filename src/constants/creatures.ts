@@ -28,6 +28,7 @@ export interface CreatureEntity {
   maxHp: number;
   conditions: ActiveConditions;
   status: CreatureStatus;
+  walkingDistanceToPlayer: number;
 }
 
 export const CREATURES: { [C in CreatureType]: Creature } = {

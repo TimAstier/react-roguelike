@@ -4,6 +4,7 @@ import { ItemType } from '../constants/items';
 import { ActiveConditions } from '../typings/activeConditions';
 import { CellData } from '../typings/cell';
 import { GameStatus } from '../typings/gameStatus';
+import { Hit } from '../typings/hit';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { getDijkstraMap } from '../utils/getDijkstraMap';
@@ -102,6 +103,7 @@ export interface GameState {
   eventLogs: string[];
   playerConditions: ActiveConditions;
   creatures: { [id: string]: CreatureEntity };
+  hitsLastRound: Hit[];
 }
 
 export const INITIAL_STATE: GameState = {
@@ -124,6 +126,7 @@ export const INITIAL_STATE: GameState = {
   inventory: [],
   gold: 0,
   playerConditions: {},
+  hitsLastRound: [],
 };
 
 // REDUCER
