@@ -29,9 +29,10 @@
 - [x] Scroll if too many blocks
 - [x] Add bars for HP
 - [x] Sort creature blocks
+- [x] Bug: Rat always show idle
 - [ ] Hover on creatures highlight creature block
 - [ ] Hover on creature block highlightd creature
-- [ ] Bug: Rat always show idle
+- [ ] Bug: Creature moving away if no space available because blocked by ally
 - [ ] Some sort of effect (sound/animation) on attack? Maybe in the creatue block?
 - [ ] Add reveal animation on spawn and on gameover
 - [ ] Add blur on shadows?

@@ -59,13 +59,15 @@ const tryMove = (
 
     const numberOfInBetweenOpaqueTiles = inBetweenOpaqueTiles.length;
     const hasLOS = numberOfInBetweenOpaqueTiles === 0;
-    if (!hasLOS) {
-      if (entity.status === 'idle') {
-        return;
-      }
-    } else {
+    if (hasLOS) {
       entity.status = 'hostile';
     }
+  } else {
+    entity.status = 'hostile';
+  }
+
+  if (entity.status === 'idle') {
+    return;
   }
 
   const shuffledAdjacentPositions = adjacentPositions.sort(() => Math.random() - 0.5);
