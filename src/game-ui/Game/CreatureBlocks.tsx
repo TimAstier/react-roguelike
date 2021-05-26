@@ -77,13 +77,13 @@ const Block: React.FC<BlockProps> = ({ entity, index }) => {
 };
 
 interface Props {
-  entities: { [id: string]: CreatureEntity };
+  entities: CreatureEntity[];
 }
 
 export const CreatureBlocks: React.FC<Props> = (props) => {
   return (
     <Wrapper>
-      {Object.entries(props.entities).map(([, entity], index) => {
+      {props.entities.map((entity, index) => {
         return <Block key={entity.id} entity={entity} index={index} />;
       })}
     </Wrapper>
