@@ -52,31 +52,40 @@ export const CanvasCell: React.FC<CellProps> = ({
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
   const tile = getTile(tileType);
 
+  const wasHitLastRound = hitsLastRound.filter((h) => h.creatureId === creature?.id).length !== 0;
+
+  const getBackgroundColor = () => {
+    if (!revealed && visibility === 'dark') {
+      return NON_REVEALED_BACKGROUND_COLOR;
+    }
+    if (visibility === 'clear') {
+      return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+    }
+    if (visibility === 'dim' || revealed) {
+      return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+    }
+    return NON_REVEALED_BACKGROUND_COLOR;
+  };
+
   React.useEffect(() => {
     // TODO: UseBlink and use same logic for Player?
     if (imageRef.current) {
       if (creature) {
-        const wasHitLastRound =
-          hitsLastRound.filter((h) => h.creatureId === creature.id).length !== 0;
         if (wasHitLastRound) {
           const tween = new Konva.Tween({
             node: imageRef.current,
-            duration: 0.1,
+            duration: 0.15,
             easing: Konva.Easings.BounceEaseInOut,
-            opacity: 0,
-            fill: 'red',
+            fill: getBackgroundColor(),
           });
           tween.play();
-          setTimeout(() => {
-            tween.reverse();
-          }, 100);
           return () => {
             tween.pause();
           };
         }
       }
     }
-  }, [creature, hitsLastRound]);
+  }, [creature, wasHitLastRound]);
 
   const renderFlame = () => (
     <Flame flameImage={flameImage} position={position} opacity={visibility === 'dim' ? 0.3 : 1} />
@@ -139,19 +148,6 @@ export const CanvasCell: React.FC<CellProps> = ({
     return null;
   };
 
-  const getBackgroundColor = () => {
-    if (!revealed && visibility === 'dark') {
-      return NON_REVEALED_BACKGROUND_COLOR;
-    }
-    if (visibility === 'clear') {
-      return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
-    }
-    if (visibility === 'dim' || revealed) {
-      return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
-    }
-    return NON_REVEALED_BACKGROUND_COLOR;
-  };
-
   const Creature = () => {
     // TODO DRY with Item
     // Unlike items, we don't "remember" creatures
@@ -187,7 +183,7 @@ export const CanvasCell: React.FC<CellProps> = ({
           width={CELL_WIDTH_IN_PIXELS - 2}
           height={CELL_WIDTH_IN_PIXELS - 2}
           opacity={opacity}
-          fill={getBackgroundColor()}
+          fill={wasHitLastRound ? 'red' : getBackgroundColor()}
           crop={{
             x: spritePosition[0] * 16,
             y: spritePosition[1] * 16,

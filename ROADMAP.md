@@ -34,9 +34,6 @@
 - [x] Add blink animation when player is attacked
 - [ ] Hover on creatures highlight creature block
 - [ ] Hover on creature block highlightd creature
-- [ ] Bug: Creature moving away if no space available because blocked by ally
-- [ ] Improve: Creature should not move where another creature died
-- [ ] Allow creature to follow AND attack?
 - [ ] Add reveal animation on spawn and on gameover
 - [ ] Add blur on shadows?
 - [ ] Improve eventLogs
@@ -59,6 +56,8 @@
 
 ## Gameplay
 
+- [ ] Bug: Creature moving away if no space available because blocked by ally
+- [ ] Improve: Creature should not move where another creature died
 - [ ] Hunger clock with impact on visibility
 - [ ] Way to heal
 - [ ] Way to regain hunger clock

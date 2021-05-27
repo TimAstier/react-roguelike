@@ -24,27 +24,25 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
   let frontXModifier: number;
   let frontYModifier: number;
 
+  const wasHitLastRound = hitsLastRound.filter((h) => h.creatureId === 'player').length !== 0;
+
   React.useEffect(() => {
     // TODO: UueBlink and use same logic for creature?
     if (rectRef.current) {
-      const wasHitLastRound = hitsLastRound.filter((h) => h.creatureId === 'player').length !== 0;
       if (wasHitLastRound) {
         const tween = new Konva.Tween({
           node: rectRef.current,
-          duration: 0.1,
+          duration: 0.15,
           easing: Konva.Easings.BounceEaseInOut,
-          fill: 'red',
+          fill: 'blue',
         });
         tween.play();
-        setTimeout(() => {
-          tween.reverse();
-        }, 100);
         return () => {
           tween.pause();
         };
       }
     }
-  }, [hitsLastRound]);
+  }, [wasHitLastRound]);
 
   switch (moveDirection) {
     case 'Up':
@@ -84,7 +82,7 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
         ref={rectRef}
         width={playerWidth}
         height={playerWidth}
-        fill={'blue'}
+        fill={wasHitLastRound ? 'red' : 'blue'}
         x={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_X) / 2 - playerWidth / 2}
         y={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_Y) / 2 - playerWidth / 2}
       />
