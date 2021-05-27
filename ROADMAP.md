@@ -31,7 +31,7 @@
 - [x] Sort creature blocks
 - [x] Bug: Rat always show idle
 - [x] Add blink animation when attacking creature
-- [ ] Add blink animation when player is attacked
+- [x] Add blink animation when player is attacked
 - [ ] Hover on creatures highlight creature block
 - [ ] Hover on creature block highlightd creature
 - [ ] Bug: Creature moving away if no space available because blocked by ally

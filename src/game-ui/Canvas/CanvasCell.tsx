@@ -53,7 +53,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   const tile = getTile(tileType);
 
   React.useEffect(() => {
-    // TODO: Use blink and use same logic for player?
+    // TODO: UseBlink and use same logic for Player?
     if (imageRef.current) {
       if (creature) {
         const wasHitLastRound =
