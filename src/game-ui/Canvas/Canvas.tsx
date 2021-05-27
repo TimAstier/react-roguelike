@@ -14,6 +14,7 @@ import {
 } from '../../constants/config';
 import { GameAction, gameActions } from '../../game-logic/game';
 import { CellData } from '../../typings/cell';
+import { Hit } from '../../typings/hit';
 import { MoveDirection } from '../../typings/moveDirection';
 import { Position } from '../../typings/position';
 import { CanvasCell } from './CanvasCell';
@@ -36,6 +37,7 @@ const renderCells = (
   flameImage: HTMLImageElement | undefined,
   creaturesImage: HTMLImageElement | undefined,
   playerPosition: Position,
+  hitsLastRound: Hit[],
   dispatch: React.Dispatch<GameAction>
 ) => {
   const cellsToSideX = Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2);
@@ -70,6 +72,7 @@ const renderCells = (
               dispatch={dispatch}
               burning={cellData.burningRounds > 0}
               creature={cellData.creature}
+              hitsLastRound={hitsLastRound}
             />
           );
         });
@@ -138,6 +141,7 @@ interface Props {
   playerPosition: Position;
   gameMap: CellData[][];
   moveDirection: MoveDirection;
+  hitsLastRound: Hit[];
   dispatch: React.Dispatch<GameAction>;
 }
 
@@ -161,6 +165,7 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
             flameImage,
             creaturesImage,
             props.playerPosition,
+            props.hitsLastRound,
             props.dispatch
           )}
         </Group>

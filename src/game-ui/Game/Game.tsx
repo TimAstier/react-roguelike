@@ -110,6 +110,7 @@ export const Game: React.FC<Props> = (props) => {
                     playerPosition={props.state.playerPosition}
                     gameMap={props.state.currentMap}
                     moveDirection={props.state.moveDirection}
+                    hitsLastRound={props.state.hitsLastRound}
                     dispatch={props.dispatch}
                   />
                 )}

@@ -1,3 +1,4 @@
+import Konva from 'konva';
 import React from 'react';
 import { Circle, Group, Image, Rect, Text } from 'react-konva';
 
@@ -13,6 +14,7 @@ import {
 import { GameAction, gameActions } from '../../game-logic/game';
 import { HoverCellPayload } from '../../game-logic/reduceHoverCell';
 import { CellContent, CreatureData } from '../../typings/cell';
+import { Hit } from '../../typings/hit';
 import { Position } from '../../typings/position';
 import { Visibility } from '../../typings/visibility';
 import { Flame } from './Flame';
@@ -29,6 +31,7 @@ export interface CellProps {
   creaturesImage: HTMLImageElement | undefined;
   burning: boolean;
   creature?: CreatureData;
+  hitsLastRound: Hit[];
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -43,9 +46,37 @@ export const CanvasCell: React.FC<CellProps> = ({
   burning,
   creature,
   creaturesImage,
+  hitsLastRound,
 }) => {
+  const imageRef = React.useRef<Konva.Image>(null);
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
   const tile = getTile(tileType);
+
+  React.useEffect(() => {
+    // TODO: Use blink and use same logic for player?
+    if (imageRef.current) {
+      if (creature) {
+        const wasHitLastRound =
+          hitsLastRound.filter((h) => h.creatureId === creature.id).length !== 0;
+        if (wasHitLastRound) {
+          const tween = new Konva.Tween({
+            node: imageRef.current,
+            duration: 0.1,
+            easing: Konva.Easings.BounceEaseInOut,
+            opacity: 0,
+            fill: 'red',
+          });
+          tween.play();
+          setTimeout(() => {
+            tween.reverse();
+          }, 100);
+          return () => {
+            tween.pause();
+          };
+        }
+      }
+    }
+  }, [creature, hitsLastRound]);
 
   const renderFlame = () => (
     <Flame flameImage={flameImage} position={position} opacity={visibility === 'dim' ? 0.3 : 1} />
@@ -108,6 +139,19 @@ export const CanvasCell: React.FC<CellProps> = ({
     return null;
   };
 
+  const getBackgroundColor = () => {
+    if (!revealed && visibility === 'dark') {
+      return NON_REVEALED_BACKGROUND_COLOR;
+    }
+    if (visibility === 'clear') {
+      return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+    }
+    if (visibility === 'dim' || revealed) {
+      return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
+    }
+    return NON_REVEALED_BACKGROUND_COLOR;
+  };
+
   const Creature = () => {
     // TODO DRY with Item
     // Unlike items, we don't "remember" creatures
@@ -136,12 +180,14 @@ export const CanvasCell: React.FC<CellProps> = ({
       const spritePosition = CREATURES[creature.type].spritePosition;
       return (
         <Image
+          ref={imageRef}
           x={position[0] * CELL_WIDTH_IN_PIXELS + 1}
           y={position[1] * CELL_WIDTH_IN_PIXELS + 1}
           image={creaturesImage}
           width={CELL_WIDTH_IN_PIXELS - 2}
           height={CELL_WIDTH_IN_PIXELS - 2}
           opacity={opacity}
+          fill={getBackgroundColor()}
           crop={{
             x: spritePosition[0] * 16,
             y: spritePosition[1] * 16,
@@ -182,19 +228,6 @@ export const CanvasCell: React.FC<CellProps> = ({
       return <Item />;
     }
     return renderTile();
-  };
-
-  const getBackgroundColor = () => {
-    if (!revealed && visibility === 'dark') {
-      return NON_REVEALED_BACKGROUND_COLOR;
-    }
-    if (visibility === 'clear') {
-      return tile?.clearBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
-    }
-    if (visibility === 'dim' || revealed) {
-      return tile?.dimBackgroundColor || NON_REVEALED_BACKGROUND_COLOR;
-    }
-    return NON_REVEALED_BACKGROUND_COLOR;
   };
 
   const handleMouseEnter = (payload: HoverCellPayload) => {

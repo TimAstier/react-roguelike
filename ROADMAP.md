@@ -30,10 +30,13 @@
 - [x] Add bars for HP
 - [x] Sort creature blocks
 - [x] Bug: Rat always show idle
+- [x] Add blink animation when attacking creature
+- [ ] Add blink animation when player is attacked
 - [ ] Hover on creatures highlight creature block
 - [ ] Hover on creature block highlightd creature
 - [ ] Bug: Creature moving away if no space available because blocked by ally
-- [ ] Some sort of effect (sound/animation) on attack? Maybe in the creatue block?
+- [ ] Improve: Creature should not move where another creature died
+- [ ] Allow creature to follow AND attack?
 - [ ] Add reveal animation on spawn and on gameover
 - [ ] Add blur on shadows?
 - [ ] Improve eventLogs

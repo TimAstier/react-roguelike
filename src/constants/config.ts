@@ -16,7 +16,7 @@ export const GRID_HEIGHT = 38; // number of cells
 export const MAX_CLEAR_VISIBILITY = 6.5;
 export const MAX_VISIBILITY = 8.5;
 
-export const INITIAL_MAX_HP = 100;
+export const INITIAL_MAX_HP = 125;
 export const NUMBER_OF_INVENTORY_SLOTS = 8;
 
 export const SMALL_GOLD_AMOUNT = 20;

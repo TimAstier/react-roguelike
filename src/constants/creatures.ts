@@ -35,7 +35,7 @@ export const CREATURES: { [C in CreatureType]: Creature } = {
   // A rather robust standard opponent
   goblin: {
     type: 'goblin',
-    maxHp: 20,
+    maxHp: 25,
     spritePosition: [0, 2],
     imageSrc: roguelikecreatures,
     baseAttack: '1d8+5',

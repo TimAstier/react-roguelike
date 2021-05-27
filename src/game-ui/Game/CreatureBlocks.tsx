@@ -45,9 +45,6 @@ const Block: React.FC<BlockProps> = ({ entity, index }) => {
                 <div
                   style={{
                     marginLeft: 20,
-                    width: `${hpPercentage}%`,
-                    display: 'flex',
-                    alignItems: 'center',
                     height: 20,
                   }}
                 >

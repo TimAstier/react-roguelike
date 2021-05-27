@@ -63,9 +63,6 @@ export const PlayerStats: React.FC<Props> = (props) => {
                   <div
                     style={{
                       marginLeft: 20,
-                      width: `${hpPercentage}%`,
-                      display: 'flex',
-                      alignItems: 'center',
                       height: 20,
                     }}
                   >
