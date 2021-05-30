@@ -39,6 +39,7 @@ const renderCells = (
   creaturesImage: HTMLImageElement | undefined,
   playerPosition: Position,
   hitsLastRound: Hit[],
+  round: number,
   dispatch: React.Dispatch<GameAction>
 ) => {
   const cellsToSideX = Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2);
@@ -74,6 +75,7 @@ const renderCells = (
               burning={cellData.burningRounds > 0}
               creature={cellData.creature}
               hitsLastRound={hitsLastRound}
+              round={round}
             />
           );
         });
@@ -85,6 +87,7 @@ interface Props {
   gameMap: CellData[][];
   moveDirection: MoveDirection;
   hitsLastRound: Hit[];
+  round: number;
   dispatch: React.Dispatch<GameAction>;
 }
 
@@ -109,6 +112,7 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
             creaturesImage,
             props.playerPosition,
             props.hitsLastRound,
+            props.round,
             props.dispatch
           )}
         </Group>
@@ -116,6 +120,7 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
           moveDirection={props.moveDirection}
           dispatch={props.dispatch}
           hitsLastRound={props.hitsLastRound}
+          round={props.round}
         />
       </Layer>
     </Stage>

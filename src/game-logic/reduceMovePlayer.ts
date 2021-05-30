@@ -101,6 +101,7 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
 };
 
 const tick = (draft: GameState) => {
+  draft.round++;
   resolveConditions(draft);
   draft.currentMap = updateBurningTiles(draft.currentMap);
   resolveStartingAndEndingConditions(draft);

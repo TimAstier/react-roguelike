@@ -32,6 +32,7 @@ export interface CellProps {
   burning: boolean;
   creature?: CreatureData;
   hitsLastRound: Hit[];
+  round: number;
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -47,6 +48,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   creature,
   creaturesImage,
   hitsLastRound,
+  round,
 }) => {
   const imageRef = React.useRef<Konva.Image>(null);
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
@@ -85,7 +87,7 @@ export const CanvasCell: React.FC<CellProps> = ({
         }
       }
     }
-  }, [creature, wasHitLastRound]);
+  }, [creature, wasHitLastRound, round]);
 
   const renderFlame = () => (
     <Flame flameImage={flameImage} position={position} opacity={visibility === 'dim' ? 0.3 : 1} />

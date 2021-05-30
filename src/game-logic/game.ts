@@ -89,6 +89,7 @@ export interface GameState {
   seed: string;
   gameStatus: GameStatus;
   depth: number;
+  round: number;
   deathText: string;
   moveDirection: MoveDirection;
   playerPosition: Position;
@@ -112,6 +113,7 @@ export const INITIAL_STATE: GameState = {
   seed: '',
   gameStatus: 'playing',
   depth: 1,
+  round: 0,
   deathText: '',
   moveDirection: 'Right',
   characterName: 'Kerhebos',
