@@ -24,12 +24,18 @@
 
 ## Improve game display
 
-- [ ] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
-- [ ] Display creature stat blocks
-- [ ] Some sort of effect (sound/animation) on attack?
-- [ ] Add reveal animation on spawn and on gameover
-- [ ] Add blur on shadows?
+- [x] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
+- [x] Display creature blocks
+- [x] Scroll if too many blocks
+- [x] Add bars for HP
+- [x] Sort creature blocks
+- [x] Bug: Rat always show idle
+- [x] Add blink animation when attacking creature
+- [x] Add blink animation when player is attacked
+- [ ] Hover on creatures highlight creature block
+- [ ] Hover on creature block highlightd creature
 - [ ] Improve eventLogs
+  - [ ] Display logs from same round on the same row.
   - [ ] Add colors in eventLogs
   - [ ] Make it more obvious which logs are from the previous round
   - [ ] Scroll through eventLogs (and reset on next one)
@@ -48,6 +54,8 @@
 
 ## Gameplay
 
+- [ ] Bug: Creature moving away if no space available because blocked by ally
+- [ ] Improve: Creature should not move where another creature died
 - [ ] Hunger clock with impact on visibility
 - [ ] Way to heal
 - [ ] Way to regain hunger clock

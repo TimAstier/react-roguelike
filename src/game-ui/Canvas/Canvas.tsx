@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Layer, Rect, Stage } from 'react-konva';
+import { Group, Layer, Stage } from 'react-konva';
 import useImage from 'use-image';
 
 import flame from '../../assets/images/flames.png';
@@ -12,11 +12,13 @@ import {
   VIEWPORT_HEIGHT_IN_PIXELS,
   VIEWPORT_WIDTH_IN_PIXELS,
 } from '../../constants/config';
-import { GameAction, gameActions } from '../../game-logic/game';
+import { GameAction } from '../../game-logic/game';
 import { CellData } from '../../typings/cell';
+import { Hit } from '../../typings/hit';
 import { MoveDirection } from '../../typings/moveDirection';
 import { Position } from '../../typings/position';
 import { CanvasCell } from './CanvasCell';
+import { Player } from './Player';
 
 const getOffsetX = (playerPositionX: number) => {
   return playerPositionX < Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2)
@@ -36,6 +38,8 @@ const renderCells = (
   flameImage: HTMLImageElement | undefined,
   creaturesImage: HTMLImageElement | undefined,
   playerPosition: Position,
+  hitsLastRound: Hit[],
+  round: number,
   dispatch: React.Dispatch<GameAction>
 ) => {
   const cellsToSideX = Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2);
@@ -70,74 +74,20 @@ const renderCells = (
               dispatch={dispatch}
               burning={cellData.burningRounds > 0}
               creature={cellData.creature}
+              hitsLastRound={hitsLastRound}
+              round={round}
             />
           );
         });
     });
 };
 
-const renderPlayer = (moveDirection: MoveDirection, dispatch: React.Dispatch<GameAction>) => {
-  const playerWidth = 0.6 * CELL_WIDTH_IN_PIXELS;
-  const frontWidth = 0.3 * CELL_WIDTH_IN_PIXELS;
-  let frontXModifier: number;
-  let frontYModifier: number;
-
-  switch (moveDirection) {
-    case 'Up':
-      frontXModifier = frontWidth / 2;
-      frontYModifier = playerWidth - frontWidth;
-      break;
-    case 'Down':
-      frontXModifier = frontWidth / 2;
-      frontYModifier = -playerWidth + frontWidth * 2;
-      break;
-    case 'Left':
-      frontXModifier = playerWidth - frontWidth;
-      frontYModifier = frontWidth / 2;
-      break;
-    case 'Right':
-      frontXModifier = -playerWidth + frontWidth * 2;
-      frontYModifier = frontWidth / 2;
-      break;
-  }
-
-  const handleMouseEnter = () =>
-    dispatch(
-      gameActions.hoverCell({
-        tileType: '.',
-        visibility: 'clear',
-        revealed: true,
-        content: 'Player',
-        burning: false,
-      })
-    );
-
-  const handleMouseLeave = () => dispatch(gameActions.hoverAwayFromCell());
-
-  return (
-    <Group onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Rect
-        width={playerWidth}
-        height={playerWidth}
-        fill={'blue'}
-        x={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_X) / 2 - playerWidth / 2}
-        y={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_Y) / 2 - playerWidth / 2}
-      />
-      <Rect
-        width={frontWidth}
-        height={frontWidth}
-        fill={'black'}
-        x={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_X) / 2 - frontXModifier}
-        y={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_Y) / 2 - frontYModifier}
-      />
-    </Group>
-  );
-};
-
 interface Props {
   playerPosition: Position;
   gameMap: CellData[][];
   moveDirection: MoveDirection;
+  hitsLastRound: Hit[];
+  round: number;
   dispatch: React.Dispatch<GameAction>;
 }
 
@@ -161,10 +111,17 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
             flameImage,
             creaturesImage,
             props.playerPosition,
+            props.hitsLastRound,
+            props.round,
             props.dispatch
           )}
         </Group>
-        {renderPlayer(props.moveDirection, props.dispatch)}
+        <Player
+          moveDirection={props.moveDirection}
+          dispatch={props.dispatch}
+          hitsLastRound={props.hitsLastRound}
+          round={props.round}
+        />
       </Layer>
     </Stage>
   );

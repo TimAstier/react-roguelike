@@ -9,6 +9,7 @@ export type Trait = 'keenSmell';
 export type CreatureStatus = 'idle' | 'hostile';
 
 export interface Creature {
+  type: CreatureType;
   maxHp: number;
   spritePosition: Position;
   imageSrc: string;
@@ -27,12 +28,14 @@ export interface CreatureEntity {
   maxHp: number;
   conditions: ActiveConditions;
   status: CreatureStatus;
+  walkingDistanceToPlayer: number;
 }
 
 export const CREATURES: { [C in CreatureType]: Creature } = {
   // A rather robust standard opponent
   goblin: {
-    maxHp: 20,
+    type: 'goblin',
+    maxHp: 25,
     spritePosition: [0, 2],
     imageSrc: roguelikecreatures,
     baseAttack: '1d8+5',
@@ -43,6 +46,7 @@ export const CREATURES: { [C in CreatureType]: Creature } = {
   },
   // Spawn in large groups and aggro from far away without needing LOS
   rat: {
+    type: 'rat',
     maxHp: 10,
     spritePosition: [0, 1],
     imageSrc: roguelikecreatures,
