@@ -34,8 +34,6 @@
 - [x] Add blink animation when player is attacked
 - [ ] Hover on creatures highlight creature block
 - [ ] Hover on creature block highlightd creature
-- [ ] Add reveal animation on spawn and on gameover
-- [ ] Add blur on shadows?
 - [ ] Improve eventLogs
   - [ ] Display logs from same round on the same row.
   - [ ] Add colors in eventLogs

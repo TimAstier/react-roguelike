@@ -1,5 +1,15 @@
 # Changelog
 
+## 🎨 **UI Update** - [0.1.4] - 2021-XX-XX
+
+### Game
+
+- Add creature blocks on the left side of the screen
+- Add short blink animation when a creature or the player is hit
+- Show horizontal HP bars for creatures
+- Increase dimensions of the viewport
+- Use more of the empty screen space for UI elements
+
 ## 👾 **Creatures** - [0.1.3] - 2021-05-23
 
 ### Game
