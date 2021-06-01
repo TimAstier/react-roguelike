@@ -42,6 +42,12 @@ const SideWrapper = styled.div`
   color: white;
 `;
 
+const BottomBar = styled.div`
+  height: 18px;
+  padding-left: 25px;
+  padding-right: 25px;
+`;
+
 interface Props {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
@@ -54,6 +60,7 @@ export const Game: React.FC<Props> = (props) => {
   useGameKeys(props.dispatch, props.state.gameStatus);
 
   React.useEffect(() => {
+    // Don't generate new map if coming from MapGenerator
     if (props.state.currentMap.length === 0) {
       const seed = getRandomString();
       const rng = seedrandom(seed);
@@ -139,6 +146,9 @@ export const Game: React.FC<Props> = (props) => {
       <InteractionText
         interactionText={props.state.gameStatus === 'playing' ? props.state.interactionText : ''}
       />
+      <BottomBar>
+        <div style={{ color: 'white' }}>-- Depth {props.state.depth} --</div>
+      </BottomBar>
     </Wrapper>
   );
 };
