@@ -7,6 +7,7 @@ import { CellData } from '../typings/cell';
 import { Level } from '../typings/level';
 import { Position } from '../typings/position';
 import { findCellsInArea } from '../utils/findCellsInArea';
+import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
 import { horizontalSplitArea } from './horizontalSplitArea';
@@ -129,6 +130,23 @@ const connectAllLeaves = (
   return newMap;
 };
 
+const placeDownwardStaircase = (map: TileType[][], rng: () => number) => {
+  const newMap = map;
+
+  const candidatePositions = newMap
+    .map((row, j) => row.map((tile, i) => (tile === '.' ? ([i, j] as Position) : null)))
+    .flat()
+    .filter((p) => p !== null);
+
+  const positionIndex = getRandomIntInclusive(0, candidatePositions.length - 1, rng);
+
+  const position = candidatePositions[positionIndex] as Position;
+
+  newMap[position[1]][position[0]] = '>';
+
+  return newMap;
+};
+
 const generateMap = (rng: () => number): TileType[][] => {
   // Get an empty map
   const emptyMap = createEmptyMap(GRID_WIDTH, GRID_HEIGHT);
@@ -147,6 +165,9 @@ const generateMap = (rng: () => number): TileType[][] => {
 
   // Connect rooms
   resultMap = connectAllLeaves(leavesArray, resultMap, rng);
+
+  // Place downards staircase
+  resultMap = placeDownwardStaircase(resultMap, rng);
 
   return resultMap;
 };
