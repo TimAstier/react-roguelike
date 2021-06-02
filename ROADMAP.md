@@ -7,7 +7,8 @@
 - [x] Generate maps for multiple depths in generate level
 - [x] Add downward staircase in generateLevel
 - [x] Add gold in generateLevel
-- [ ] Add monsters in generateLevel (use spawnNumber)
+- [x] Add monsters in generateLevel
+- [ ] Spawn numbers in hordes based on spawnNumber
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
 - [ ] Hunger clock (with impact on visibility)?

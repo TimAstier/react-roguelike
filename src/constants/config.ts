@@ -32,3 +32,6 @@ export const PLAYER_BASE_AC = 13;
 
 export const MIN_GOLD_SPAWN_NUMBER = 3;
 export const MAX_GOLD_SPAWN_NUMBER = 10;
+
+export const MIN_CREATURE_SPAWN_NUMBER = 5;
+export const MAX_CREATURE_SPAWN_NUMBER = 10;

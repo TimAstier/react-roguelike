@@ -3,9 +3,12 @@
 import {
   GRID_HEIGHT,
   GRID_WIDTH,
+  MAX_CREATURE_SPAWN_NUMBER,
   MAX_GOLD_SPAWN_NUMBER,
+  MIN_CREATURE_SPAWN_NUMBER,
   MIN_GOLD_SPAWN_NUMBER,
 } from '../constants/config';
+import { CreatureType } from '../constants/creatures';
 import { TileType } from '../constants/tiles';
 import { Area } from '../typings/area';
 import { CellData } from '../typings/cell';
@@ -181,6 +184,8 @@ const getGoldSize = (rng: () => number) => {
   return rng() > 0.5 ? 'BigGold' : 'SmallGold';
 };
 
+const pickCreatureType = (rng: () => number): CreatureType => (rng() > 0.5 ? 'goblin' : 'rat'); // TODO
+
 export const createGameMap = (
   map: TileType[][],
   spawn: Position,
@@ -194,17 +199,31 @@ export const createGameMap = (
   const goldSpawnNumber = getRandomIntInclusive(MIN_GOLD_SPAWN_NUMBER, MAX_GOLD_SPAWN_NUMBER, rng);
   const goldPositions = shuffledCandidatePositions.splice(0, goldSpawnNumber).map((p) => String(p));
 
+  const creatureSpawnNumber = getRandomIntInclusive(
+    MIN_CREATURE_SPAWN_NUMBER,
+    MAX_CREATURE_SPAWN_NUMBER,
+    rng
+  );
+
+  const creatureSpawnPositions = shuffledCandidatePositions
+    .splice(0, creatureSpawnNumber)
+    .map((p) => String(p));
+
   const gameMap: CellData[][] = [];
   for (let j = 0; j < height; j += 1) {
     gameMap[j] = [];
     for (let i = 0; i < width; i += 1) {
       const content = goldPositions.includes(String([i, j])) ? getGoldSize(rng) : 0;
+      const creature = creatureSpawnPositions.includes(String([i, j]))
+        ? { type: pickCreatureType(rng), id: 'temp_id' }
+        : undefined;
       gameMap[j][i] = {
         content,
         tile: map[j][i],
         revealed: false,
         visibility: 'clear',
         burningRounds: 0,
+        creature,
       };
       if (i === spawn[0] && j === spawn[1]) {
         gameMap[j][i].content = 'Player';
