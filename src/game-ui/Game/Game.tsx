@@ -59,19 +59,37 @@ export const Game: React.FC<Props> = (props) => {
   const areFontsLoaded = useAreFontLoaded();
   useGameKeys(props.dispatch, props.state.gameStatus);
 
+  const initMap = () => {
+    const seed = props.state.seed.concat(String(props.state.depth)) || getRandomString();
+    const rng = seedrandom(seed);
+    const level = generateLevel(rng);
+    props.dispatch(gameActions.setSeed(seed));
+    // NOTE: Maybe generate level should also init the initial state?
+    props.dispatch(gameActions.setCurrentMap(level.gameMap));
+    props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
+  };
+
+  const initGameState = () => {
+    props.dispatch(gameActions.initVisibility());
+    props.dispatch(gameActions.initCreatures());
+  };
+
+  // Initialise first depth
   React.useEffect(() => {
     // Don't generate new map if coming from MapGenerator
     if (props.state.currentMap.length === 0) {
-      const seed = getRandomString();
-      const rng = seedrandom(seed);
-      const level = generateLevel(rng);
-      props.dispatch(gameActions.setSeed(seed));
-      props.dispatch(gameActions.setCurrentMap(level.gameMap));
-      props.dispatch(gameActions.initPlayerSpawn(level.playerSpawn));
+      initMap();
     }
-    props.dispatch(gameActions.initVisibility());
-    props.dispatch(gameActions.initCreatures());
+    initGameState();
   }, []);
+
+  // Initialise depths > 1
+  React.useEffect(() => {
+    if (props.state.depth > 1) {
+      initMap();
+      initGameState();
+    }
+  }, [props.state.depth]);
 
   if (!areFontsLoaded) {
     return null;

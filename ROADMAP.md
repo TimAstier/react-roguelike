@@ -4,7 +4,7 @@
 
 - [x] Display current depth
 - [x] Add downward staircases tile
-- [ ] Generate maps for multiple depths in generate level
+- [x] Generate maps for multiple depths in generate level
 - [ ] Switch between maps when depth increases
 - [ ] Add monsters in generateLevel (use spawnNumber)
 - [ ] Add doors in generateLevel
