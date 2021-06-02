@@ -123,6 +123,7 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
   if (creature) {
     attackCreature(draft, creature.id, creature.type);
   } else if (nextTile?.type === '>') {
+    draft.eventLogs.push(`You reached depth ${draft.depth + 1}!`);
     return void draft.depth++;
   } else if (getCanWalkToNextPosition(draft, moveDirection, nextTile)) {
     moveToNewPosition(draft, nextPosition);

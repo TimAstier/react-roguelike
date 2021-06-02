@@ -29,3 +29,6 @@ export const BURNING_DAMAGE_PERCENTAGE = 9;
 
 export const PLAYER_BASE_ATTACK = '3d5+3';
 export const PLAYER_BASE_AC = 13;
+
+export const MIN_GOLD_SPAWN_NUMBER = 3;
+export const MAX_GOLD_SPAWN_NUMBER = 10;

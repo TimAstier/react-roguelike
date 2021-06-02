@@ -1,6 +1,11 @@
 // Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
 
-import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
+import {
+  GRID_HEIGHT,
+  GRID_WIDTH,
+  MAX_GOLD_SPAWN_NUMBER,
+  MIN_GOLD_SPAWN_NUMBER,
+} from '../constants/config';
 import { TileType } from '../constants/tiles';
 import { Area } from '../typings/area';
 import { CellData } from '../typings/cell';
@@ -8,6 +13,7 @@ import { Level } from '../typings/level';
 import { Position } from '../typings/position';
 import { findCellsInArea } from '../utils/findCellsInArea';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
+import { shuffleArray } from '../utils/shuffleArray';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
 import { horizontalSplitArea } from './horizontalSplitArea';
@@ -130,20 +136,19 @@ const connectAllLeaves = (
   return newMap;
 };
 
-const placeDownwardStaircase = (map: TileType[][], rng: () => number) => {
-  const newMap = map;
-
-  const candidatePositions = newMap
+const findGroundPositions = (map: TileType[][]): Position[] => {
+  return map
     .map((row, j) => row.map((tile, i) => (tile === '.' ? ([i, j] as Position) : null)))
     .flat()
-    .filter((p) => p !== null);
+    .filter((p) => p !== null) as Position[];
+};
 
+const placeDownwardStaircase = (map: TileType[][], rng: () => number) => {
+  const newMap = map;
+  const candidatePositions = findGroundPositions(newMap);
   const positionIndex = getRandomIntInclusive(0, candidatePositions.length - 1, rng);
-
-  const position = candidatePositions[positionIndex] as Position;
-
+  const position = candidatePositions[positionIndex];
   newMap[position[1]][position[0]] = '>';
-
   return newMap;
 };
 
@@ -172,18 +177,30 @@ const generateMap = (rng: () => number): TileType[][] => {
   return resultMap;
 };
 
+const getGoldSize = (rng: () => number) => {
+  return rng() > 0.5 ? 'BigGold' : 'SmallGold';
+};
+
 export const createGameMap = (
   map: TileType[][],
   spawn: Position,
   width: number,
-  height: number
+  height: number,
+  rng: () => number
 ): CellData[][] => {
+  const candidatePositions = findGroundPositions(map);
+  const shuffledCandidatePositions = shuffleArray(candidatePositions, rng) as Position[];
+
+  const goldSpawnNumber = getRandomIntInclusive(MIN_GOLD_SPAWN_NUMBER, MAX_GOLD_SPAWN_NUMBER, rng);
+  const goldPositions = shuffledCandidatePositions.splice(0, goldSpawnNumber).map((p) => String(p));
+
   const gameMap: CellData[][] = [];
   for (let j = 0; j < height; j += 1) {
     gameMap[j] = [];
     for (let i = 0; i < width; i += 1) {
+      const content = goldPositions.includes(String([i, j])) ? getGoldSize(rng) : 0;
       gameMap[j][i] = {
-        content: 0,
+        content,
         tile: map[j][i],
         revealed: false,
         visibility: 'clear',
@@ -208,7 +225,7 @@ export const generateLevel = (rng: () => number): Level => {
   map[spawn[1]][spawn[0]] = '@';
 
   // Create gameMap
-  const gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT);
+  const gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT, rng);
 
   return { gameMap, playerSpawn: spawn };
 };
