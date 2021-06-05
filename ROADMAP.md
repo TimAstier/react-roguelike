@@ -8,7 +8,8 @@
 - [x] Add downward staircase in generateLevel
 - [x] Add gold in generateLevel
 - [x] Add monsters in generateLevel
-- [ ] Spawn numbers in hordes based on spawnNumber
+- [x] Spawn numbers in hordes based on spawnNumber
+- [ ] Keep spawning creatures during play
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
 - [ ] Hunger clock (with impact on visibility)?

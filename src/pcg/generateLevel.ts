@@ -3,12 +3,12 @@
 import {
   GRID_HEIGHT,
   GRID_WIDTH,
-  MAX_CREATURE_SPAWN_NUMBER,
   MAX_GOLD_SPAWN_NUMBER,
-  MIN_CREATURE_SPAWN_NUMBER,
+  MAX_HORDES_NUMBER,
   MIN_GOLD_SPAWN_NUMBER,
+  MIN_HORDES_NUMBER,
 } from '../constants/config';
-import { CreatureType } from '../constants/creatures';
+import { CREATURES, CreatureType } from '../constants/creatures';
 import { TileType } from '../constants/tiles';
 import { Area } from '../typings/area';
 import { CellData } from '../typings/cell';
@@ -16,6 +16,7 @@ import { Level } from '../typings/level';
 import { Position } from '../typings/position';
 import { findCellsInArea } from '../utils/findCellsInArea';
 import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
+import { getSurroundingPositions } from '../utils/getSurroundingPositions';
 import { shuffleArray } from '../utils/shuffleArray';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
@@ -186,6 +187,11 @@ const getGoldSize = (rng: () => number) => {
 
 const pickCreatureType = (rng: () => number): CreatureType => (rng() > 0.5 ? 'goblin' : 'rat'); // TODO
 
+interface SpawnPosition {
+  position: Position;
+  creatureType: CreatureType;
+}
+
 export const createGameMap = (
   map: TileType[][],
   spawn: Position,
@@ -199,15 +205,37 @@ export const createGameMap = (
   const goldSpawnNumber = getRandomIntInclusive(MIN_GOLD_SPAWN_NUMBER, MAX_GOLD_SPAWN_NUMBER, rng);
   const goldPositions = shuffledCandidatePositions.splice(0, goldSpawnNumber).map((p) => String(p));
 
-  const creatureSpawnNumber = getRandomIntInclusive(
-    MIN_CREATURE_SPAWN_NUMBER,
-    MAX_CREATURE_SPAWN_NUMBER,
-    rng
-  );
+  const hordesNumber = getRandomIntInclusive(MIN_HORDES_NUMBER, MAX_HORDES_NUMBER, rng);
+  const hordesPositions = shuffledCandidatePositions.splice(0, hordesNumber);
 
-  const creatureSpawnPositions = shuffledCandidatePositions
-    .splice(0, creatureSpawnNumber)
-    .map((p) => String(p));
+  let spawnPositions: SpawnPosition[] = [];
+
+  if (rng) {
+    // Generate spawnPositions
+    hordesPositions.forEach((position) => {
+      const creatureType = pickCreatureType(rng);
+      const options = { position, radius: 3, mapHeight: GRID_HEIGHT, mapWidth: GRID_WIDTH };
+      const surroundingPositions = getSurroundingPositions(options);
+      const surroundingCandidatePositions = surroundingPositions.filter((value) =>
+        shuffledCandidatePositions.map((p) => String(p)).includes(String(value))
+      );
+      const shuffledSurroundingCandidatePositions = shuffleArray(
+        surroundingCandidatePositions,
+        rng
+      ) as Position[];
+      spawnPositions = spawnPositions.concat(
+        ...shuffledSurroundingCandidatePositions
+          .splice(
+            0,
+            Math.min(
+              CREATURES[creatureType].spawnNumber,
+              shuffledSurroundingCandidatePositions.length
+            )
+          )
+          .map((p) => ({ position: p, creatureType }))
+      );
+    });
+  }
 
   const gameMap: CellData[][] = [];
   for (let j = 0; j < height; j += 1) {
@@ -217,9 +245,10 @@ export const createGameMap = (
       let creature = undefined;
       if (rng) {
         content = goldPositions.includes(String([i, j])) ? getGoldSize(rng) : 0;
-        creature = creatureSpawnPositions.includes(String([i, j]))
-          ? { type: pickCreatureType(rng), id: 'temp_id' }
-          : undefined;
+        const spawnType = spawnPositions
+          .map((p) => ({ position: String(p.position), creatureType: p.creatureType }))
+          .find((p) => p.position === String([i, j]));
+        creature = spawnType ? { type: spawnType.creatureType, id: 'temp_id' } : undefined;
       }
       gameMap[j][i] = {
         content,
