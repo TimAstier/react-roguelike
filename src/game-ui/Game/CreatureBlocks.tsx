@@ -7,7 +7,7 @@ import { Sprite } from '../Shared/Sprite';
 
 const Wrapper = styled.div`
   margin-top: 10px;
-  max-height: 576px;
+  height: 576px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     /*Chrome, Safari and Opera */

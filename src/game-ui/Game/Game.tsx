@@ -31,7 +31,7 @@ const InnerWrapper = styled.div`
   width: 100%;
   min-width: 1200px;
   max-width: 1400px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -46,6 +46,11 @@ const BottomBar = styled.div`
   height: 18px;
   padding-left: 25px;
   padding-right: 25px;
+  width: 100%;
+  min-width: 1200px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 interface Props {
