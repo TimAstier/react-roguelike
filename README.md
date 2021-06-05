@@ -84,7 +84,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore -->
 <table>
   <tr>
-    <td align="center"><a href="https://timotheeastier.com"><img src="https://avatars1.githubusercontent.com/u/8555097?v=4" width="100px;" alt="Timothée Astier"/><br /><sub><b>Timothée Astier</b></sub></a><br /><a href="https://github.com/TimAstier/react-rpg-game/commits?author=TimAstier" title="Code">💻</a> <a href="https://github.com/TimAstier/react-rpg-game/commits?author=TimAstier" title="Documentation">📖</a> <a href="#maintenance-TimAstier" title="Maintenance">🚧</a> <a href="#ideas-TimAstier" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/TimAstier"><img src="https://avatars1.githubusercontent.com/u/8555097?v=4" width="100px;" alt="Timothée Astier"/><br /><sub><b>Timothée Astier</b></sub></a><br /><a href="https://github.com/TimAstier/react-rpg-game/commits?author=TimAstier" title="Code">💻</a> <a href="https://github.com/TimAstier/react-rpg-game/commits?author=TimAstier" title="Documentation">📖</a> <a href="#maintenance-TimAstier" title="Maintenance">🚧</a> <a href="#ideas-TimAstier" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
