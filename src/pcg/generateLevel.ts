@@ -191,7 +191,7 @@ export const createGameMap = (
   spawn: Position,
   width: number,
   height: number,
-  rng: () => number
+  rng?: () => number
 ): CellData[][] => {
   const candidatePositions = findGroundPositions(map);
   const shuffledCandidatePositions = shuffleArray(candidatePositions, rng) as Position[];
@@ -213,10 +213,14 @@ export const createGameMap = (
   for (let j = 0; j < height; j += 1) {
     gameMap[j] = [];
     for (let i = 0; i < width; i += 1) {
-      const content = goldPositions.includes(String([i, j])) ? getGoldSize(rng) : 0;
-      const creature = creatureSpawnPositions.includes(String([i, j]))
-        ? { type: pickCreatureType(rng), id: 'temp_id' }
-        : undefined;
+      let content: 0 | 'SmallGold' | 'BigGold' = 0;
+      let creature = undefined;
+      if (rng) {
+        content = goldPositions.includes(String([i, j])) ? getGoldSize(rng) : 0;
+        creature = creatureSpawnPositions.includes(String([i, j]))
+          ? { type: pickCreatureType(rng), id: 'temp_id' }
+          : undefined;
+      }
       gameMap[j][i] = {
         content,
         tile: map[j][i],
