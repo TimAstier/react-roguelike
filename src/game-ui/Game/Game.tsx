@@ -60,7 +60,9 @@ export const Game: React.FC<Props> = (props) => {
   useGameKeys(props.dispatch, props.state.gameStatus);
 
   const initMap = () => {
-    const seed = props.state.seed.concat(String(props.state.depth)) || getRandomString();
+    const seed = props.state.seed
+      ? props.state.seed.concat(String(props.state.depth))
+      : getRandomString();
     const rng = seedrandom(seed);
     const level = generateLevel(rng);
     props.dispatch(gameActions.setSeed(seed));
