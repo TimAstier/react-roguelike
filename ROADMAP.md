@@ -10,7 +10,7 @@
 - [x] Add monsters in generateLevel
 - [x] Spawn numbers in hordes based on spawnNumber
 - [x] Improve: Creature should not move where another creature died
-- [ ] Bug: Creature moving away if no space available because blocked by ally
+- [x] Bug: Creature moving away in a corridor if no space available because blocked by ally
 - [ ] Hover on creatures highlight creature block
 - [ ] Hover on creature block highlightd creature
 - [ ] Keep spawning creatures during play

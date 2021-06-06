@@ -73,12 +73,12 @@ const tryMove = (
   const shuffledAdjacentPositions = adjacentPositions.sort(() => Math.random() - 0.5);
 
   // Remove options already occupied by a creature
-  const shuffledElmptyAdjacentPositions = shuffledAdjacentPositions.filter((position) => {
+  const shuffledEmptyAdjacentPositions = shuffledAdjacentPositions.filter((position) => {
     return !draft.currentMap[position[1]][position[0]].creature;
   });
 
   // TODO: return numbers from getDijkstraMap
-  const distances = shuffledElmptyAdjacentPositions.map((p) => {
+  const distances = shuffledEmptyAdjacentPositions.map((p) => {
     return draft.dijkstraMap[p[1]][p[0]] === '#' ? Infinity : Number(draft.dijkstraMap[p[1]][p[0]]);
   });
 
@@ -88,10 +88,16 @@ const tryMove = (
     return;
   }
   const nextPositionIndex = distances.findIndex((d) => d === nextDistance);
-  const nextPosition = shuffledElmptyAdjacentPositions[nextPositionIndex];
+  const nextPosition = shuffledEmptyAdjacentPositions[nextPositionIndex];
 
-  // Do not move creatures on top of a creature that just died this round
+  // Do not make creature moving away if they are surrounded by 2 or more walls
+  const currentDistance = Number(draft.dijkstraMap[entity.position[1]][entity.position[0]]);
+  if (distances.filter((d) => d === Infinity).length >= 2 && nextDistance > currentDistance) {
+    return;
+  }
+
   if (draft.deathPositionsThisRound.map(String).includes(String(nextPosition))) {
+    // Do not move creatures on top of a creature that just died this round
     return;
   }
 
