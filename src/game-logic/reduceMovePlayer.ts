@@ -112,6 +112,7 @@ const tick = (draft: GameState) => {
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
   draft.interactionText = '';
   draft.hitsLastRound = [];
+  draft.deathPositionsThisRound = [];
   draft.moveDirection = moveDirection;
   draft.playerPreviousPosition = draft.playerPosition;
 

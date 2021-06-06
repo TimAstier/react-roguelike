@@ -105,6 +105,7 @@ export interface GameState {
   playerConditions: ActiveConditions;
   creatures: { [id: string]: CreatureEntity };
   hitsLastRound: Hit[];
+  deathPositionsThisRound: Position[];
 }
 
 export const INITIAL_STATE: GameState = {
@@ -129,6 +130,7 @@ export const INITIAL_STATE: GameState = {
   gold: 0,
   playerConditions: {},
   hitsLastRound: [],
+  deathPositionsThisRound: [],
 };
 
 // REDUCER

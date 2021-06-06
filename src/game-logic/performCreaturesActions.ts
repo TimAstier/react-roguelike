@@ -90,6 +90,11 @@ const tryMove = (
   const nextPositionIndex = distances.findIndex((d) => d === nextDistance);
   const nextPosition = shuffledElmptyAdjacentPositions[nextPositionIndex];
 
+  // Do not move creatures on top of a creature that just died this round
+  if (draft.deathPositionsThisRound.map(String).includes(String(nextPosition))) {
+    return;
+  }
+
   // Perform the move
   draft.currentMap[nextPosition[1]][nextPosition[0]].creature = {
     id: entity.id,
