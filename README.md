@@ -25,7 +25,7 @@ React Roguelike is under development. In the latest version you can:
 - [use-immer](https://github.com/immerjs/use-immer) - a hook to use immer as a React hook to manipulate state
 - [styled-components](https://www.styled-components.com/) - a convenient way to style components with CSS
 - [use-sound](https://github.com/joshwcomeau/use-sound) - a React Hook for Sound Effects
-- [seedrandom](https://github.com/davidbau/seedrandom) - Seeded random number generator for JavaScript
+- [seedrandom](https://github.com/davidbau/seedrandom) - seeded random number generator for JavaScript
 - [fontfaceobserver](https://github.com/bramstein/fontfaceobserver) - a fast and simple web font loader
 - [RPG Dice Roller](https://greenimp.github.io/rpg-dice-roller/) - easy advanced dice rolling
 
@@ -68,8 +68,8 @@ https://react-roguelike.herokuapp.com
 - Music from Pixelsphere.org / The Cynic Project from [opengameart](https://opengameart.org/content/crystal-cave-song18)
 - Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution [license](http://creativecommons.org/licenses/by/3.0/)
 - [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter)
-- Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 - Flames [art](https://opengameart.org/content/lpc-flames) from Sharm
+- Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 
 ## License
 
