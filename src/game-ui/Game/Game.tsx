@@ -143,6 +143,7 @@ export const Game: React.FC<Props> = (props) => {
                     gameMap={props.state.currentMap}
                     moveDirection={props.state.moveDirection}
                     hitsLastRound={props.state.hitsLastRound}
+                    deathPositionsThisRound={props.state.deathPositionsThisRound}
                     round={props.state.round}
                     dispatch={props.dispatch}
                   />

@@ -1,6 +1,7 @@
 // Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
 
 import {
+  DEBUG_SPAWN_CREATURES,
   GRID_HEIGHT,
   GRID_WIDTH,
   MAX_GOLD_SPAWN_NUMBER,
@@ -210,7 +211,7 @@ export const createGameMap = (
 
   let spawnPositions: SpawnPosition[] = [];
 
-  if (rng) {
+  if (rng && DEBUG_SPAWN_CREATURES) {
     // Generate spawnPositions
     hordesPositions.forEach((position) => {
       const creatureType = pickCreatureType(rng);
@@ -257,6 +258,7 @@ export const createGameMap = (
         visibility: 'clear',
         burningRounds: 0,
         creature,
+        position: `${i},${j}`,
       };
       if (i === spawn[0] && j === spawn[1]) {
         gameMap[j][i].content = 'Player';

@@ -17,4 +17,5 @@ export interface CellData {
   revealed: boolean;
   visibility: Visibility;
   burningRounds: number;
+  position: string;
 }

@@ -284,6 +284,7 @@ describe('game reducer', () => {
         revealed: true,
         visibility: 'clear',
         burningRounds: 0,
+        position: '1,1',
       };
       const state: GameState = { ...INITIAL_STATE, currentMap, playerPosition: [0, 1] };
       const action = gameActions.movePlayer('Right');
@@ -301,6 +302,7 @@ describe('game reducer', () => {
         revealed: true,
         visibility: 'clear',
         burningRounds: 0,
+        position: '1,1',
       };
       const state: GameState = { ...INITIAL_STATE, currentMap, playerPosition: [0, 1] };
       const action = gameActions.movePlayer('Right');
@@ -320,6 +322,7 @@ describe('game reducer', () => {
         revealed: true,
         visibility: 'clear',
         burningRounds: 0,
+        position: '1,1',
       };
       const state: GameState = { ...INITIAL_STATE, currentMap, playerPosition: [0, 1] };
       const action = gameActions.movePlayer('Right');

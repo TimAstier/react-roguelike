@@ -33,6 +33,7 @@ export interface CellProps {
   creature?: CreatureData;
   hitsLastRound: Hit[];
   round: number;
+  creatureDiedThisRound: boolean;
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -49,6 +50,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   creaturesImage,
   hitsLastRound,
   round,
+  creatureDiedThisRound,
 }) => {
   const imageRef = React.useRef<Konva.Image>(null);
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
@@ -213,7 +215,39 @@ export const CanvasCell: React.FC<CellProps> = ({
     }
   };
 
+  const renderDeadCreature = () => {
+    let opacity = 0;
+    if (visibility === 'clear') {
+      opacity = 1;
+    } else if (visibility === 'dim') {
+      opacity = 0.3;
+    }
+
+    return (
+      <Image
+        ref={imageRef}
+        x={position[0] * CELL_WIDTH_IN_PIXELS + 1}
+        y={position[1] * CELL_WIDTH_IN_PIXELS + 1}
+        image={itemsImage}
+        width={CELL_WIDTH_IN_PIXELS - 2}
+        height={CELL_WIDTH_IN_PIXELS - 2}
+        opacity={opacity}
+        fill={wasHitLastRound ? 'red' : getBackgroundColor()}
+        crop={{
+          x: 12 * 16,
+          y: 9 * 16,
+          width: 16,
+          height: 16,
+        }}
+      />
+    );
+  };
+
   const renderContentOrTile = () => {
+    if (creatureDiedThisRound) {
+      return renderDeadCreature();
+    }
+
     if (visibility !== 'dark' && creature) {
       return <Creature />;
     }

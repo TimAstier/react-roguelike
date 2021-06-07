@@ -39,6 +39,7 @@ const renderCells = (
   creaturesImage: HTMLImageElement | undefined,
   playerPosition: Position,
   hitsLastRound: Hit[],
+  deathPositionsThisRound: string[],
   round: number,
   dispatch: React.Dispatch<GameAction>
 ) => {
@@ -60,6 +61,12 @@ const renderCells = (
         .map((cellData, posX) => {
           const position = `${posX}-${posY}`;
           const visibility = cellData.visibility;
+          let creatureDiedThisRound = false;
+
+          if (deathPositionsThisRound.includes(cellData.position)) {
+            creatureDiedThisRound = true;
+          }
+
           return (
             <CanvasCell
               visibility={visibility}
@@ -76,6 +83,7 @@ const renderCells = (
               creature={cellData.creature}
               hitsLastRound={hitsLastRound}
               round={round}
+              creatureDiedThisRound={creatureDiedThisRound}
             />
           );
         });
@@ -87,6 +95,7 @@ interface Props {
   gameMap: CellData[][];
   moveDirection: MoveDirection;
   hitsLastRound: Hit[];
+  deathPositionsThisRound: Position[];
   round: number;
   dispatch: React.Dispatch<GameAction>;
 }
@@ -112,6 +121,7 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
             creaturesImage,
             props.playerPosition,
             props.hitsLastRound,
+            props.deathPositionsThisRound.map(String),
             props.round,
             props.dispatch
           )}
