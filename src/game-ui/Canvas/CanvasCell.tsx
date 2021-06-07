@@ -273,7 +273,15 @@ export const CanvasCell: React.FC<CellProps> = ({
   return (
     <Group
       onMouseEnter={() =>
-        handleMouseEnter({ tileType, visibility, revealed, content, burning, creature })
+        handleMouseEnter({
+          tileType,
+          visibility,
+          revealed,
+          content,
+          burning,
+          creature,
+          creatureDiedThisRound,
+        })
       }
       onMouseLeave={() => handleMouseLeave()}
     >

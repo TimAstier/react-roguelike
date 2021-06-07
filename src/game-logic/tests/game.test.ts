@@ -266,6 +266,20 @@ describe('game reducer', () => {
       const newState = produce(game)(state, action);
       expect(newState.interactionText).toEqual('You see a goblin!');
     });
+    it('says "You see a very much dead creature."', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '.',
+        visibility: 'clear',
+        revealed: false,
+        content: 0,
+        burning: false,
+        creatureDiedThisRound: true,
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.interactionText).toEqual('You see a very much dead creature.');
+    });
   });
   describe('hoverAwayFromCell', () => {
     it('empties the interactionText', () => {

@@ -36,4 +36,6 @@ export const MAX_GOLD_SPAWN_NUMBER = 10;
 export const MIN_HORDES_NUMBER = 5;
 export const MAX_HORDES_NUMBER = 10;
 
+/** DEBUG */
+
 export const DEBUG_SPAWN_CREATURES = true;
