@@ -130,7 +130,11 @@ export const Game: React.FC<Props> = (props) => {
             setWithBackgroundMusic={props.setWithBackgroundMusic}
             playerConditions={props.state.playerConditions}
           />
-          <CreatureBlocks entities={visibleEntities} />
+          <CreatureBlocks
+            entities={visibleEntities}
+            dispatch={props.dispatch}
+            hoveredCreatureId={props.state.hoveredCreatureId}
+          />
         </SideWrapper>
         <div>
           <EventLogs eventLogs={props.state.eventLogs} />
@@ -146,6 +150,7 @@ export const Game: React.FC<Props> = (props) => {
                     deathPositionsThisRound={props.state.deathPositionsThisRound}
                     round={props.state.round}
                     dispatch={props.dispatch}
+                    hoveredCreatureId={props.state.hoveredCreatureId}
                   />
                 )}
                 {props.state.gameStatus === 'gameover' && (

@@ -34,6 +34,7 @@ export interface CellProps {
   hitsLastRound: Hit[];
   round: number;
   creatureDiedThisRound: boolean;
+  highlighted: boolean;
 }
 
 export const CanvasCell: React.FC<CellProps> = ({
@@ -50,8 +51,10 @@ export const CanvasCell: React.FC<CellProps> = ({
   creaturesImage,
   hitsLastRound,
   round,
+  highlighted,
   creatureDiedThisRound,
 }) => {
+  const [hasBlinked, setHasBlinked] = React.useState(false);
   const imageRef = React.useRef<Konva.Image>(null);
   const item = content !== 0 && content !== 'Player' ? getItem(content) : '';
   const tile = getTile(tileType);
@@ -72,6 +75,10 @@ export const CanvasCell: React.FC<CellProps> = ({
   };
 
   React.useEffect(() => {
+    setHasBlinked(false);
+  }, [round]);
+
+  React.useEffect(() => {
     // TODO: UseBlink and use same logic for Player?
     if (imageRef.current) {
       if (creature) {
@@ -81,6 +88,7 @@ export const CanvasCell: React.FC<CellProps> = ({
             duration: 0.15,
             easing: Konva.Easings.BounceEaseInOut,
             fill: getBackgroundColor(),
+            onFinish: () => setHasBlinked(true),
           });
           tween.play();
           return () => {
@@ -187,13 +195,15 @@ export const CanvasCell: React.FC<CellProps> = ({
           width={CELL_WIDTH_IN_PIXELS - 2}
           height={CELL_WIDTH_IN_PIXELS - 2}
           opacity={opacity}
-          fill={wasHitLastRound ? 'red' : getBackgroundColor()}
+          fill={wasHitLastRound && !hasBlinked ? 'red' : getBackgroundColor()}
           crop={{
             x: spritePosition[0] * 16,
             y: spritePosition[1] * 16,
             width: 16,
             height: 16,
           }}
+          stroke={highlighted ? 'white' : undefined}
+          strokeWidth={2}
         />
       );
     }

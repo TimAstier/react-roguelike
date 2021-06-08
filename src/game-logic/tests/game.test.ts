@@ -280,6 +280,20 @@ describe('game reducer', () => {
       const newState = produce(game)(state, action);
       expect(newState.interactionText).toEqual('You see a very much dead creature.');
     });
+    it('sets hoveredCreatureId', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '.',
+        visibility: 'clear',
+        revealed: false,
+        content: 0,
+        burning: false,
+        creature: { type: 'goblin', id: 'a' },
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.hoveredCreatureId).toEqual('a');
+    });
   });
   describe('hoverAwayFromCell', () => {
     it('empties the interactionText', () => {
@@ -287,6 +301,28 @@ describe('game reducer', () => {
       const action = gameActions.hoverAwayFromCell();
       const newState = produce(game)(state, action);
       expect(newState.interactionText).toEqual('');
+    });
+    it('resets hoveredCreatureId', () => {
+      const state: GameState = { ...INITIAL_STATE, hoveredCreatureId: 'a' };
+      const action = gameActions.hoverAwayFromCell();
+      const newState = produce(game)(state, action);
+      expect(newState.hoveredCreatureId).toEqual('');
+    });
+  });
+  describe('hoverCreatureBlock', () => {
+    it('sets hoveredCreatureId', () => {
+      const state: GameState = INITIAL_STATE;
+      const action = gameActions.hoverCreatureBlock('a');
+      const newState = produce(game)(state, action);
+      expect(newState.hoveredCreatureId).toEqual('a');
+    });
+  });
+  describe('hoverAwayFromCreatureBlock', () => {
+    it('resets hoveredCreatureId', () => {
+      const state: GameState = { ...INITIAL_STATE, hoveredCreatureId: 'a' };
+      const action = gameActions.hoverAwayFromCreatureBlock();
+      const newState = produce(game)(state, action);
+      expect(newState.hoveredCreatureId).toEqual('');
     });
   });
   describe('loot items', () => {

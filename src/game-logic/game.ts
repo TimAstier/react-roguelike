@@ -25,7 +25,9 @@ export type GameAction =
   | { type: '@@GAME/INIT_VISIBILITY' }
   | { type: '@@GAME/INIT_CREATURES' }
   | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
-  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
+  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' }
+  | { type: '@@GAME/HOVER_CREATURE_BLOCK'; creatureId: string }
+  | { type: '@@GAME/HOVER_AWAY_FROM_CREATURE_BLOCK' };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -69,6 +71,15 @@ const hoverAwayFromCell = (): GameAction => ({
   type: '@@GAME/HOVER_AWAY_FROM_CELL',
 });
 
+const hoverCreatureBlock = (creatureId: string): GameAction => ({
+  type: '@@GAME/HOVER_CREATURE_BLOCK',
+  creatureId,
+});
+
+const hoverAwayFromCreatureBlock = (): GameAction => ({
+  type: '@@GAME/HOVER_AWAY_FROM_CREATURE_BLOCK',
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
@@ -79,6 +90,8 @@ export const gameActions = {
   initCreatures,
   hoverCell,
   hoverAwayFromCell,
+  hoverCreatureBlock,
+  hoverAwayFromCreatureBlock,
 };
 
 // INITIAL_STATE
@@ -106,6 +119,7 @@ export interface GameState {
   creatures: { [id: string]: CreatureEntity };
   hitsLastRound: Hit[];
   deathPositionsThisRound: Position[];
+  hoveredCreatureId: string;
 }
 
 export const INITIAL_STATE: GameState = {
@@ -131,6 +145,7 @@ export const INITIAL_STATE: GameState = {
   playerConditions: {},
   hitsLastRound: [],
   deathPositionsThisRound: [],
+  hoveredCreatureId: '',
 };
 
 // REDUCER
@@ -159,6 +174,11 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/HOVER_CELL':
       return reduceHoverCell(draft, action.payload);
     case '@@GAME/HOVER_AWAY_FROM_CELL':
+      draft.hoveredCreatureId = '';
       return void (draft.interactionText = '');
+    case '@@GAME/HOVER_CREATURE_BLOCK':
+      return void (draft.hoveredCreatureId = action.creatureId);
+    case '@@GAME/HOVER_AWAY_FROM_CREATURE_BLOCK':
+      return void (draft.hoveredCreatureId = '');
   }
 };

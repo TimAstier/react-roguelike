@@ -35,6 +35,8 @@ export const reduceHoverCell = (draft: GameState, payload: HoverCellPayload): vo
   }
 
   if (creature && visibility !== 'dark') {
+    draft.hoveredCreatureId = creature.id;
+
     if (visibility === 'dim') {
       draft.interactionText = 'You see something standing in the shadows.';
       return;

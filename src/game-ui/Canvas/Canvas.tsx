@@ -41,6 +41,7 @@ const renderCells = (
   hitsLastRound: Hit[],
   deathPositionsThisRound: string[],
   round: number,
+  hoveredCreatureId: string,
   dispatch: React.Dispatch<GameAction>
 ) => {
   const cellsToSideX = Math.floor(NUMBER_OF_CELLS_IN_VIEWPORT_X / 2);
@@ -67,6 +68,8 @@ const renderCells = (
             creatureDiedThisRound = true;
           }
 
+          const highlighted = cellData.creature?.id === hoveredCreatureId;
+
           return (
             <CanvasCell
               visibility={visibility}
@@ -84,6 +87,7 @@ const renderCells = (
               hitsLastRound={hitsLastRound}
               round={round}
               creatureDiedThisRound={creatureDiedThisRound}
+              highlighted={highlighted}
             />
           );
         });
@@ -98,6 +102,7 @@ interface Props {
   deathPositionsThisRound: Position[];
   round: number;
   dispatch: React.Dispatch<GameAction>;
+  hoveredCreatureId: string;
 }
 
 // We use React.memo() here to avoid re-rendering the canvas on game-state updates that are not related to the canvas
@@ -123,6 +128,7 @@ export const Canvas: React.FC<Props> = React.memo((props) => {
             props.hitsLastRound,
             props.deathPositionsThisRound.map(String),
             props.round,
+            props.hoveredCreatureId,
             props.dispatch
           )}
         </Group>

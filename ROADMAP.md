@@ -11,8 +11,9 @@
 - [x] Spawn numbers in hordes based on spawnNumber
 - [x] Improve: Creature should not move where another creature died
 - [x] Bug: Creature moving away in a corridor if no space available because blocked by ally
-- [ ] Hover on creatures highlight creature block
-- [ ] Hover on creature block highlightd creature
+- [x] Hover on creatures highlight creature block
+- [x] Hover on creature block highlightd creature
+- [ ] Highlight player
 - [ ] Keep spawning creatures during play
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel

@@ -20,12 +20,17 @@ interface Props {
 
 export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound, round }) => {
   const rectRef = React.useRef<Konva.Rect>(null);
+  const [hasBlinked, setHasBlinked] = React.useState(false);
   const playerWidth = 0.6 * CELL_WIDTH_IN_PIXELS;
   const frontWidth = 0.3 * CELL_WIDTH_IN_PIXELS;
   let frontXModifier: number;
   let frontYModifier: number;
 
   const wasHitLastRound = hitsLastRound.filter((h) => h.creatureId === 'player').length !== 0;
+
+  React.useEffect(() => {
+    setHasBlinked(false);
+  }, [round]);
 
   React.useEffect(() => {
     // TODO: UseBlink and use same logic for creature?
@@ -36,6 +41,7 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
           duration: 0.15,
           easing: Konva.Easings.BounceEaseInOut,
           fill: 'blue',
+          onFinish: () => setHasBlinked(true),
         });
         tween.play();
         return () => {
@@ -83,7 +89,7 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
         ref={rectRef}
         width={playerWidth}
         height={playerWidth}
-        fill={wasHitLastRound ? 'red' : 'blue'}
+        fill={wasHitLastRound && !hasBlinked ? 'red' : 'blue'}
         x={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_X) / 2 - playerWidth / 2}
         y={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_Y) / 2 - playerWidth / 2}
         _useStrictMode
