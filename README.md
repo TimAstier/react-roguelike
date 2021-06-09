@@ -11,10 +11,7 @@
 
 ## How to play
 
-React Roguelike is under development. In the latest version you can:
-
-1. Generate and edit edit a map on https://react-roguelike.herokuapp.com/pcg.
-2. Click "Play" and move around the map.
+Go to https://react-roguelike.herokuapp.com to start a new game.
 
 ## Built with
 
@@ -31,7 +28,7 @@ React Roguelike is under development. In the latest version you can:
 
 ## Contributing
 
-You are welcome to contribute to this project :) See [CONTRIBUTING](./CONTRIBUTING.md).
+You are welcome to contribute to this project! See [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## Roadmap
 
