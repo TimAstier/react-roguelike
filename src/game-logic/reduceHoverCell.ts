@@ -27,6 +27,7 @@ export const reduceHoverCell = (draft: GameState, payload: HoverCellPayload): vo
 
   if (content === 'Player') {
     draft.interactionText = 'This is you.';
+    draft.hoveredCreatureId = 'Player';
     return;
   }
 

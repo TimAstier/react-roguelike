@@ -129,6 +129,8 @@ export const Game: React.FC<Props> = (props) => {
             withBackgroundMusic={props.withBackgroundMusic}
             setWithBackgroundMusic={props.setWithBackgroundMusic}
             playerConditions={props.state.playerConditions}
+            dispatch={props.dispatch}
+            hoveredCreatureId={props.state.hoveredCreatureId}
           />
           <CreatureBlocks
             entities={visibleEntities}

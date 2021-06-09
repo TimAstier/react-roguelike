@@ -192,8 +192,8 @@ export const CanvasCell: React.FC<CellProps> = ({
           x={position[0] * CELL_WIDTH_IN_PIXELS + 1}
           y={position[1] * CELL_WIDTH_IN_PIXELS + 1}
           image={creaturesImage}
-          width={CELL_WIDTH_IN_PIXELS - 2}
-          height={CELL_WIDTH_IN_PIXELS - 2}
+          width={CELL_WIDTH_IN_PIXELS - 3}
+          height={CELL_WIDTH_IN_PIXELS - 3}
           opacity={opacity}
           fill={wasHitLastRound && !hasBlinked ? 'red' : getBackgroundColor()}
           crop={{
@@ -202,8 +202,6 @@ export const CanvasCell: React.FC<CellProps> = ({
             width: 16,
             height: 16,
           }}
-          stroke={highlighted ? 'white' : undefined}
-          strokeWidth={2}
         />
       );
     }
@@ -296,12 +294,12 @@ export const CanvasCell: React.FC<CellProps> = ({
       onMouseLeave={() => handleMouseLeave()}
     >
       <Rect
-        width={CELL_WIDTH_IN_PIXELS}
-        height={CELL_WIDTH_IN_PIXELS}
+        width={CELL_WIDTH_IN_PIXELS - 1}
+        height={CELL_WIDTH_IN_PIXELS - 1}
         fill={getBackgroundColor()}
         x={position[0] * CELL_WIDTH_IN_PIXELS}
         y={position[1] * CELL_WIDTH_IN_PIXELS}
-        stroke={'rgba(0, 0, 0, 0.1)'}
+        stroke={highlighted ? 'white' : 'rgba(0, 0, 0, 0.1)'}
         strokeWidth={2}
       />
       {renderContentOrTile()}

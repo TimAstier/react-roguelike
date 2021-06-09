@@ -68,7 +68,9 @@ const renderCells = (
             creatureDiedThisRound = true;
           }
 
-          const highlighted = cellData.creature?.id === hoveredCreatureId;
+          const highlighted =
+            (cellData.creature?.id === hoveredCreatureId && cellData.visibility === 'clear') ||
+            (cellData.content === 'Player' && hoveredCreatureId === 'Player');
 
           return (
             <CanvasCell

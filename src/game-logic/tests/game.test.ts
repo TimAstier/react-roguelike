@@ -294,6 +294,19 @@ describe('game reducer', () => {
       const newState = produce(game)(state, action);
       expect(newState.hoveredCreatureId).toEqual('a');
     });
+    it('sets hoveredCreatureId to player', () => {
+      const state = INITIAL_STATE;
+      const payload: HoverCellPayload = {
+        tileType: '.',
+        visibility: 'clear',
+        revealed: false,
+        content: 'Player',
+        burning: false,
+      };
+      const action = gameActions.hoverCell(payload);
+      const newState = produce(game)(state, action);
+      expect(newState.hoveredCreatureId).toEqual('Player');
+    });
   });
   describe('hoverAwayFromCell', () => {
     it('empties the interactionText', () => {

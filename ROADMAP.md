@@ -13,7 +13,7 @@
 - [x] Bug: Creature moving away in a corridor if no space available because blocked by ally
 - [x] Hover on creatures highlight creature block
 - [x] Hover on creature block highlightd creature
-- [ ] Highlight player
+- [x] Highlight player
 - [ ] Keep spawning creatures during play
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
@@ -68,6 +68,7 @@
 
 ## Others
 
+- [ ] BUG: Goblins placed in front of rat even if further away?
 - [ ] Creatures can burn (like player)
 - [ ] Predefined dungeon entry, with flames
 - [ ] Improve generateLevel's corridors
