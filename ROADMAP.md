@@ -14,7 +14,7 @@
 - [x] Hover on creatures highlight creature block
 - [x] Hover on creature block highlightd creature
 - [x] Highlight player
-- [x] Add shake animation when player takes damage.
+- [x] Add shake animation when player deals damage.
 - [ ] Bug: Sometimes player doesn't blink?
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel

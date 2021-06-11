@@ -142,7 +142,7 @@ export const Game: React.FC<Props> = (props) => {
         <div>
           <EventLogs eventLogs={props.state.eventLogs} />
           <AnimationsLayer
-            shake={props.state.hitsLastRound.some((h) => h.creatureId === 'player')}
+            shake={props.state.hitsLastRound.filter((h) => h.creatureId !== 'player').length !== 0}
             round={props.state.round}
           >
             <DoubleBorders>
