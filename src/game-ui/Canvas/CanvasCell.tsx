@@ -61,6 +61,7 @@ export const CanvasCell: React.FC<CellProps> = ({
   const tile = getTile(tileType);
 
   const wasHitLastRound = hitsLastRound.filter((h) => h.creatureId === creature?.id).length !== 0;
+  const shouldBlink = wasHitLastRound && !hasBlinked;
 
   const getBackgroundColor = () => {
     if (!revealed && visibility === 'dark') {
@@ -83,7 +84,7 @@ export const CanvasCell: React.FC<CellProps> = ({
     // TODO: UseBlink and use same logic for Player?
     if (imageRef.current) {
       if (creature) {
-        if (wasHitLastRound) {
+        if (shouldBlink) {
           const tween = new Konva.Tween({
             node: imageRef.current,
             duration: ANIMATIONS_DURATION / 1000,
@@ -98,7 +99,7 @@ export const CanvasCell: React.FC<CellProps> = ({
         }
       }
     }
-  }, [creature, wasHitLastRound, round]);
+  }, [creature, round, shouldBlink]);
 
   const renderFlame = () => (
     <Flame flameImage={flameImage} position={position} opacity={visibility === 'dim' ? 0.3 : 1} />
@@ -196,7 +197,7 @@ export const CanvasCell: React.FC<CellProps> = ({
           width={CELL_WIDTH_IN_PIXELS - 3}
           height={CELL_WIDTH_IN_PIXELS - 3}
           opacity={opacity}
-          fill={wasHitLastRound && !hasBlinked ? 'red' : getBackgroundColor()}
+          fill={shouldBlink ? 'red' : getBackgroundColor()}
           crop={{
             x: spritePosition[0] * 16,
             y: spritePosition[1] * 16,

@@ -14,8 +14,8 @@
 - [x] Hover on creatures highlight creature block
 - [x] Hover on creature block highlightd creature
 - [x] Highlight player
-- [x] Add shake animation when player deals damage.
-- [ ] Bug: Sometimes player doesn't blink?
+- [x] Add shake animation when player deals damage
+- [x] Add fadein animation
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
 - [ ] Hunger clock (with impact on visibility)?
@@ -29,9 +29,12 @@
 - [ ] Add sound when player misses
 - [ ] Add sound when creature hits
 - [ ] Add sound when creature misses
+- [ ] Add sound when creature dies
+- [ ] Add sound on gameover
 - [ ] Sounds on crit
 - [ ] Sound on loot gold
 - [ ] Sound on changing depth
+- [ ] Sound over music
 
 ## Improve eventLogs
 
