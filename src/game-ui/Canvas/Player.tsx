@@ -2,6 +2,7 @@ import Konva from 'konva';
 import React from 'react';
 import { Group, Rect } from 'react-konva';
 
+import { ANIMATIONS_DURATION } from '../../constants/config';
 import {
   CELL_WIDTH_IN_PIXELS,
   NUMBER_OF_CELLS_IN_VIEWPORT_X,
@@ -38,7 +39,7 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
       if (wasHitLastRound) {
         const tween = new Konva.Tween({
           node: rectRef.current,
-          duration: 0.15,
+          duration: ANIMATIONS_DURATION / 1000,
           easing: Konva.Easings.BounceEaseInOut,
           fill: 'blue',
           onFinish: () => setHasBlinked(true),

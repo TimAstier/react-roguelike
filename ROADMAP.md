@@ -14,7 +14,8 @@
 - [x] Hover on creatures highlight creature block
 - [x] Hover on creature block highlightd creature
 - [x] Highlight player
-- [ ] Keep spawning creatures during play
+- [x] Add shake animation when player takes damage.
+- [ ] Bug: Sometimes player doesn't blink?
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
 - [ ] Hunger clock (with impact on visibility)?
@@ -55,7 +56,7 @@
 
 ## Ability ideas
 
-- Block with shield
+- Shields up: Block and counterattack against any ennemy next turn.
 
 ## Spell ideas
 
@@ -68,6 +69,9 @@
 
 ## Others
 
+- [ ] Leave bones permanently on ground when crature dies
+- [ ] Keep spawning creatures during play?
+- [ ] Unstable terrain - Unstable condition - all attack are crits
 - [ ] BUG: Goblins placed in front of rat even if further away?
 - [ ] Creatures can burn (like player)
 - [ ] Predefined dungeon entry, with flames

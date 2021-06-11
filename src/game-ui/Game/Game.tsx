@@ -11,6 +11,7 @@ import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Viewport } from '../Shared/Viewport';
+import { AnimationsLayer } from './AnimationsLayer';
 import { CreatureBlocks } from './CreatureBlocks';
 import { EquipedItems } from './EquipedItems';
 import { EventLogs } from './EventLogs';
@@ -140,7 +141,10 @@ export const Game: React.FC<Props> = (props) => {
         </SideWrapper>
         <div>
           <EventLogs eventLogs={props.state.eventLogs} />
-          <div>
+          <AnimationsLayer
+            shake={props.state.hitsLastRound.some((h) => h.creatureId === 'player')}
+            round={props.state.round}
+          >
             <DoubleBorders>
               <Viewport>
                 {props.state.currentMap && props.state.gameStatus === 'playing' && (
@@ -160,7 +164,7 @@ export const Game: React.FC<Props> = (props) => {
                 )}
               </Viewport>
             </DoubleBorders>
-          </div>
+          </AnimationsLayer>
         </div>
         <SideWrapper
           style={{

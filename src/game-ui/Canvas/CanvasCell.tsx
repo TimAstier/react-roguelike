@@ -3,6 +3,7 @@ import React from 'react';
 import { Circle, Group, Image, Rect, Text } from 'react-konva';
 
 import { CELL_WIDTH_IN_PIXELS } from '../../constants/config';
+import { ANIMATIONS_DURATION } from '../../constants/config';
 import { CREATURES } from '../../constants/creatures';
 import { getItem } from '../../constants/items';
 import {
@@ -85,7 +86,7 @@ export const CanvasCell: React.FC<CellProps> = ({
         if (wasHitLastRound) {
           const tween = new Konva.Tween({
             node: imageRef.current,
-            duration: 0.15,
+            duration: ANIMATIONS_DURATION / 1000,
             easing: Konva.Easings.BounceEaseInOut,
             fill: getBackgroundColor(),
             onFinish: () => setHasBlinked(true),
