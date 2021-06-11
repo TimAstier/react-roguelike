@@ -10,8 +10,6 @@ import { Canvas } from '../Canvas';
 import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
 import { DoubleBorders } from '../Shared/DoubleBorders';
-import { Viewport } from '../Shared/Viewport';
-import { AnimationsLayer } from './AnimationsLayer';
 import { CreatureBlocks } from './CreatureBlocks';
 import { EquipedItems } from './EquipedItems';
 import { EventLogs } from './EventLogs';
@@ -19,6 +17,8 @@ import { GameOver } from './GameOver';
 import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
 import { PlayerStats } from './PlayerStats';
+import { ShakeLayer } from './ShakeLayer';
+import { Viewport } from './Viewport';
 
 const Wrapper = styled.div`
   height: 789px;
@@ -141,12 +141,12 @@ export const Game: React.FC<Props> = (props) => {
         </SideWrapper>
         <div>
           <EventLogs eventLogs={props.state.eventLogs} />
-          <AnimationsLayer
+          <ShakeLayer
             shake={props.state.hitsLastRound.filter((h) => h.creatureId !== 'player').length !== 0}
             round={props.state.round}
           >
             <DoubleBorders>
-              <Viewport>
+              <Viewport depth={props.state.depth}>
                 {props.state.currentMap && props.state.gameStatus === 'playing' && (
                   <Canvas
                     playerPosition={props.state.playerPosition}
@@ -164,7 +164,7 @@ export const Game: React.FC<Props> = (props) => {
                 )}
               </Viewport>
             </DoubleBorders>
-          </AnimationsLayer>
+          </ShakeLayer>
         </div>
         <SideWrapper
           style={{

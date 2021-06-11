@@ -23,6 +23,16 @@
 - [ ] Way to regain hunger clock
 - [ ] Make depths harder and harder
 
+## Sounds
+
+- [ ] Add sound when player hits
+- [ ] Add sound when player misses
+- [ ] Add sound when creature hits
+- [ ] Add sound when creature misses
+- [ ] Sounds on crit
+- [ ] Sound on loot gold
+- [ ] Sound on changing depth
+
 ## Improve eventLogs
 
 - [ ] Display logs from same round on the same row.
@@ -69,7 +79,8 @@
 
 ## Others
 
-- [ ] Leave bones permanently on ground when crature dies
+- [ ] Leave bones permanently on ground when creature dies
+- [ ] Press a key to go downstairs
 - [ ] Keep spawning creatures during play?
 - [ ] Unstable terrain - Unstable condition - all attack are crits
 - [ ] BUG: Goblins placed in front of rat even if further away?
