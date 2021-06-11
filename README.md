@@ -67,6 +67,7 @@ https://react-roguelike.herokuapp.com
 - [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter)
 - Flames [art](https://opengameart.org/content/lpc-flames) from Sharm
 - Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
+- [Coin sound effects](https://opengameart.org/content/12-coin-sound-effects) from [StarNinjas](https://opengameart.org/users/starninjas)
 
 ## License
 

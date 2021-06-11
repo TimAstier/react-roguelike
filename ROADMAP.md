@@ -32,7 +32,7 @@
 - [ ] Add sound when creature dies
 - [ ] Add sound on gameover
 - [ ] Sounds on crit
-- [ ] Sound on loot gold
+- [x] Sound on loot gold
 - [ ] Sound on changing depth
 - [ ] Sound over music
 
@@ -82,7 +82,7 @@
 
 ## Others
 
-- [ ] Leave bones permanently on ground when creature dies
+- [ ] Leave bones/blood permanently on ground when creature dies
 - [ ] Press a key to go downstairs
 - [ ] Keep spawning creatures during play?
 - [ ] Unstable terrain - Unstable condition - all attack are crits

@@ -115,6 +115,7 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
   draft.deathPositionsThisRound = [];
   draft.moveDirection = moveDirection;
   draft.playerPreviousPosition = draft.playerPosition;
+  draft.sounds = [];
 
   const nextPosition = getNextPosition(draft, moveDirection);
   const nextTileType = draft.currentMap[nextPosition[1]][nextPosition[0]].tile;

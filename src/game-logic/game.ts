@@ -1,6 +1,7 @@
 import { INITIAL_MAX_HP } from '../constants/config';
 import { CreatureEntity } from '../constants/creatures';
 import { ItemType } from '../constants/items';
+import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { ActiveConditions } from '../typings/activeConditions';
 import { CellData } from '../typings/cell';
 import { GameStatus } from '../typings/gameStatus';
@@ -120,6 +121,7 @@ export interface GameState {
   hitsLastRound: Hit[];
   deathPositionsThisRound: Position[];
   hoveredCreatureId: string;
+  sounds: (keyof typeof SOUNDS)[];
 }
 
 export const INITIAL_STATE: GameState = {
@@ -146,6 +148,7 @@ export const INITIAL_STATE: GameState = {
   hitsLastRound: [],
   deathPositionsThisRound: [],
   hoveredCreatureId: '',
+  sounds: [],
 };
 
 // REDUCER

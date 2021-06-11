@@ -9,6 +9,7 @@ import { sortCreatures } from '../../utils/sortCreatures';
 import { Canvas } from '../Canvas';
 import { useAreFontLoaded } from '../hooks/useAreFontsLoaded';
 import { useGameKeys } from '../hooks/useGameKeys';
+import { useSoundsManager } from '../hooks/useSoundsManager';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { CreatureBlocks } from './CreatureBlocks';
 import { EquipedItems } from './EquipedItems';
@@ -64,6 +65,7 @@ interface Props {
 export const Game: React.FC<Props> = (props) => {
   const areFontsLoaded = useAreFontLoaded();
   useGameKeys(props.dispatch, props.state.gameStatus);
+  useSoundsManager({ sounds: props.state.sounds, round: props.state.round });
 
   const initMap = () => {
     const seed = props.state.seed
