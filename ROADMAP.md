@@ -16,6 +16,9 @@
 - [x] Highlight player
 - [x] Add shake animation when player deals damage
 - [x] Add fadein animation
+- [ ] Leave bones/blood permanently on ground when creature dies
+- [ ] Press key to go downstairs
+- [ ] Press key to wait
 - [ ] Add doors in generateLevel
 - [ ] Add grass in generateLevel
 - [ ] Hunger clock (with impact on visibility)?
@@ -31,10 +34,11 @@
 - [ ] Add sound when creature misses
 - [ ] Add sound when creature dies
 - [ ] Add sound on gameover
+- [ ] Stop music on death
 - [ ] Sounds on crit
 - [x] Sound on loot gold
-- [ ] Sound on changing depth
-- [ ] Sound over music
+- [x] Add stairs sound
+- [x] Sound over music
 
 ## Improve eventLogs
 
@@ -82,8 +86,6 @@
 
 ## Others
 
-- [ ] Leave bones/blood permanently on ground when creature dies
-- [ ] Press a key to go downstairs
 - [ ] Keep spawning creatures during play?
 - [ ] Unstable terrain - Unstable condition - all attack are crits
 - [ ] BUG: Goblins placed in front of rat even if further away?

@@ -39,4 +39,5 @@ export const MAX_HORDES_NUMBER = 10;
 
 /** DEBUG */
 
-export const DEBUG_SPAWN_CREATURES = true;
+export const PLAY_MUSIC_AT_START = false;
+export const DEBUG_SPAWN_CREATURES = false;

@@ -8,6 +8,7 @@ import { useImmerReducer } from 'use-immer';
 import useSound from 'use-sound';
 
 import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
+import { PLAY_MUSIC_AT_START } from './constants/config';
 import { game } from './game-logic';
 import { INITIAL_STATE } from './game-logic/game';
 import { Game } from './game-ui/Game';
@@ -28,7 +29,7 @@ export const App: React.FC = () => {
   const [state, dispatch] = useImmerReducer(game, INITIAL_STATE);
   const [play, { stop }] = useSound<HowlOptions>(crystalCaveSong, { loop: true, volume: 0.1 });
   const didUserInput = useDetectUserInput();
-  const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(false);
+  const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(PLAY_MUSIC_AT_START);
 
   React.useEffect(() => {
     if (didUserInput && withBackgroundMusic) {

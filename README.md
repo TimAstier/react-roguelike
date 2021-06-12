@@ -68,6 +68,7 @@ https://react-roguelike.herokuapp.com
 - Flames [art](https://opengameart.org/content/lpc-flames) from Sharm
 - Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 - [Coin sound effects](https://opengameart.org/content/12-coin-sound-effects) from [StarNinjas](https://opengameart.org/users/starninjas)
+- [Stone stairs sound effect](https://opengameart.org/content/stone-stair-steps) from [Dorkster](https://opengameart.org/users/dorkster)
 
 ## License
 
