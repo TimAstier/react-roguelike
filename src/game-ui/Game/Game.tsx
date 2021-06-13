@@ -2,6 +2,7 @@ import React from 'react';
 import seedrandom from 'seedrandom';
 import styled from 'styled-components';
 
+import { GAMEOVER_FADEOUT_DURATION } from '../../constants/config';
 import { GameAction, gameActions, GameState } from '../../game-logic/game';
 import { generateLevel } from '../../pcg/generateLevel';
 import { getRandomString } from '../../utils/getRandomString';
@@ -66,6 +67,7 @@ export const Game: React.FC<Props> = (props) => {
   const areFontsLoaded = useAreFontLoaded();
   useGameKeys(props.dispatch, props.state.gameStatus);
   useSoundsManager({ sounds: props.state.sounds, round: props.state.round });
+  const [showGameOver, setShowGameover] = React.useState(false);
 
   const initMap = () => {
     const seed = props.state.seed
@@ -100,6 +102,17 @@ export const Game: React.FC<Props> = (props) => {
       initGameState();
     }
   }, [props.state.depth]);
+
+  React.useEffect(() => {
+    if (props.state.gameStatus === 'gameover') {
+      const timer = setTimeout(() => {
+        setShowGameover(true);
+      }, GAMEOVER_FADEOUT_DURATION);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [props.state.gameStatus]);
 
   if (!areFontsLoaded) {
     return null;
@@ -148,8 +161,8 @@ export const Game: React.FC<Props> = (props) => {
             round={props.state.round}
           >
             <DoubleBorders>
-              <Viewport depth={props.state.depth}>
-                {props.state.currentMap && props.state.gameStatus === 'playing' && (
+              <Viewport depth={props.state.depth} gameStatus={props.state.gameStatus}>
+                {!showGameOver && (
                   <Canvas
                     playerPosition={props.state.playerPosition}
                     gameMap={props.state.currentMap}
@@ -161,9 +174,7 @@ export const Game: React.FC<Props> = (props) => {
                     hoveredCreatureId={props.state.hoveredCreatureId}
                   />
                 )}
-                {props.state.gameStatus === 'gameover' && (
-                  <GameOver deathText={props.state.deathText} />
-                )}
+                {showGameOver && <GameOver deathText={props.state.deathText} />}
               </Viewport>
             </DoubleBorders>
           </ShakeLayer>

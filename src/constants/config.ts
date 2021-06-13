@@ -1,5 +1,6 @@
-export const ANIMATIONS_DURATION = 200; // Also update animations.css <= could use scss to use variable
 export const PAUSE_TIME_BETWEEN_MOVES = 250; // ms
+export const ANIMATIONS_DURATION = 200; // Also update animations.css <= could use scss to use variable
+export const GAMEOVER_FADEOUT_DURATION = 1000;
 
 export const CELL_WIDTH_IN_PIXELS = 29;
 export const NUMBER_OF_CELLS_IN_VIEWPORT_X = 31; // Has to be odd to center the player
@@ -39,5 +40,5 @@ export const MAX_HORDES_NUMBER = 10;
 
 /** DEBUG */
 
-export const PLAY_MUSIC_AT_START = false;
-export const DEBUG_SPAWN_CREATURES = false;
+export const PLAY_MUSIC_AT_START = true;
+export const DEBUG_SPAWN_CREATURES = true;

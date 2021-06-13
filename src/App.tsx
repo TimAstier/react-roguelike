@@ -8,7 +8,7 @@ import { useImmerReducer } from 'use-immer';
 import useSound from 'use-sound';
 
 import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
-import { PLAY_MUSIC_AT_START } from './constants/config';
+import { GAMEOVER_FADEOUT_DURATION, PLAY_MUSIC_AT_START } from './constants/config';
 import { game } from './game-logic';
 import { INITIAL_STATE } from './game-logic/game';
 import { Game } from './game-ui/Game';
@@ -27,7 +27,10 @@ const Wrapper = styled.div`
 
 export const App: React.FC = () => {
   const [state, dispatch] = useImmerReducer(game, INITIAL_STATE);
-  const [play, { stop }] = useSound<HowlOptions>(crystalCaveSong, { loop: true, volume: 0.1 });
+  const [play, { stop, sound }] = useSound<HowlOptions>(crystalCaveSong, {
+    loop: true,
+    volume: 0.1,
+  });
   const didUserInput = useDetectUserInput();
   const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(PLAY_MUSIC_AT_START);
 
@@ -44,6 +47,12 @@ export const App: React.FC = () => {
       play();
     }
   }, [withBackgroundMusic]);
+
+  React.useEffect(() => {
+    if (state.gameStatus === 'gameover') {
+      sound.fade(0.1, 0, GAMEOVER_FADEOUT_DURATION);
+    }
+  }, [state.gameStatus]);
 
   return (
     <Wrapper>
