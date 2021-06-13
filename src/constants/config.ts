@@ -1,3 +1,10 @@
+/** DEBUG */
+
+export const PLAY_MUSIC_AT_START = true;
+export const DEBUG_SPAWN_CREATURES = true;
+
+/** END DEGUG */
+
 export const PAUSE_TIME_BETWEEN_MOVES = 250; // ms
 export const ANIMATIONS_DURATION = 200; // Also update animations.css <= could use scss to use variable
 export const GAMEOVER_FADEOUT_DURATION = 1000;
@@ -37,8 +44,3 @@ export const MAX_GOLD_SPAWN_NUMBER = 10;
 
 export const MIN_HORDES_NUMBER = 5;
 export const MAX_HORDES_NUMBER = 10;
-
-/** DEBUG */
-
-export const PLAY_MUSIC_AT_START = true;
-export const DEBUG_SPAWN_CREATURES = true;
