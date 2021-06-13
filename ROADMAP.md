@@ -34,7 +34,7 @@
 - [ ] Add sound when creature misses
 - [ ] Add sound when creature dies
 - [ ] Sounds on crit
-- [ ] Add sound on gameover
+- [x] Add gameover theme
 - [x] Stop music on death
 - [x] Sound on loot gold
 - [x] Add stairs sound

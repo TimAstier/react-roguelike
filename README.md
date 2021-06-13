@@ -63,6 +63,7 @@ https://react-roguelike.herokuapp.com
 ## Credits
 
 - Music from Pixelsphere.org / The Cynic Project from [opengameart](https://opengameart.org/content/crystal-cave-song18)
+- [Gameover theme](https://opengameart.org/content/game-over-theme) by Cleyton Kauffman - https://soundcloud.com/cleytonkauffman
 - Font [Ugly Terminal 8](https://fontstruct.com/fontstructions/show/915284) by "ahoge", Creative Commons Attribution [license](http://creativecommons.org/licenses/by/3.0/)
 - [Roguelike/RPG Items](https://opengameart.org/content/roguelikerpg-items) by @JoeCreates (Twitter)
 - Flames [art](https://opengameart.org/content/lpc-flames) from Sharm

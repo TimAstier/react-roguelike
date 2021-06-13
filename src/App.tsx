@@ -8,6 +8,7 @@ import { useImmerReducer } from 'use-immer';
 import useSound from 'use-sound';
 
 import crystalCaveSong from './assets/music/crystal-cave-song.mp3';
+import gameoverSong from './assets/music/no-hope.mp3';
 import { GAMEOVER_FADEOUT_DURATION, PLAY_MUSIC_AT_START } from './constants/config';
 import { game } from './game-logic';
 import { INITIAL_STATE } from './game-logic/game';
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
     loop: true,
     volume: 0.1,
   });
+  const [playGameover] = useSound(gameoverSong, { volume: 0.6 });
   const didUserInput = useDetectUserInput();
   const [withBackgroundMusic, setWithBackgroundMusic] = React.useState(PLAY_MUSIC_AT_START);
 
@@ -51,8 +53,16 @@ export const App: React.FC = () => {
   React.useEffect(() => {
     if (state.gameStatus === 'gameover') {
       sound.fade(0.1, 0, GAMEOVER_FADEOUT_DURATION);
+      if (withBackgroundMusic) {
+        const timer = setTimeout(() => {
+          playGameover();
+        }, GAMEOVER_FADEOUT_DURATION);
+        return () => {
+          clearTimeout(timer);
+        };
+      }
     }
-  }, [state.gameStatus]);
+  }, [state.gameStatus, withBackgroundMusic]);
 
   return (
     <Wrapper>
