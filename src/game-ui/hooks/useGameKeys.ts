@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { PAUSE_TIME_BETWEEN_MOVES } from '../../constants/config';
-import { PLAYER_ACTIONS } from '../../constants/playerActions';
+import { PLAYER_ACTION_SHORTCUTS, PLAYER_ACTIONS } from '../../constants/playerActions';
 import { GameAction, gameActions } from '../../game-logic/game';
 import { GameStatus } from '../../typings/gameStatus';
 import { MoveDirection } from '../../typings/moveDirection';
 
-const GAME_KEYS = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'w'];
+const GAME_KEYS = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', ...PLAYER_ACTION_SHORTCUTS];
 
 const mapKeyCodeToDirection = (key: string): MoveDirection | undefined => {
   if (!GAME_KEYS.includes(key)) {
