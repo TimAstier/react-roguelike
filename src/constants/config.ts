@@ -5,7 +5,7 @@ export const DEBUG_SPAWN_CREATURES = true;
 
 /** END DEGUG */
 
-export const PAUSE_TIME_BETWEEN_MOVES = 250; // ms
+export const PAUSE_TIME_BETWEEN_MOVES = 126; // ms
 export const ANIMATIONS_DURATION = 200; // Also update animations.css <= could use scss to use variable
 export const GAMEOVER_FADEOUT_DURATION = 1000;
 
