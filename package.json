@@ -1,6 +1,6 @@
 {
   "name": "react-roguelike",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": false,
   "description": "A roguelike game built with React and TypeScript.",
   "repository": "https://github.com/TimAstier/react-roguelike",
@@ -19,6 +19,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/seedrandom": "^3.0.0",
     "@types/styled-components": "^5.1.9",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "eslint": "^7.24.0",
@@ -36,12 +37,14 @@
     "react-konva": "^17.0.2-0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "rpg-dice-roller": "^5.0.0",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.2.3",
     "typescript": "^4.1.2",
     "use-image": "^1.0.7",
     "use-immer": "^0.5.1",
     "use-sound": "^2.1.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -73,5 +76,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [ "/node_modules/(?!rpg-dice-roller).+\\.js$"]
   }
 }

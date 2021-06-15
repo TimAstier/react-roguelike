@@ -1,55 +1,71 @@
 # ROADMAP
 
-- [x] Create basic grid
-- [x] Move with arrow keys
-- [x] Smooth move animation
-- [x] Add Prettier
-- [x] Live demo with auto-deploy when merge into master
-- [x] Debounce keypress handler
-- [x] Protect master branch
-- [x] Auto deploy development and review app
-- [x] Setup Circle CI
-- [x] Add CONRIBUTING file and @all-contributors bot
-- [x] Fixed viewport and moving background
-- [x] Walls
-- [x] Fog of war
-- [x] Hide cells that are hidden behind walls in fogOfWar
-- [x] Add sound manager
-- [x] Inventory component
-- [x] "Interaction text" component
-- [x] "Events text" component
-- [x] Remember visibility of explored cells
-- [x] Reveal adjacent walls
-- [x] Toolbar (to see available tiles)
-- [x] Add tiles to map in /pcg
-- [x] Load game from map in /pcg
-- [x] Add Cell logic to render tiles or content depending on visibility and revealed
-- [x] Add HP state and design
-- [x] Describe tiles via hover on cell in InteractionText.
-- [x] Player stats
-- [x] Fix interaction text showing when mouse hovers as consequence of player movement
-- [x] Doors
-- [x] Keyboard shortcuts
-- [x] Interaction text when hitting walls
-- [x] Only see "something" when an item is in dim light.
-- [ ] Hunger clock with impact on visibility
-- [ ] Pillar tile to climb and increase visibility
-- [ ] Creatures
-- [ ] Improve generateLevel's corridors
+## Game improvements
+
+- [ ] Hunger clock (with impact on visibility)?
+- [ ] Way to regain hunger clock
+- [ ] Add doors in generateLevel
+- [ ] Make depths harder and harder
+- [ ] Leave bones/blood permanently on ground when creature dies
+- [ ] Press key to go downstairs
+
+## Improve eventLogs
+
+- [ ] Display logs from same round on the same row.
+- [ ] Add colors in eventLogs
+- [ ] Make it more obvious which logs are from the previous round
+- [ ] Scroll through eventLogs (and reset on next one)
+
+## Debug mode
+
+- [ ] Load game from test map
+- [ ] Has BGM: off by default
+- [ ] Possibility to edit cells in game
+
+## Races
+
+- [ ] Add UI to pick race/name
+- [ ] Possibility to get a random name
+- [ ] Preview of Player (different size and colors)
+- [ ] Impact on
+  - [ ] Initial CON (Health)
+  - [ ] Max visibility
+  - [ ] Initial STR (carrying capacity)
+- [ ] First races: Elf / Goliath / Gnome / Human
+
+## Items
+
+- [ ] Add grass in generateLevel
+- [ ] Something to set fire
+- [ ] Throw items
+- [ ] Equip items (in any hand)
 - [ ] Add items in generateLevel
-- [ ] Add monsters in generateLevel
-- [ ] Add downward staircases tile and in generateLevel
-- [ ] Add project to this PR: https://github.com/konvajs/konva/issues/256
-- [ ] Seed map with RNG
-- [ ] Attacks
-- [ ] Creatures' AI
+
+## Ability ideas
+
+- Shields up: Block and counterattack against any ennemy next turn.
+
+## Spell ideas
+
+- Wormhole. You use it on a wall, and it creates a temporary tunnel to the other side. It works like a normal corridor, but after some time it closes and places the wall tiles back. You can use it to skip rooms, to shoot through it, to make shortcuts, to escape from danger, or even lure monsters there and then let it close while they are inside so they get crushed by the wall.
+- Clone. Creates your clone that you can control. Every turn you have to make a move for yourself, and then for your clone too. After some time it disappears.
+- Time stop. For some time gives you infinite speed, or, in other words, stops everything except you. You are the only one who get to move. You can do sequential attacks, knowing for the next few turns no one can move. For monsters it will look just like you did it all in one turn.
+- Wall. Well, it basically creates temporary wall. Or may be something more interesting, like it can only shift already existing walls. After some time everything returns to normal.
+- Blink spell, the ability to teleport instantly a short distance.
+- Stone Wall
+
+## Others
+
+- [ ] Keep spawning creatures during play?
+- [ ] Unstable terrain - Unstable condition - all attack are crits
+- [ ] BUG: Goblins placed in front of rat even if further away?
+- [ ] Creatures can burn (like player)
+- [ ] Predefined dungeon entry, with flames
+- [ ] Improve generateLevel's corridors
+- [ ] Consider Player just as another creature? Sth like isPlayer = true
+- [ ] Menus at bottom of screen
+- [ ] Remember high scores with local storage
+- [ ] Pillar tile to climb and increase visibility
+- [ ] Burning entities can set flammable tiles on fire
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?
-- [ ] Move over the map by moving Viewport (see https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation:_Scrolling_maps)
-- [ ] NPCs
-- [ ] Player death
-- [ ] Active conditions
-- [ ] Rest
-- [ ] Environment: grass, water, plants...
-- [ ] Throw items
-- [ ] Use requestAnimationFrame for player movement. See for example [this code](https://github.com/KilroggD/rpg-react-redux/blob/master/src/tile-view/GameLoop.js) and [explanations](https://levelup.gitconnected.com/rpg-game-with-react-redux-html5-part-1-build-a-tile-map-9144fd867830), or [this code](https://github.com/ASteinheiser/react-rpg.com/blob/edd9d6f2af131822f97b3b49eb91696ec5e3f497/src/features/player/index.js).

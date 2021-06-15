@@ -10,6 +10,8 @@ interface Item {
   nameInSentence: string;
 }
 
+// TODO: Refactor using same pattern as in Conditions
+
 export const ITEMS: Item[] = [
   {
     type: 'Sword',

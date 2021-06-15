@@ -1,7 +1,7 @@
 export const NON_REVEALED_BACKGROUND_COLOR = 'rgb(0,0,0,1)';
 export const DEFAULT_FONT_COLOR = '#5C606A';
 
-export type TileType = ' ' | '#' | '.' | '@' | '+';
+export type TileType = ' ' | '#' | '.' | '@' | '+' | '"' | "'" | '>';
 
 export interface Tile {
   type: TileType;
@@ -11,10 +11,12 @@ export interface Tile {
   dimBackgroundColor: string;
   clearFontColor: string;
   dimFontColor: string;
-  // flammability: number;
-  // opacity: number;
   canWalkThrough: boolean;
+  flammability: number; // From 0 to 1 | 0 = won't burn; 1 = burns for sure next round
+  // opacity: number;
 }
+
+// TODO: Refactor using same pattern as in Conditions
 
 export const TILES: Tile[] = [
   {
@@ -26,6 +28,7 @@ export const TILES: Tile[] = [
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
     canWalkThrough: true,
+    flammability: 0,
   },
   {
     type: '#',
@@ -36,6 +39,7 @@ export const TILES: Tile[] = [
     clearFontColor: 'black',
     dimFontColor: 'black',
     canWalkThrough: false,
+    flammability: 0,
   },
   {
     type: '.',
@@ -46,6 +50,7 @@ export const TILES: Tile[] = [
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
     canWalkThrough: true,
+    flammability: 0,
   },
   {
     type: '@',
@@ -56,6 +61,7 @@ export const TILES: Tile[] = [
     clearFontColor: DEFAULT_FONT_COLOR,
     dimFontColor: '#555564',
     canWalkThrough: true,
+    flammability: 0,
   },
   {
     type: '+',
@@ -66,6 +72,40 @@ export const TILES: Tile[] = [
     clearFontColor: '#EB833D',
     dimFontColor: '#EB833D',
     canWalkThrough: true,
+    flammability: 0.12,
+  },
+  {
+    type: '"',
+    name: 'grass',
+    nameInSentence: 'some grass',
+    clearBackgroundColor: '#131226',
+    dimBackgroundColor: '#020211',
+    clearFontColor: '#548419',
+    dimFontColor: '#245702',
+    canWalkThrough: true,
+    flammability: 0.55,
+  },
+  {
+    type: "'",
+    name: 'ashes',
+    nameInSentence: 'a pile of ashes',
+    clearBackgroundColor: '#131226',
+    dimBackgroundColor: '#020211',
+    clearFontColor: 'grey',
+    dimFontColor: '#808080',
+    canWalkThrough: true,
+    flammability: 0,
+  },
+  {
+    type: '>',
+    name: 'downwardStaircase',
+    nameInSentence: 'a downward staircase',
+    clearBackgroundColor: '#131226',
+    dimBackgroundColor: '#020211',
+    clearFontColor: '#D0CC00',
+    dimFontColor: '#D0CC00',
+    canWalkThrough: true,
+    flammability: 0,
   },
 ];
 
