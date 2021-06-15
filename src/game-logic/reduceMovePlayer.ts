@@ -74,6 +74,7 @@ const moveToNewPosition = (draft: GameState, position: Position) => {
     draft.currentMap.map((row) => row.map((cellData) => cellData.tile)),
     position
   );
+  draft.sounds.push('stone');
 };
 
 const moveAndStayAtSamePosition = (draft: GameState, tileNameInSentence: string | undefined) => {
