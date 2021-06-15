@@ -1,12 +1,24 @@
 // Inspired by https://www.youtube.com/watch?v=TlLIOgWYVpI
 
-import { GRID_HEIGHT, GRID_WIDTH } from '../constants/config';
+import {
+  DEBUG_SPAWN_CREATURES,
+  GRID_HEIGHT,
+  GRID_WIDTH,
+  MAX_GOLD_SPAWN_NUMBER,
+  MAX_HORDES_NUMBER,
+  MIN_GOLD_SPAWN_NUMBER,
+  MIN_HORDES_NUMBER,
+} from '../constants/config';
+import { CREATURES, CreatureType } from '../constants/creatures';
 import { TileType } from '../constants/tiles';
 import { Area } from '../typings/area';
 import { CellData } from '../typings/cell';
 import { Level } from '../typings/level';
 import { Position } from '../typings/position';
 import { findCellsInArea } from '../utils/findCellsInArea';
+import { getRandomIntInclusive } from '../utils/getRandomIntInclusive';
+import { getSurroundingPositions } from '../utils/getSurroundingPositions';
+import { shuffleArray } from '../utils/shuffleArray';
 import { walkGrid } from '../utils/walkGrid';
 import { getRandomAreaWithinArea } from './getRandomAreaWithinArea';
 import { horizontalSplitArea } from './horizontalSplitArea';
@@ -129,6 +141,22 @@ const connectAllLeaves = (
   return newMap;
 };
 
+const findGroundPositions = (map: TileType[][]): Position[] => {
+  return map
+    .map((row, j) => row.map((tile, i) => (tile === '.' ? ([i, j] as Position) : null)))
+    .flat()
+    .filter((p) => p !== null) as Position[];
+};
+
+const placeDownwardStaircase = (map: TileType[][], rng: () => number) => {
+  const newMap = map;
+  const candidatePositions = findGroundPositions(newMap);
+  const positionIndex = getRandomIntInclusive(0, candidatePositions.length - 1, rng);
+  const position = candidatePositions[positionIndex];
+  newMap[position[1]][position[0]] = '>';
+  return newMap;
+};
+
 const generateMap = (rng: () => number): TileType[][] => {
   // Get an empty map
   const emptyMap = createEmptyMap(GRID_WIDTH, GRID_HEIGHT);
@@ -148,25 +176,89 @@ const generateMap = (rng: () => number): TileType[][] => {
   // Connect rooms
   resultMap = connectAllLeaves(leavesArray, resultMap, rng);
 
+  // Place downards staircase
+  resultMap = placeDownwardStaircase(resultMap, rng);
+
   return resultMap;
 };
+
+const getGoldSize = (rng: () => number) => {
+  return rng() > 0.5 ? 'BigGold' : 'SmallGold';
+};
+
+const pickCreatureType = (rng: () => number): CreatureType => (rng() > 0.5 ? 'goblin' : 'rat'); // TODO
+
+interface SpawnPosition {
+  position: Position;
+  creatureType: CreatureType;
+}
 
 export const createGameMap = (
   map: TileType[][],
   spawn: Position,
   width: number,
-  height: number
+  height: number,
+  rng?: () => number
 ): CellData[][] => {
+  const candidatePositions = findGroundPositions(map);
+  const shuffledCandidatePositions = shuffleArray(candidatePositions, rng) as Position[];
+
+  const goldSpawnNumber = getRandomIntInclusive(MIN_GOLD_SPAWN_NUMBER, MAX_GOLD_SPAWN_NUMBER, rng);
+  const goldPositions = shuffledCandidatePositions.splice(0, goldSpawnNumber).map((p) => String(p));
+
+  const hordesNumber = getRandomIntInclusive(MIN_HORDES_NUMBER, MAX_HORDES_NUMBER, rng);
+  const hordesPositions = shuffledCandidatePositions.splice(0, hordesNumber);
+
+  let spawnPositions: SpawnPosition[] = [];
+
+  if (rng && DEBUG_SPAWN_CREATURES) {
+    // Generate spawnPositions
+    hordesPositions.forEach((position) => {
+      const creatureType = pickCreatureType(rng);
+      const options = { position, radius: 3, mapHeight: GRID_HEIGHT, mapWidth: GRID_WIDTH };
+      const surroundingPositions = getSurroundingPositions(options);
+      const surroundingCandidatePositions = surroundingPositions.filter((value) =>
+        shuffledCandidatePositions.map((p) => String(p)).includes(String(value))
+      );
+      const shuffledSurroundingCandidatePositions = shuffleArray(
+        surroundingCandidatePositions,
+        rng
+      ) as Position[];
+      spawnPositions = spawnPositions.concat(
+        ...shuffledSurroundingCandidatePositions
+          .splice(
+            0,
+            Math.min(
+              CREATURES[creatureType].spawnNumber,
+              shuffledSurroundingCandidatePositions.length
+            )
+          )
+          .map((p) => ({ position: p, creatureType }))
+      );
+    });
+  }
+
   const gameMap: CellData[][] = [];
   for (let j = 0; j < height; j += 1) {
     gameMap[j] = [];
     for (let i = 0; i < width; i += 1) {
+      let content: 0 | 'SmallGold' | 'BigGold' = 0;
+      let creature = undefined;
+      if (rng) {
+        content = goldPositions.includes(String([i, j])) ? getGoldSize(rng) : 0;
+        const spawnType = spawnPositions
+          .map((p) => ({ position: String(p.position), creatureType: p.creatureType }))
+          .find((p) => p.position === String([i, j]));
+        creature = spawnType ? { type: spawnType.creatureType, id: 'temp_id' } : undefined;
+      }
       gameMap[j][i] = {
-        content: 0,
+        content,
         tile: map[j][i],
         revealed: false,
         visibility: 'clear',
         burningRounds: 0,
+        creature,
+        position: `${i},${j}`,
       };
       if (i === spawn[0] && j === spawn[1]) {
         gameMap[j][i].content = 'Player';
@@ -187,7 +279,7 @@ export const generateLevel = (rng: () => number): Level => {
   map[spawn[1]][spawn[0]] = '@';
 
   // Create gameMap
-  const gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT);
+  const gameMap = createGameMap(map, spawn, GRID_WIDTH, GRID_HEIGHT, rng);
 
   return { gameMap, playerSpawn: spawn };
 };

@@ -9,6 +9,7 @@ const c: CellData = {
   revealed: true,
   visibility: 'clear',
   burningRounds: 0,
+  position: 'x,x',
 };
 
 const d: CellData = { ...c, visibility: 'dim' };

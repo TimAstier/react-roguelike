@@ -1,4 +1,13 @@
-export const PAUSE_TIME_BETWEEN_MOVES = 75; // ms
+/** DEBUG */
+
+export const PLAY_MUSIC_AT_START = true;
+export const DEBUG_SPAWN_CREATURES = true;
+
+/** END DEGUG */
+
+export const PAUSE_TIME_BETWEEN_MOVES = 126; // ms
+export const ANIMATIONS_DURATION = 200; // Also update animations.css <= could use scss to use variable
+export const GAMEOVER_FADEOUT_DURATION = 1000;
 
 export const CELL_WIDTH_IN_PIXELS = 29;
 export const NUMBER_OF_CELLS_IN_VIEWPORT_X = 31; // Has to be odd to center the player
@@ -29,3 +38,9 @@ export const BURNING_DAMAGE_PERCENTAGE = 9;
 
 export const PLAYER_BASE_ATTACK = '3d5+3';
 export const PLAYER_BASE_AC = 13;
+
+export const MIN_GOLD_SPAWN_NUMBER = 3;
+export const MAX_GOLD_SPAWN_NUMBER = 10;
+
+export const MIN_HORDES_NUMBER = 5;
+export const MAX_HORDES_NUMBER = 10;

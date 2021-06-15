@@ -1,72 +1,20 @@
 # ROADMAP
 
-## Creatures
+## Game improvements
 
-- [x] Creatures definitions
-- [x] Display creatures on the map
-- [x] Info on hover
-- [x] Attack a creature
-- [x] Creature attacks
-- [x] Creature movements
-- [x] Fix creatures moving on same tile
-- [x] Display death message on gameover screen
-- [x] Tick function
-- [x] Creature status (idle, hostile)
-- [x] Math for attacks damage
-- [x] Miss / hit
-- [x] Critical hits
-- [ ] Create 3 types of creatures with unique traits
-- [ ] Creatures can burn (like player)
-- [ ] Consider Player just as another creature? Sth like isPlayer = true
-- [x] Reset interactionText on death
-- [x] Fix creatures can move through walls when packed?
-- [x] Fix creatures moving away when bumping into each other
-
-## Improve game display
-
-- [x] Extend viewports (only 3 rows in eventLogs, use more width, only 2 rows down, increase cell width)
-- [x] Display creature blocks
-- [x] Scroll if too many blocks
-- [x] Add bars for HP
-- [x] Sort creature blocks
-- [x] Bug: Rat always show idle
-- [x] Add blink animation when attacking creature
-- [x] Add blink animation when player is attacked
-- [ ] Hover on creatures highlight creature block
-- [ ] Hover on creature block highlightd creature
-- [ ] Improve eventLogs
-  - [ ] Display logs from same round on the same row.
-  - [ ] Add colors in eventLogs
-  - [ ] Make it more obvious which logs are from the previous round
-  - [ ] Scroll through eventLogs (and reset on next one)
-- [ ] Menus at bottom of screen
-
-## Map generation
-
-- [x] Seed map with RNG
-- [ ] Add downward staircases tile and in generateLevel
-- [ ] Improve generateLevel's corridors
-- [ ] Add doors in generateLevel
-- [ ] Add grass in generateLevel
-- [ ] Add items in generateLevel
-- [ ] Predefined dungeon entry, with flames
-- [ ] Add monsters in generateLevel (use spawnNumber)
-
-## Gameplay
-
-- [ ] Bug: Creature moving away if no space available because blocked by ally
-- [ ] Improve: Creature should not move where another creature died
-- [ ] Hunger clock with impact on visibility
-- [ ] Way to heal
+- [ ] Hunger clock (with impact on visibility)?
 - [ ] Way to regain hunger clock
+- [ ] Add doors in generateLevel
+- [ ] Make depths harder and harder
+- [ ] Leave bones/blood permanently on ground when creature dies
+- [ ] Press key to go downstairs
 
-## Dijkstra Maps - getDijkstraMap(target, passible, impassible)
+## Improve eventLogs
 
-- [x] One goal
-- [ ] Multiple goals
-- [ ] Multiple priority levels
-- [ ] Mouse pathfinding
-- [ ] Pack behavior by adding costs around tiles occupied by an ally
+- [ ] Display logs from same round on the same row.
+- [ ] Add colors in eventLogs
+- [ ] Make it more obvious which logs are from the previous round
+- [ ] Scroll through eventLogs (and reset on next one)
 
 ## Debug mode
 
@@ -87,16 +35,37 @@
 
 ## Items
 
+- [ ] Add grass in generateLevel
 - [ ] Something to set fire
 - [ ] Throw items
 - [ ] Equip items (in any hand)
+- [ ] Add items in generateLevel
+
+## Ability ideas
+
+- Shields up: Block and counterattack against any ennemy next turn.
+
+## Spell ideas
+
+- Wormhole. You use it on a wall, and it creates a temporary tunnel to the other side. It works like a normal corridor, but after some time it closes and places the wall tiles back. You can use it to skip rooms, to shoot through it, to make shortcuts, to escape from danger, or even lure monsters there and then let it close while they are inside so they get crushed by the wall.
+- Clone. Creates your clone that you can control. Every turn you have to make a move for yourself, and then for your clone too. After some time it disappears.
+- Time stop. For some time gives you infinite speed, or, in other words, stops everything except you. You are the only one who get to move. You can do sequential attacks, knowing for the next few turns no one can move. For monsters it will look just like you did it all in one turn.
+- Wall. Well, it basically creates temporary wall. Or may be something more interesting, like it can only shift already existing walls. After some time everything returns to normal.
+- Blink spell, the ability to teleport instantly a short distance.
+- Stone Wall
 
 ## Others
 
+- [ ] Keep spawning creatures during play?
+- [ ] Unstable terrain - Unstable condition - all attack are crits
+- [ ] BUG: Goblins placed in front of rat even if further away?
+- [ ] Creatures can burn (like player)
+- [ ] Predefined dungeon entry, with flames
+- [ ] Improve generateLevel's corridors
+- [ ] Consider Player just as another creature? Sth like isPlayer = true
+- [ ] Menus at bottom of screen
 - [ ] Remember high scores with local storage
 - [ ] Pillar tile to climb and increase visibility
 - [ ] Burning entities can set flammable tiles on fire
 - [ ] Fix can see through diagonal walls
 - [ ] Why can see more on the left side at the end of corridors?
-- [ ] NPCs
-- [ ] Rest

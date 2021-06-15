@@ -1,6 +1,7 @@
 import { INITIAL_MAX_HP } from '../constants/config';
 import { CreatureEntity } from '../constants/creatures';
 import { ItemType } from '../constants/items';
+import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { ActiveConditions } from '../typings/activeConditions';
 import { CellData } from '../typings/cell';
 import { GameStatus } from '../typings/gameStatus';
@@ -8,6 +9,7 @@ import { Hit } from '../typings/hit';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { getDijkstraMap } from '../utils/getDijkstraMap';
+import { reduceDoPlayerAction } from './reduceDoPlayerAction';
 import { HoverCellPayload, reduceHoverCell } from './reduceHoverCell';
 import { reduceInitCreatures } from './reduceInitCreatures';
 import { reduceMovePlayer } from './reduceMovePlayer';
@@ -25,7 +27,10 @@ export type GameAction =
   | { type: '@@GAME/INIT_VISIBILITY' }
   | { type: '@@GAME/INIT_CREATURES' }
   | { type: '@@GAME/HOVER_CELL'; payload: HoverCellPayload }
-  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' };
+  | { type: '@@GAME/HOVER_AWAY_FROM_CELL' }
+  | { type: '@@GAME/HOVER_CREATURE_BLOCK'; creatureId: string }
+  | { type: '@@GAME/HOVER_AWAY_FROM_CREATURE_BLOCK' }
+  | { type: '@@GAME/DO_PLAYER_ACTION'; playerAction: string };
 
 const movePlayer = (direction: MoveDirection): GameAction => ({
   type: '@@GAME/MOVE_PLAYER',
@@ -69,6 +74,20 @@ const hoverAwayFromCell = (): GameAction => ({
   type: '@@GAME/HOVER_AWAY_FROM_CELL',
 });
 
+const hoverCreatureBlock = (creatureId: string): GameAction => ({
+  type: '@@GAME/HOVER_CREATURE_BLOCK',
+  creatureId,
+});
+
+const hoverAwayFromCreatureBlock = (): GameAction => ({
+  type: '@@GAME/HOVER_AWAY_FROM_CREATURE_BLOCK',
+});
+
+const doPlayerAction = (playerAction: string): GameAction => ({
+  type: '@@GAME/DO_PLAYER_ACTION',
+  playerAction,
+});
+
 export const gameActions = {
   movePlayer,
   setCurrentMap,
@@ -79,6 +98,9 @@ export const gameActions = {
   initCreatures,
   hoverCell,
   hoverAwayFromCell,
+  hoverCreatureBlock,
+  hoverAwayFromCreatureBlock,
+  doPlayerAction,
 };
 
 // INITIAL_STATE
@@ -105,6 +127,11 @@ export interface GameState {
   playerConditions: ActiveConditions;
   creatures: { [id: string]: CreatureEntity };
   hitsLastRound: Hit[];
+  deathPositionsThisRound: Position[];
+  hoveredCreatureId: string;
+  sounds: (keyof typeof SOUNDS)[];
+  waitStreak: number;
+  playerActions: string[];
 }
 
 export const INITIAL_STATE: GameState = {
@@ -129,6 +156,11 @@ export const INITIAL_STATE: GameState = {
   gold: 0,
   playerConditions: {},
   hitsLastRound: [],
+  deathPositionsThisRound: [],
+  hoveredCreatureId: '',
+  sounds: [],
+  waitStreak: 0,
+  playerActions: ['wait'],
 };
 
 // REDUCER
@@ -157,6 +189,13 @@ export const game = (draft = INITIAL_STATE, action: GameAction): GameState | voi
     case '@@GAME/HOVER_CELL':
       return reduceHoverCell(draft, action.payload);
     case '@@GAME/HOVER_AWAY_FROM_CELL':
+      draft.hoveredCreatureId = '';
       return void (draft.interactionText = '');
+    case '@@GAME/HOVER_CREATURE_BLOCK':
+      return void (draft.hoveredCreatureId = action.creatureId);
+    case '@@GAME/HOVER_AWAY_FROM_CREATURE_BLOCK':
+      return void (draft.hoveredCreatureId = '');
+    case '@@GAME/DO_PLAYER_ACTION':
+      return reduceDoPlayerAction(draft, action.playerAction);
   }
 };

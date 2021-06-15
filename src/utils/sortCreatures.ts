@@ -8,6 +8,8 @@ interface Options {
   hitsLastRound: Hit[];
 }
 
+// BUG: Goblins placed in front of rat even if further away?
+
 export const sortCreatures = (options: Options): CreatureEntity[] => {
   const array = Object.keys(options.creatures).map((id) => options.creatures[id]);
   return (

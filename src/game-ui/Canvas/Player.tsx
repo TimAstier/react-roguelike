@@ -2,6 +2,7 @@ import Konva from 'konva';
 import React from 'react';
 import { Group, Rect } from 'react-konva';
 
+import { PAUSE_TIME_BETWEEN_MOVES } from '../../constants/config';
 import {
   CELL_WIDTH_IN_PIXELS,
   NUMBER_OF_CELLS_IN_VIEWPORT_X,
@@ -20,22 +21,29 @@ interface Props {
 
 export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound, round }) => {
   const rectRef = React.useRef<Konva.Rect>(null);
+  const [hasBlinked, setHasBlinked] = React.useState(false);
   const playerWidth = 0.6 * CELL_WIDTH_IN_PIXELS;
   const frontWidth = 0.3 * CELL_WIDTH_IN_PIXELS;
   let frontXModifier: number;
   let frontYModifier: number;
 
   const wasHitLastRound = hitsLastRound.filter((h) => h.creatureId === 'player').length !== 0;
+  const shouldBlink = wasHitLastRound && !hasBlinked;
+
+  React.useEffect(() => {
+    setHasBlinked(false);
+  }, [round]);
 
   React.useEffect(() => {
     // TODO: UseBlink and use same logic for creature?
     if (rectRef.current) {
-      if (wasHitLastRound) {
+      if (shouldBlink) {
         const tween = new Konva.Tween({
           node: rectRef.current,
-          duration: 0.15,
+          duration: PAUSE_TIME_BETWEEN_MOVES / 1000,
           easing: Konva.Easings.BounceEaseInOut,
           fill: 'blue',
+          onFinish: () => setHasBlinked(true),
         });
         tween.play();
         return () => {
@@ -43,7 +51,7 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
         };
       }
     }
-  }, [wasHitLastRound, round]);
+  }, [round, shouldBlink]);
 
   switch (moveDirection) {
     case 'Up':
@@ -83,7 +91,7 @@ export const Player: React.FC<Props> = ({ moveDirection, dispatch, hitsLastRound
         ref={rectRef}
         width={playerWidth}
         height={playerWidth}
-        fill={wasHitLastRound ? 'red' : 'blue'}
+        fill={shouldBlink ? 'red' : 'blue'}
         x={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_X) / 2 - playerWidth / 2}
         y={(CELL_WIDTH_IN_PIXELS * NUMBER_OF_CELLS_IN_VIEWPORT_Y) / 2 - playerWidth / 2}
         _useStrictMode

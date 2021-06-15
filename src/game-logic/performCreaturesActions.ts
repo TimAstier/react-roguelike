@@ -2,6 +2,7 @@ import { DiceRoll } from 'rpg-dice-roller';
 
 import { PLAYER_BASE_AC } from '../constants/config';
 import { Creature, CreatureEntity, CREATURES } from '../constants/creatures';
+import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { Position } from '../typings/position';
 import { getAdjacentPositions } from '../utils/getAdjacentPositions';
 import { isInsideCircle } from '../utils/isInsideCircle';
@@ -22,9 +23,11 @@ const attackPlayer = (draft: GameState, template: Creature) => {
   const damage = damageRoll.total;
   draft.hitsLastRound.push({ creatureId: 'player', damage });
   draft.hp = Math.max(draft.hp - damage, 0);
+  draft.waitStreak = 0;
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}The ${template.type} hits you for ${damage} damage!`
   );
+  draft.sounds.push(`${template.type}Attack` as keyof typeof SOUNDS);
   if (draft.hp === 0) {
     draft.eventLogs.push('You died.');
     draft.deathText = `Killed by a ${template.type} on depth ${draft.depth}.`;
@@ -73,12 +76,12 @@ const tryMove = (
   const shuffledAdjacentPositions = adjacentPositions.sort(() => Math.random() - 0.5);
 
   // Remove options already occupied by a creature
-  const shuffledElmptyAdjacentPositions = shuffledAdjacentPositions.filter((position) => {
+  const shuffledEmptyAdjacentPositions = shuffledAdjacentPositions.filter((position) => {
     return !draft.currentMap[position[1]][position[0]].creature;
   });
 
   // TODO: return numbers from getDijkstraMap
-  const distances = shuffledElmptyAdjacentPositions.map((p) => {
+  const distances = shuffledEmptyAdjacentPositions.map((p) => {
     return draft.dijkstraMap[p[1]][p[0]] === '#' ? Infinity : Number(draft.dijkstraMap[p[1]][p[0]]);
   });
 
@@ -88,7 +91,18 @@ const tryMove = (
     return;
   }
   const nextPositionIndex = distances.findIndex((d) => d === nextDistance);
-  const nextPosition = shuffledElmptyAdjacentPositions[nextPositionIndex];
+  const nextPosition = shuffledEmptyAdjacentPositions[nextPositionIndex];
+
+  // Do not make creature moving away if they are surrounded by 2 or more walls
+  const currentDistance = Number(draft.dijkstraMap[entity.position[1]][entity.position[0]]);
+  if (distances.filter((d) => d === Infinity).length >= 2 && nextDistance > currentDistance) {
+    return;
+  }
+
+  if (draft.deathPositionsThisRound.map(String).includes(String(nextPosition))) {
+    // Do not move creatures on top of a creature that just died this round
+    return;
+  }
 
   // Perform the move
   draft.currentMap[nextPosition[1]][nextPosition[0]].creature = {

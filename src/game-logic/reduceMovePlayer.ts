@@ -4,16 +4,14 @@ import { GRID_HEIGHT, GRID_WIDTH, PLAYER_BASE_ATTACK } from '../constants/config
 import { CreatureType } from '../constants/creatures';
 import { CREATURES } from '../constants/creatures';
 import { getTile, Tile } from '../constants/tiles';
+import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { getDijkstraMap } from '../utils/getDijkstraMap';
-import { checkCreaturesDeath } from './checkCreaturesDeath';
 import { GameState } from './game';
+import { initRound } from './initRound';
 import { lootItem } from './lootItem';
-import { performCreaturesActions } from './performCreaturesActions';
-import { resolveConditions } from './resolveConditions';
-import { resolveStartingAndEndingConditions } from './resolveStartingAndEndingConditions';
-import { updateBurningTiles } from './updateBurningTiles';
+import { tick } from './tick';
 import { updateVisibility } from './updateVisibility';
 
 const getNextPosition = (draft: GameState, moveDirection: MoveDirection): Position => {
@@ -86,6 +84,7 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   const hitRoll = new DiceRoll('d20');
   if (hitRoll.total < creatureAC) {
     draft.eventLogs.push(`You miss the ${type}.`);
+    draft.sounds.push('miss');
     return;
   }
   // Deal damage
@@ -98,22 +97,21 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}You hit the ${type} for ${damage} damage!`
   );
-};
-
-const tick = (draft: GameState) => {
-  draft.round++;
-  resolveConditions(draft);
-  draft.currentMap = updateBurningTiles(draft.currentMap);
-  resolveStartingAndEndingConditions(draft);
-  checkCreaturesDeath(draft);
-  performCreaturesActions(draft);
+  if (isCriticalHit) {
+    draft.sounds.push('crit');
+  } else {
+    draft.sounds.push('attack');
+  }
+  if (draft.creatures[id].hp > 0) {
+    draft.sounds.push(`${type}Pain` as keyof typeof SOUNDS);
+  }
 };
 
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
-  draft.interactionText = '';
-  draft.hitsLastRound = [];
+  initRound(draft);
+
   draft.moveDirection = moveDirection;
-  draft.playerPreviousPosition = draft.playerPosition;
+  draft.waitStreak = 0;
 
   const nextPosition = getNextPosition(draft, moveDirection);
   const nextTileType = draft.currentMap[nextPosition[1]][nextPosition[0]].tile;
@@ -122,6 +120,10 @@ export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection)
 
   if (creature) {
     attackCreature(draft, creature.id, creature.type);
+  } else if (nextTile?.type === '>') {
+    draft.eventLogs.push(`You reached depth ${draft.depth + 1}!`);
+    draft.sounds.push('stairs');
+    return void draft.depth++;
   } else if (getCanWalkToNextPosition(draft, moveDirection, nextTile)) {
     moveToNewPosition(draft, nextPosition);
   } else {

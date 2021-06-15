@@ -1,6 +1,6 @@
 {
   "name": "react-roguelike",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "private": false,
   "description": "A roguelike game built with React and TypeScript.",
   "repository": "https://github.com/TimAstier/react-roguelike",

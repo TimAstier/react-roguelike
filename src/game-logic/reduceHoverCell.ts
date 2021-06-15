@@ -11,13 +11,23 @@ export interface HoverCellPayload {
   content: CellContent;
   burning: boolean;
   creature?: CreatureData;
+  creatureDiedThisRound?: boolean;
 }
 
 export const reduceHoverCell = (draft: GameState, payload: HoverCellPayload): void => {
-  const { tileType, visibility, revealed, content, burning, creature } = payload;
+  const {
+    tileType,
+    visibility,
+    revealed,
+    content,
+    burning,
+    creature,
+    creatureDiedThisRound,
+  } = payload;
 
   if (content === 'Player') {
     draft.interactionText = 'This is you.';
+    draft.hoveredCreatureId = 'Player';
     return;
   }
 
@@ -26,6 +36,8 @@ export const reduceHoverCell = (draft: GameState, payload: HoverCellPayload): vo
   }
 
   if (creature && visibility !== 'dark') {
+    draft.hoveredCreatureId = creature.id;
+
     if (visibility === 'dim') {
       draft.interactionText = 'You see something standing in the shadows.';
       return;
@@ -64,6 +76,10 @@ export const reduceHoverCell = (draft: GameState, payload: HoverCellPayload): vo
     object = getTile(tileType)?.nameInSentence;
   }
 
+  if (creatureDiedThisRound) {
+    object = 'a very much dead creature';
+  }
+
   if (verb === 'remember seeing') {
     location = ' over there';
   }
@@ -71,5 +87,6 @@ export const reduceHoverCell = (draft: GameState, payload: HoverCellPayload): vo
   const interactionText = `You ${verb} ${object}${
     burning && visibility !== 'dark' ? ' burning' : ''
   }${location}.`;
+
   draft.interactionText = interactionText;
 };

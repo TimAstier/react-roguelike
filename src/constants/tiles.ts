@@ -1,7 +1,7 @@
 export const NON_REVEALED_BACKGROUND_COLOR = 'rgb(0,0,0,1)';
 export const DEFAULT_FONT_COLOR = '#5C606A';
 
-export type TileType = ' ' | '#' | '.' | '@' | '+' | '"' | "'";
+export type TileType = ' ' | '#' | '.' | '@' | '+' | '"' | "'" | '>';
 
 export interface Tile {
   type: TileType;
@@ -93,6 +93,17 @@ export const TILES: Tile[] = [
     dimBackgroundColor: '#020211',
     clearFontColor: 'grey',
     dimFontColor: '#808080',
+    canWalkThrough: true,
+    flammability: 0,
+  },
+  {
+    type: '>',
+    name: 'downwardStaircase',
+    nameInSentence: 'a downward staircase',
+    clearBackgroundColor: '#131226',
+    dimBackgroundColor: '#020211',
+    clearFontColor: '#D0CC00',
+    dimFontColor: '#D0CC00',
     canWalkThrough: true,
     flammability: 0,
   },

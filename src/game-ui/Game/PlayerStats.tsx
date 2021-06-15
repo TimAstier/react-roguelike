@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import rpgicons from '../../assets/images/rpgicons.png';
 import { CONDITIONS } from '../../constants/conditions';
+import { GameAction, gameActions } from '../../game-logic/game';
 import { ActiveConditions } from '../../typings/activeConditions';
 import { DoubleBorders } from '../Shared/DoubleBorders';
 import { Sprite } from '../Shared/Sprite';
@@ -32,6 +33,8 @@ interface Props {
   maxHp: number;
   gold: number;
   playerConditions: ActiveConditions;
+  dispatch: React.Dispatch<GameAction>;
+  hoveredCreatureId: string;
 }
 
 export const PlayerStats: React.FC<Props> = (props) => {
@@ -41,11 +44,24 @@ export const PlayerStats: React.FC<Props> = (props) => {
       ? 0
       : (props.playerConditions.burning?.activeRounds / CONDITIONS.burning.duration) * 100;
 
+  const handleMouseEnter = () => props.dispatch(gameActions.hoverCreatureBlock('Player'));
+  const handleMouseLeave = () => props.dispatch(gameActions.hoverAwayFromCreatureBlock());
+
+  const highlighted = props.hoveredCreatureId === 'Player';
+
   return (
-    <Wrapper>
+    <Wrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div>
         <DoubleBorders>
-          <div style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 17, paddingBottom: 17 }}>
+          <div
+            style={{
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingTop: 17,
+              paddingBottom: 17,
+              background: highlighted ? 'radial-gradient(#555454, #030303)' : undefined,
+            }}
+          >
             <div style={{ width: 164 }}>
               <div style={{ display: 'flex' }}>
                 <span>
