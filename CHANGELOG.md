@@ -1,14 +1,41 @@
 # Changelog
 
-## 🎨 **UI Update** - [0.1.4] - 2021-XX-XX
+## 🎮 🎨 🔊 **Playable version** - [0.2.0] - 2021-06-15
 
 ### Game
 
-- Add creature blocks on the left side of the screen
-- Add short blink animation when a creature or the player is hit
-- Show horizontal HP bars for creatures
-- Increase dimensions of the viewport
+- New tile - Downward staircase
+- Display current depth
+- Gold and creatures are spawned randomly in the game
+- Small improvements to creatures movement
+- New action - Wait
+- Waiting for more than 3 rounds will start regenerating HP
+
+### UI
+
+- Creature blocks are shown on the left side of the screen
+- Increased dimensions of the viewport
 - Use more of the empty screen space for UI elements
+- Hover on creatures highlights creature block
+- Hover on creature block highlights creature
+
+### Animations
+
+- Short blink animation when a creature or the player is hit
+- Shake animation when player deals damage
+- Fadein animation when changing depths and when the game ends
+
+### New sounds
+
+- Player hits
+- Player misses
+- Player critc
+- Creature hits
+- Creature misses
+- Creature dies
+- Gameover theme
+- Loot gold
+- Descending to the next depth
 
 ## 👾 **Creatures** - [0.1.3] - 2021-05-23
 

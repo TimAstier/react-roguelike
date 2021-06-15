@@ -1,41 +1,13 @@
 # ROADMAP
 
-## MVP playable version
+## Game improvements
 
-- [x] Display current depth
-- [x] Add downward staircases tile
-- [x] Generate maps for multiple depths in generate level
-- [x] Add downward staircase in generateLevel
-- [x] Add gold in generateLevel
-- [x] Add monsters in generateLevel
-- [x] Spawn numbers in hordes based on spawnNumber
-- [x] Improve: Creature should not move where another creature died
-- [x] Bug: Creature moving away in a corridor if no space available because blocked by ally
-- [x] Hover on creatures highlight creature block
-- [x] Hover on creature block highlightd creature
-- [x] Highlight player
-- [x] Add shake animation when player deals damage
-- [x] Add fadein animation
-- [x] Press key to wait
-- [x] Add rest
 - [ ] Hunger clock (with impact on visibility)?
 - [ ] Way to regain hunger clock
 - [ ] Add doors in generateLevel
 - [ ] Make depths harder and harder
-
-## Sounds
-
-- [x] Add sound when player hits
-- [x] Add sound when player misses
-- [x] Sounds on crit
-- [x] Add sound when creature hits
-- [x] Add sound when creature misses
-- [x] Add sound when creature dies
-- [x] Add gameover theme
-- [x] Stop music on death
-- [x] Sound on loot gold
-- [x] Add stairs sound
-- [x] Sound over music
+- [ ] Leave bones/blood permanently on ground when creature dies
+- [ ] Press key to go downstairs
 
 ## Improve eventLogs
 
@@ -84,8 +56,6 @@
 
 ## Others
 
-- [ ] Leave bones/blood permanently on ground when creature dies
-- [ ] Press key to go downstairs
 - [ ] Keep spawning creatures during play?
 - [ ] Unstable terrain - Unstable condition - all attack are crits
 - [ ] BUG: Goblins placed in front of rat even if further away?
