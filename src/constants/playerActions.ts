@@ -1,4 +1,4 @@
-interface PlayerAction {
+export interface PlayerAction {
   type: string;
   gameKey: string;
 }
@@ -9,5 +9,3 @@ export const PLAYER_ACTIONS: PlayerAction[] = [
     gameKey: 'w',
   },
 ];
-
-export const PLAYER_ACTION_SHORTCUTS = PLAYER_ACTIONS.map((action) => action.gameKey);

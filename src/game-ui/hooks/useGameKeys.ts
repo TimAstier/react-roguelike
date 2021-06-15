@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PAUSE_TIME_BETWEEN_MOVES } from '../../constants/config';
-import { PLAYER_ACTION_SHORTCUTS, PLAYER_ACTIONS } from '../../constants/playerActions';
+import { PLAYER_ACTIONS } from '../../constants/playerActions';
 import { GameAction, gameActions } from '../../game-logic/game';
 import { GameStatus } from '../../typings/gameStatus';
 import { MoveDirection } from '../../typings/moveDirection';

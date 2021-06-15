@@ -1,7 +1,6 @@
 import { INITIAL_MAX_HP } from '../constants/config';
 import { CreatureEntity } from '../constants/creatures';
 import { ItemType } from '../constants/items';
-import { PLAYER_ACTIONS } from '../constants/playerActions';
 import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { ActiveConditions } from '../typings/activeConditions';
 import { CellData } from '../typings/cell';

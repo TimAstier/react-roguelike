@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { PLAYER_ACTIONS } from '../../constants/playerActions';
+import { PLAYER_ACTIONS, PlayerAction } from '../../constants/playerActions';
 import { GameAction, gameActions } from '../../game-logic/game';
 
 const Wrapper = styled.div`
@@ -17,6 +17,17 @@ interface Props {
   dispatch: React.Dispatch<GameAction>;
 }
 
+const renderActionLabel = (playerAction: PlayerAction) => {
+  let hasColoredLetter = false;
+  return playerAction.type.split('').map((char) => {
+    if (char === playerAction.gameKey && !hasColoredLetter) {
+      hasColoredLetter = true;
+      return <span style={{ color: 'yellow' }}>{char}</span>;
+    }
+    return char;
+  });
+};
+
 export const Actions: React.FC<Props> = (props) => {
   const renderPlayerActions = () =>
     props.actions.map((action) => {
@@ -26,7 +37,9 @@ export const Actions: React.FC<Props> = (props) => {
           <ActionWrapper
             key={action}
             onClick={() => props.dispatch(gameActions.doPlayerAction(action))}
-          >{`${playerAction.gameKey}. ${playerAction.type}`}</ActionWrapper>
+          >
+            {renderActionLabel(playerAction)}
+          </ActionWrapper>
         );
       }
     });
