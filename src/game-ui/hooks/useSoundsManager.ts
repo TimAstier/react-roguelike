@@ -2,7 +2,7 @@ import React from 'react';
 import useSound from 'use-sound';
 
 import attack from '../../assets/sounds/attack.wav';
-import crit from '../../assets/sounds/crit.mp3.flac';
+import crit from '../../assets/sounds/crit.wav';
 import goblinAttack from '../../assets/sounds/goblin_attack.wav';
 import goblinDeath from '../../assets/sounds/goblin_death.wav';
 import goblinPain from '../../assets/sounds/goblin_pain.wav';

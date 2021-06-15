@@ -16,11 +16,8 @@
 - [x] Highlight player
 - [x] Add shake animation when player deals damage
 - [x] Add fadein animation
-- [ ] Leave bones/blood permanently on ground when creature dies
-- [ ] Press key to go downstairs
 - [ ] Press key to wait
 - [ ] Add doors in generateLevel
-- [ ] Add grass in generateLevel
 - [ ] Hunger clock (with impact on visibility)?
 - [ ] Way to heal (rest, item)?
 - [ ] Way to regain hunger clock
@@ -66,6 +63,7 @@
 
 ## Items
 
+- [ ] Add grass in generateLevel
 - [ ] Something to set fire
 - [ ] Throw items
 - [ ] Equip items (in any hand)
@@ -86,6 +84,8 @@
 
 ## Others
 
+- [ ] Leave bones/blood permanently on ground when creature dies
+- [ ] Press key to go downstairs
 - [ ] Keep spawning creatures during play?
 - [ ] Unstable terrain - Unstable condition - all attack are crits
 - [ ] BUG: Goblins placed in front of rat even if further away?

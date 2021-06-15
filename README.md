@@ -73,7 +73,6 @@ https://react-roguelike.herokuapp.com
 - Squeaky Rat by Iwan 'qubodup' Gabovitch http://opengameart.org/users/qubodup
 - [Monster growl sounds](https://opengameart.org/content/monster-sound-pack-volume-1) from Ogrebane
 - [Attack miss sound](https://opengameart.org/content/3-melee-sounds) from remaxim
-- [Hits - punches](https://opengameart.org/content/37-hitspunches) used for crits sound
 - [Punches, hits, swords and squishes sounds](https://opengameart.org/content/punches-hits-swords-and-squishes) by Philippe Groarke. Many sounds have been used for these, below is the complete attributions:
   <details>
   afterguard - unionsword 1865 (CC-BY 3.0  -- http://www.freesound.org/people/afterguard/sounds/44660/)
