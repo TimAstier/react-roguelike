@@ -18,6 +18,7 @@ import { EventLogs } from './EventLogs';
 import { GameOver } from './GameOver';
 import { InteractionText } from './InteractionText';
 import { Inventory } from './Inventory';
+import { Actions } from './PlayerActions';
 import { PlayerStats } from './PlayerStats';
 import { ShakeLayer } from './ShakeLayer';
 import { Viewport } from './Viewport';
@@ -182,13 +183,12 @@ export const Game: React.FC<Props> = (props) => {
         <SideWrapper
           style={{
             marginLeft: '15px',
+            boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-end',
-            height: 627,
-            marginTop: 90,
           }}
         >
+          <Actions actions={props.state.playerActions} dispatch={props.dispatch} />
           <EquipedItems equipedItems={props.state.equipedItems} />
           <Inventory inventory={props.state.inventory} />
         </SideWrapper>

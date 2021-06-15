@@ -16,11 +16,11 @@
 - [x] Highlight player
 - [x] Add shake animation when player deals damage
 - [x] Add fadein animation
-- [ ] Press key to wait
-- [ ] Add doors in generateLevel
+- [x] Press key to wait
+- [x] Add rest
 - [ ] Hunger clock (with impact on visibility)?
-- [ ] Way to heal (rest, item)?
 - [ ] Way to regain hunger clock
+- [ ] Add doors in generateLevel
 - [ ] Make depths harder and harder
 
 ## Sounds

@@ -23,6 +23,7 @@ const attackPlayer = (draft: GameState, template: Creature) => {
   const damage = damageRoll.total;
   draft.hitsLastRound.push({ creatureId: 'player', damage });
   draft.hp = Math.max(draft.hp - damage, 0);
+  draft.waitStreak = 0;
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}The ${template.type} hits you for ${damage} damage!`
   );

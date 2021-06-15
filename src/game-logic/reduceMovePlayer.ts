@@ -8,13 +8,10 @@ import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { getDijkstraMap } from '../utils/getDijkstraMap';
-import { checkCreaturesDeath } from './checkCreaturesDeath';
 import { GameState } from './game';
+import { initRound } from './initRound';
 import { lootItem } from './lootItem';
-import { performCreaturesActions } from './performCreaturesActions';
-import { resolveConditions } from './resolveConditions';
-import { resolveStartingAndEndingConditions } from './resolveStartingAndEndingConditions';
-import { updateBurningTiles } from './updateBurningTiles';
+import { tick } from './tick';
 import { updateVisibility } from './updateVisibility';
 
 const getNextPosition = (draft: GameState, moveDirection: MoveDirection): Position => {
@@ -110,22 +107,11 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   }
 };
 
-const tick = (draft: GameState) => {
-  draft.round++;
-  resolveConditions(draft);
-  draft.currentMap = updateBurningTiles(draft.currentMap);
-  resolveStartingAndEndingConditions(draft);
-  checkCreaturesDeath(draft);
-  performCreaturesActions(draft);
-};
-
 export const reduceMovePlayer = (draft: GameState, moveDirection: MoveDirection): void => {
-  draft.interactionText = '';
-  draft.hitsLastRound = [];
-  draft.deathPositionsThisRound = [];
+  initRound(draft);
+
   draft.moveDirection = moveDirection;
-  draft.playerPreviousPosition = draft.playerPosition;
-  draft.sounds = [];
+  draft.waitStreak = 0;
 
   const nextPosition = getNextPosition(draft, moveDirection);
   const nextTileType = draft.currentMap[nextPosition[1]][nextPosition[0]].tile;

@@ -12,6 +12,7 @@ const EquipedWrapper = styled.div`
   width: 85%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
 `;
 
 const Slot = styled.div`
