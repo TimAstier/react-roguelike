@@ -39,6 +39,7 @@
     "react-scripts": "4.0.3",
     "rpg-dice-roller": "^5.0.0",
     "seedrandom": "^3.0.5",
+    "serve": "^12.0.0",
     "styled-components": "^5.2.3",
     "typescript": "^4.1.2",
     "use-image": "^1.0.7",
@@ -48,7 +49,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -81,6 +83,8 @@
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
-    "transformIgnorePatterns": [ "/node_modules/(?!rpg-dice-roller).+\\.js$"]
+    "transformIgnorePatterns": [
+      "/node_modules/(?!rpg-dice-roller).+\\.js$"
+    ]
   }
 }
