@@ -1,6 +1,6 @@
 /** DEBUG */
 
-export const PLAY_MUSIC_AT_START = false;
+export const PLAY_MUSIC_AT_START = true;
 export const DEBUG_SPAWN_CREATURES = true;
 
 /** END DEGUG */
