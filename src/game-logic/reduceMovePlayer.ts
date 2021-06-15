@@ -87,6 +87,7 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   const hitRoll = new DiceRoll('d20');
   if (hitRoll.total < creatureAC) {
     draft.eventLogs.push(`You miss the ${type}.`);
+    draft.sounds.push('miss');
     return;
   }
   // Deal damage
@@ -99,6 +100,11 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}You hit the ${type} for ${damage} damage!`
   );
+  if (isCriticalHit) {
+    draft.sounds.push('crit');
+  } else {
+    draft.sounds.push('attack');
+  }
   if (draft.creatures[id].hp > 0) {
     draft.sounds.push(`${type}Pain` as keyof typeof SOUNDS);
   }

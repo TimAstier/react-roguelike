@@ -1,11 +1,14 @@
 import React from 'react';
 import useSound from 'use-sound';
 
+import attack from '../../assets/sounds/attack.wav';
+import crit from '../../assets/sounds/crit.mp3.flac';
 import goblinAttack from '../../assets/sounds/goblin_attack.wav';
 import goblinDeath from '../../assets/sounds/goblin_death.wav';
 import goblinPain from '../../assets/sounds/goblin_pain.wav';
 import lootBigGold from '../../assets/sounds/lootBigGold.ogg';
 import lootSmallGold from '../../assets/sounds/lootSmallGold.ogg';
+import miss from '../../assets/sounds/miss.wav';
 import ratAttack from '../../assets/sounds/rat_attack.ogg';
 import ratDeath from '../../assets/sounds/rat_death.ogg';
 import ratPain from '../../assets/sounds/rat_pain.ogg';
@@ -13,6 +16,9 @@ import stairs from '../../assets/sounds/stairs.ogg';
 import { useDetectUserInput } from './useDetectUserInput';
 
 export const SOUNDS = {
+  crit,
+  attack,
+  miss,
   lootSmallGold,
   lootBigGold,
   stairs,
@@ -32,6 +38,9 @@ interface Options {
 export const useSoundsManager = ({ sounds, round }: Options): void => {
   const didUserInput = useDetectUserInput();
 
+  const [playCrit] = useSound(crit);
+  const [playAttack] = useSound(attack, { volume: 3 });
+  const [playMiss] = useSound(miss, { volume: 0.6 });
   const [playLootSmallGold] = useSound(lootSmallGold);
   const [playLootBigGold] = useSound(lootBigGold);
   const [playStairs] = useSound(stairs);
@@ -43,6 +52,9 @@ export const useSoundsManager = ({ sounds, round }: Options): void => {
   const [playGoblinDeath] = useSound(goblinDeath, { volume: 0.3 });
 
   const soundPlayer: { [key: string]: typeof playLootSmallGold } = {
+    crit: playCrit,
+    attack: playAttack,
+    miss: playMiss,
     lootSmallGold: playLootSmallGold,
     lootBigGold: playLootBigGold,
     stairs: playStairs,

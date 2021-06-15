@@ -28,9 +28,9 @@
 
 ## Sounds
 
-- [ ] Add sound when player hits
-- [ ] Add sound when player misses
-- [ ] Sounds on crit
+- [x] Add sound when player hits
+- [x] Add sound when player misses
+- [x] Sounds on crit
 - [x] Add sound when creature hits
 - [x] Add sound when creature misses
 - [x] Add sound when creature dies
