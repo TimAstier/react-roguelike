@@ -70,6 +70,8 @@ https://react-roguelike.herokuapp.com
 - Font [Ubuntu Mono](https://fonts.google.com/specimen/Ubuntu+Mono)
 - [Coin sound effects](https://opengameart.org/content/12-coin-sound-effects) from [StarNinjas](https://opengameart.org/users/starninjas)
 - [Stone stairs sound effect](https://opengameart.org/content/stone-stair-steps) from [Dorkster](https://opengameart.org/users/dorkster)
+- Squeaky Rat by Iwan 'qubodup' Gabovitch http://opengameart.org/users/qubodup
+- [Monster growl sounds](https://opengameart.org/content/monster-sound-pack-volume-1) from Ogrebane
 
 ## License
 

@@ -2,6 +2,7 @@ import { DiceRoll } from 'rpg-dice-roller';
 
 import { PLAYER_BASE_AC } from '../constants/config';
 import { Creature, CreatureEntity, CREATURES } from '../constants/creatures';
+import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { Position } from '../typings/position';
 import { getAdjacentPositions } from '../utils/getAdjacentPositions';
 import { isInsideCircle } from '../utils/isInsideCircle';
@@ -25,6 +26,7 @@ const attackPlayer = (draft: GameState, template: Creature) => {
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}The ${template.type} hits you for ${damage} damage!`
   );
+  draft.sounds.push(`${template.type}Attack` as keyof typeof SOUNDS);
   if (draft.hp === 0) {
     draft.eventLogs.push('You died.');
     draft.deathText = `Killed by a ${template.type} on depth ${draft.depth}.`;

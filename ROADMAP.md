@@ -30,10 +30,10 @@
 
 - [ ] Add sound when player hits
 - [ ] Add sound when player misses
-- [ ] Add sound when creature hits
-- [ ] Add sound when creature misses
-- [ ] Add sound when creature dies
 - [ ] Sounds on crit
+- [x] Add sound when creature hits
+- [x] Add sound when creature misses
+- [x] Add sound when creature dies
 - [x] Add gameover theme
 - [x] Stop music on death
 - [x] Sound on loot gold

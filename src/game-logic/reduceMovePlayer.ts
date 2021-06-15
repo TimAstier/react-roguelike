@@ -4,6 +4,7 @@ import { GRID_HEIGHT, GRID_WIDTH, PLAYER_BASE_ATTACK } from '../constants/config
 import { CreatureType } from '../constants/creatures';
 import { CREATURES } from '../constants/creatures';
 import { getTile, Tile } from '../constants/tiles';
+import { SOUNDS } from '../game-ui/hooks/useSoundsManager';
 import { MoveDirection } from '../typings/moveDirection';
 import { Position } from '../typings/position';
 import { getDijkstraMap } from '../utils/getDijkstraMap';
@@ -74,7 +75,6 @@ const moveToNewPosition = (draft: GameState, position: Position) => {
     draft.currentMap.map((row) => row.map((cellData) => cellData.tile)),
     position
   );
-  draft.sounds.push('stone');
 };
 
 const moveAndStayAtSamePosition = (draft: GameState, tileNameInSentence: string | undefined) => {
@@ -99,6 +99,9 @@ const attackCreature = (draft: GameState, id: string, type: CreatureType) => {
   draft.eventLogs.push(
     `${isCriticalHit ? '[CRIT] ' : ''}You hit the ${type} for ${damage} damage!`
   );
+  if (draft.creatures[id].hp > 0) {
+    draft.sounds.push(`${type}Pain` as keyof typeof SOUNDS);
+  }
 };
 
 const tick = (draft: GameState) => {
