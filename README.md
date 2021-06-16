@@ -60,6 +60,18 @@ https://react-roguelike-development.herokuapp.com
 Merging commits to `master` will auto-deploy to:  
 https://react-roguelike.herokuapp.com
 
+### Alternative with Netlify
+
+```
+netlify deploy
+```
+
+```
+netlify deploy --prod
+```
+
+https://react-roguelike-demo.netlify.app
+
 ## Credits
 
 - Music from Pixelsphere.org / The Cynic Project from [opengameart](https://opengameart.org/content/crystal-cave-song18)
