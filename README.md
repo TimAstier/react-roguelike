@@ -2,7 +2,7 @@
 <h1>React Roguelike</h1>
 
 <p>A roguelike game built with React and TypeScript.</p>
-<p><a href="https://react-roguelike.herokuapp.com/">https://react-roguelike.herokuapp.com</a><p/>
+<p><a href="https://react-roguelike-demo.netlify.app">https://react-roguelike-demo.netlify.app</a><p/>
 </div>
 
 [![CircleCI](https://circleci.com/gh/TimAstier/react-roguelike.svg?style=svg)](https://circleci.com/gh/TimAstier/react-roguelike) [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
@@ -11,7 +11,9 @@
 
 ## How to play
 
-Go to https://react-roguelike.herokuapp.com to start a new game.
+Go to https://react-roguelike-demo.netlify.app to start a new game.
+
+The level editor is available [here](https://react-roguelike-demo.netlify.app).
 
 ## Built with
 
@@ -52,25 +54,17 @@ $ yarn dev
 
 ## Deployments:
 
-Review apps will be deployed when opening a PR on the development branch.
-
-Merging commits to `development` will auto-deploy to:  
-https://react-roguelike-development.herokuapp.com
-
 Merging commits to `master` will auto-deploy to:  
-https://react-roguelike.herokuapp.com
+https://react-roguelike-demo.netlify.app
 
-### Alternative with Netlify
+### Manual deployment
 
-```
+```sh
+yarn build
 netlify deploy
-```
-
-```
+# specify "build" as directory
 netlify deploy --prod
 ```
-
-https://react-roguelike-demo.netlify.app
 
 ## Credits
 
