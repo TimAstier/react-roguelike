@@ -45,7 +45,7 @@ $ cd react-roguelike
 $ yarn install
 
 # Start the app
-$ yarn start
+$ yarn dev
 
 # Open a browser tab at http://localhost:3000/
 ```
