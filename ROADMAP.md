@@ -2,11 +2,10 @@
 
 ## Game improvements
 
+- [ ] Prevent mobs from aggroing through doors
 - [ ] Hunger clock (with impact on visibility)?
 - [ ] Way to regain hunger clock
 - [ ] Add doors in generateLevel
-- [ ] Make depths harder and harder
-- [ ] Leave bones/blood permanently on ground when creature dies
 - [ ] Press key to go downstairs
 
 ## Improve eventLogs
@@ -15,12 +14,6 @@
 - [ ] Add colors in eventLogs
 - [ ] Make it more obvious which logs are from the previous round
 - [ ] Scroll through eventLogs (and reset on next one)
-
-## Debug mode
-
-- [ ] Load game from test map
-- [ ] Has BGM: off by default
-- [ ] Possibility to edit cells in game
 
 ## Races
 
@@ -35,15 +28,12 @@
 
 ## Items
 
+- Shields up: Block and counterattack against any ennemy next turn.
 - [ ] Add grass in generateLevel
 - [ ] Something to set fire
 - [ ] Throw items
 - [ ] Equip items (in any hand)
 - [ ] Add items in generateLevel
-
-## Ability ideas
-
-- Shields up: Block and counterattack against any ennemy next turn.
 
 ## Spell ideas
 
@@ -56,6 +46,8 @@
 
 ## Others
 
+- [ ] Make depths harder and harder
+- [ ] Leave bones/blood permanently on ground when creature dies
 - [ ] Keep spawning creatures during play?
 - [ ] Unstable terrain - Unstable condition - all attack are crits
 - [ ] BUG: Goblins placed in front of rat even if further away?
